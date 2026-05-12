@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Up Dietitian · Lauren Nash, APD · sports dietitian, Perth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:    "#201C12",
+          sand:   "#EAE6D7",
+          green:  "#1D4032",
+          orange: "#FF6C00",
+          "sand-2": "#dfdac6",
+          "ink-2":  "#13110a"
+        },
+        fontFamily: {
+          display: ["Anton", "Impact", "system-ui", "sans-serif"],
+          sans:    ["Archivo", "system-ui", "sans-serif"],
+          mono:    ["JetBrains Mono", "ui-monospace", "monospace"]
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html, body { background: #EAE6D7; color: #201C12; }
+  body { font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .font-display { font-family: 'Anton', Impact, system-ui, sans-serif; letter-spacing: .01em; }
+  .font-mono    { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .skew-italic  { transform: skew(-8deg, 0); display: inline-block; }
+  /* gritty noise overlay */
+  .noise::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.18;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/></svg>");}
+  .scan::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;
+    background-image:repeating-linear-gradient(0deg, rgba(0,0,0,.6) 0 1px, transparent 1px 3px);}
+  .ticker { animation: ticker 30s linear infinite; }
+  .ticker-slow { animation: ticker 60s linear infinite; }
+  .ticker-rev  { animation: tickerRev 40s linear infinite; }
+  @keyframes ticker    { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes tickerRev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  .pulse-dot { animation: pulseDot 1.6s ease-in-out infinite; }
+  @keyframes pulseDot { 0%,100%{ opacity:.35; transform: scale(.85);} 50%{ opacity:1; transform: scale(1);} }
+  .kinetic-row { will-change: transform; }
+  .grain-bg{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/></svg>");}
+  /* selection */
+  ::selection { background: #FF6C00; color: #EAE6D7; }
+  /* density */
+  [data-density="airy"]    { --gap-y: clamp(96px, 12vw, 180px); --pad-y: clamp(80px, 10vw, 140px); }
+  [data-density="compact"] { --gap-y: clamp(48px, 6vw, 88px);   --pad-y: clamp(40px, 5vw, 72px); }
+  /* hide scrollbars in horizontal drag-reveal */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+  /* cursor blob */
+  #cursor-blob{position:fixed;top:0;left:0;width:18px;height:18px;border-radius:9999px;background:#FF6C00;pointer-events:none;z-index:60;mix-blend-mode:difference;transform:translate3d(-100px,-100px,0);transition:width .2s,height .2s,opacity .2s;opacity:0}
+  @media (hover:hover){ #cursor-blob{opacity:1} }
+  /* button shimmer */
+  .btn-shine{position:relative;overflow:hidden}
+  .btn-shine::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-110%);transition:transform .7s}
+  .btn-shine:hover::after{transform:translateX(110%)}
+  /* marquee gradient mask edges */
+  .mask-fade{ -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent); mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent); }
+  /* sticky cta safe area */
+  .safe-b { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+  /* drag-reveal slider thumb */
+  .reveal-handle{ background: #FF6C00; box-shadow: 0 0 0 6px rgba(255,108,0,.18), 0 8px 20px rgba(0,0,0,.25); }
+  /* about counter */
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* override important: hide cursor blob on touch */
+  @media (pointer: coarse) { #cursor-blob{ display:none } }
+</style>
+</head>
+<body class="bg-sand text-ink">
+  <div id="cursor-blob"></div>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="src/hooks.jsx"></script>
+  <script type="text/babel" src="src/nav.jsx"></script>
+  <script type="text/babel" src="src/hero.jsx"></script>
+  <script type="text/babel" src="src/marquee.jsx"></script>
+  <script type="text/babel" src="src/about.jsx"></script>
+  <script type="text/babel" src="src/services.jsx"></script>
+  <script type="text/babel" src="src/process.jsx"></script>
+  <script type="text/babel" src="src/footer.jsx"></script>
+  <script type="text/babel" src="src/sticky-cta.jsx"></script>
+  <script type="text/babel" src="src/app.jsx"></script>
+</body>
+</html>
