@@ -54,7 +54,7 @@ function Hero({ headline, sub, theme }) {
             <h1
               className="font-display leading-[.86] tracking-tight"
               style={{
-                fontSize: 'clamp(48px, 10vw, 160px)',
+                fontSize: 'clamp(64px, 18.5vw, 280px)',
                 color: i === 1 ? t.accent : t.fg,
                 textShadow: i === 1 ? 'none' : 'none',
               }}
