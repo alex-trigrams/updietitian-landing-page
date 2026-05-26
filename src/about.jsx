@@ -56,88 +56,125 @@ function About({ theme }) {
           </div>
         </div>
 
-        {/* drag-reveal testimonial card */}
-        <DragReveal theme={theme} />
+        {/* athlete testimonials */}
+        <Testimonials />
       </div>
     </section>
   );
 }
 
-function DragReveal({ theme }) {
-  const [pct, setPct] = React.useState(50);
-  const ref = React.useRef(null);
-  const dragging = React.useRef(false);
+const TESTIMONIALS = [
+  {
+    // photo: 'assets/images/testimonials/sarah.jpg',  // add photo when available
+    name: 'Sarah',
+    sport: 'Ironman 70.3',
+    quote: 'Lauren completely changed how I think about race day nutrition. My last 70.3 I held power all the way through T2 and ran my best half marathon split ever. Nutrition was never a limiter again.',
+  },
+  {
+    // photo: 'assets/images/testimonials/tom.jpg',
+    name: 'Tom',
+    sport: 'Ultra Marathon',
+    quote: 'I used to bonk at 60km every single race. After working with Lauren I finished my first 100-miler with energy to spare. The gut training protocol alone was worth every cent.',
+  },
+  {
+    // photo: 'assets/images/testimonials/mia.jpg',
+    name: 'Mia',
+    sport: 'CrossFit',
+    quote: 'I finally stopped feeling like I was undereating for my training. Lauren built a plan that worked with my schedule, not against it. My recovery time dropped noticeably within the first few weeks.',
+  },
+];
 
-  const setFromClient = (clientX) => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
-    setPct(x * 100);
-  };
-
-  React.useEffect(() => {
-    const up = () => dragging.current = false;
-    const move = (e) => { if (!dragging.current) return; const cx = e.touches ? e.touches[0].clientX : e.clientX; setFromClient(cx); };
-    window.addEventListener('mouseup', up);
-    window.addEventListener('touchend', up);
-    window.addEventListener('mousemove', move);
-    window.addEventListener('touchmove', move, { passive: false });
-    return () => { window.removeEventListener('mouseup', up); window.removeEventListener('touchend', up); window.removeEventListener('mousemove', move); window.removeEventListener('touchmove', move); };
-  }, []);
+function TestimonialCard({ card, idx }) {
+  const [flipped, setFlipped] = React.useState(false);
 
   return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-label={`${card.name} — ${card.sport}. Tap to read testimonial.`}
+      className="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-orange"
+      style={{ perspective: '1000px', height: 420 }}
+      onClick={() => setFlipped(f => !f)}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+      onKeyDown={(e) => e.key === 'Enter' && setFlipped(f => !f)}
+    >
+      <div style={{
+        position: 'relative', width: '100%', height: '100%',
+        transformStyle: 'preserve-3d',
+        transition: 'transform 0.55s cubic-bezier(.4,0,.2,1)',
+        transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+      }}>
+
+        {/* FRONT — photo + name + sport */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+          borderRadius: 20, overflow: 'hidden',
+          background: '#1D4032', display: 'flex', flexDirection: 'column',
+        }}>
+          {/* photo area */}
+          <div style={{ flex: 1, position: 'relative', overflow: 'hidden', background: 'rgba(32,28,18,.35)' }}>
+            {card.photo
+              ? <img src={card.photo} alt={card.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
+              : (
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontFamily: 'Anton', fontSize: 'clamp(80px, 12vw, 120px)', color: '#FF6C00', opacity: .25, lineHeight: 1 }}>{card.name[0]}</span>
+                </div>
+              )
+            }
+            {/* flip hint */}
+            <div style={{ position: 'absolute', top: 12, right: 12, background: 'rgba(0,0,0,.45)', borderRadius: 999, padding: '4px 10px', backdropFilter: 'blur(6px)' }}>
+              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, textTransform: 'uppercase', letterSpacing: '.18em', color: '#EAE6D7', opacity: .7 }}>flip ↻</span>
+            </div>
+          </div>
+          {/* name + sport */}
+          <div style={{ padding: '18px 22px', flexShrink: 0 }}>
+            <div style={{ fontFamily: 'Anton', fontSize: 'clamp(26px, 3vw, 34px)', color: '#EAE6D7', lineHeight: .95 }}>
+              <span style={{ display: 'inline-block', transform: 'skew(-8deg)' }}>{card.name}</span>
+            </div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, textTransform: 'uppercase', letterSpacing: '.2em', color: '#FF6C00', marginTop: 6 }}>{card.sport}</div>
+          </div>
+        </div>
+
+        {/* BACK — testimonial quote */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+          transform: 'rotateY(180deg)',
+          borderRadius: 20, overflow: 'hidden',
+          background: '#FF6C00', color: '#EAE6D7',
+          padding: '28px 26px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+        }}>
+          <div style={{ fontFamily: 'Anton', fontSize: 72, lineHeight: .8, opacity: .25 }}>"</div>
+          <p style={{ fontFamily: 'Archivo', fontSize: 15, lineHeight: 1.65, flex: 1, display: 'flex', alignItems: 'center' }}>{card.quote}</p>
+          <div style={{ borderTop: '1px solid rgba(234,230,215,.3)', paddingTop: 16 }}>
+            <div style={{ fontFamily: 'Anton', fontSize: 22, lineHeight: .95 }}>
+              <span style={{ display: 'inline-block', transform: 'skew(-8deg)' }}>{card.name}</span>
+            </div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, textTransform: 'uppercase', letterSpacing: '.18em', opacity: .75, marginTop: 5 }}>{card.sport}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+function Testimonials() {
+  return (
     <div className="mt-20 md:mt-28">
-      <div className="flex items-end justify-between mb-4">
+      <div className="flex flex-wrap items-end justify-between gap-3 mb-8">
         <div>
-          <div className="font-mono text-[11px] uppercase tracking-[.22em] opacity-70">02 · Drag to compare</div>
+          <div className="font-mono text-[11px] uppercase tracking-[.22em] opacity-70">02 · Athlete stories</div>
           <h3 className="font-display mt-2 leading-[.95]" style={{ fontSize: 'clamp(34px, 5.5vw, 72px)' }}>
-            <span className="skew-italic">Before</span> <span className="opacity-50">/</span> <span className="skew-italic" style={{ color: '#FF6C00' }}>After</span>
+            <span className="skew-italic">What they </span><span className="skew-italic" style={{ color: '#FF6C00' }}>say.</span>
           </h3>
         </div>
-        <div className="font-mono text-[11px] uppercase tracking-[.2em] opacity-60 hidden sm:block">drag the handle ↔</div>
+        <div className="font-mono text-[11px] uppercase tracking-[.2em] opacity-50 hidden sm:block">hover or tap to flip ↻</div>
       </div>
-
-      <div
-        ref={ref}
-        className="relative h-[260px] md:h-[400px] rounded-3xl overflow-hidden select-none cursor-ew-resize touch-none"
-        style={{ background: '#1D4032', color: '#EAE6D7' }}
-        onMouseDown={(e) => { dragging.current = true; setFromClient(e.clientX); }}
-        onTouchStart={(e) => { dragging.current = true; setFromClient(e.touches[0].clientX); }}
-      >
-        {/* BEFORE panel */}
-        <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-between grain-bg">
-          <div className="font-mono text-[11px] uppercase tracking-[.2em] opacity-80">// before</div>
-          <div className="space-y-2">
-            <div className="font-display leading-[.95]" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-              <span className="skew-italic">Hit the wall</span><br/>
-              <span className="skew-italic opacity-60">at km 28.</span>
-            </div>
-            <div className="font-mono text-[11px] md:text-[13px] uppercase tracking-[.18em] opacity-70">blew up at km 28, gut shot, dead legs</div>
-          </div>
-        </div>
-
-        {/* AFTER panel — clipped */}
-        <div
-          className="absolute inset-0 p-6 md:p-10 flex flex-col justify-between grain-bg"
-          style={{ background: '#FF6C00', color: '#EAE6D7', clipPath: `inset(0 0 0 ${pct}%)` }}
-        >
-          <div className="font-mono text-[11px] uppercase tracking-[.2em] opacity-90 text-right">after //</div>
-          <div className="space-y-2 text-right">
-            <div className="font-display leading-[.95]" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-              <span className="skew-italic">3:42 marathon.</span><br/>
-              <span className="skew-italic opacity-90">Negative split.</span>
-            </div>
-            <div className="font-mono text-[11px] md:text-[13px] uppercase tracking-[.18em] opacity-90">fueled, gut sorted, 24min PB</div>
-          </div>
-        </div>
-
-        {/* divider + handle */}
-        <div className="absolute top-0 bottom-0" style={{ left: `${pct}%`, transform: 'translateX(-50%)' }}>
-          <div className="w-px h-full mx-auto" style={{ background: '#EAE6D7' }}></div>
-          <div className="reveal-handle absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center" style={{ color: '#EAE6D7' }}>
-            <span className="font-display text-[20px]">↔</span>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        {TESTIMONIALS.map((card, i) => <TestimonialCard key={i} card={card} idx={i} />)}
       </div>
     </div>
   );
