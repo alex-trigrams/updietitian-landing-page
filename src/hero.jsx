@@ -67,7 +67,7 @@ function Hero({ headline, sub, theme }) {
 
       {/* sub copy + CTA cluster */}
       <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 mt-10 md:mt-14 grid grid-cols-12 gap-6 items-end">
-        <div className="col-span-12 md:col-span-7 lg:col-span-6">
+        <div className="col-span-12 md:col-span-7 lg:col-span-6 p-5 md:p-6 rounded-2xl" style={{ background: 'rgba(0,0,0,.35)', backdropFilter: 'blur(8px)' }}>
           <p className="text-[15px] md:text-[18px] leading-snug max-w-[44ch]" style={{ color: t.sub }}>
             {sub}
           </p>
