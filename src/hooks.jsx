@@ -1,6 +1,6 @@
 // Shared hooks + theme helpers.
 
-const CALENDLY_URL = "#book"; // TODO: swap with real Calendly link
+const CALENDLY_URL = "https://calendly.com/updietitian/15min";
 
 const THEMES = {
   green:  { bg: "#1D4032", fg: "#EAE6D7", accent: "#FF6C00", sub: "rgba(234,230,215,.65)", line: "rgba(234,230,215,.18)" },

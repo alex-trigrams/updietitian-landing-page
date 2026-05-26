@@ -38,20 +38,11 @@ function About({ theme }) {
           {/* sticker / portrait placeholder */}
           <div className="col-span-12 lg:col-span-5">
             <div className="relative h-full">
-              <div
-                className="aspect-[4/5] w-full rounded-3xl relative overflow-hidden grain-bg"
-                style={{ background: '#1D4032', color: '#EAE6D7' }}
-              >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-display text-[34vw] md:text-[18vw] lg:text-[12vw] leading-none opacity-90" style={{ color: '#FF6C00' }}>LN</span>
-                </div>
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[.18em] opacity-80">
-                  <span>portrait // 4×5</span>
-                  <span>↘ drop image</span>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4 font-mono text-[10px] uppercase tracking-[.18em] opacity-80">
-                  Lauren · APD · Perth WA
-                </div>
+              <div className="aspect-[4/5] w-full rounded-3xl overflow-hidden">
+                <picture>
+                  <source srcSet="assets/images/about/about-image.avif" type="image/avif" />
+                  <img src="assets/images/about/about-image.JPG" alt="Lauren Nash APD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
+                </picture>
               </div>
 
               {/* sticker badge */}

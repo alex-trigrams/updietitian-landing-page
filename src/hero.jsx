@@ -57,8 +57,8 @@ function Hero({ headline, sub, theme }) {
       </div>
 
       {/* sub copy + CTA cluster */}
-      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 mt-10 md:mt-14 grid grid-cols-12 gap-6 items-end">
-        <div className="col-span-12 md:col-span-7 lg:col-span-6">
+      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 mt-10 md:mt-14 grid grid-cols-12 gap-6 items-start">
+        <div className="col-span-12 lg:col-span-7">
           <p className="text-[15px] md:text-[18px] leading-snug max-w-[44ch]" style={{ color: t.sub }}>
             {sub}
           </p>
@@ -79,12 +79,29 @@ function Hero({ headline, sub, theme }) {
               data-blob-hover
             >See services</a>
           </div>
+          {/* stats — shown inline on desktop, separate card on mobile */}
+          <div
+            className="hidden lg:grid grid-cols-3 gap-6 mt-8 pt-8 border-t"
+            style={{ borderColor: t.line }}
+          >
+            <Stat n={6} suffix="+" label="Sports I work in" theme={theme} />
+            <Stat n={150} suffix="+" label="Athletes coached" theme={theme} />
+            <Stat n={24} suffix="hr" label="I reply within" theme={theme} />
+          </div>
         </div>
 
-        {/* meta card */}
-        <div className="col-span-12 md:col-span-5 lg:col-span-6 md:flex md:justify-end">
+        {/* hero image — desktop */}
+        <div className="hidden lg:block col-span-5 rounded-2xl overflow-hidden" style={{ aspectRatio: '4/5' }}>
+          <picture>
+            <source srcSet="assets/images/hero/up-hero-banner.avif" type="image/avif" />
+            <img src="assets/images/hero/up-hero-banner.jpg" alt="Up Dietitian — Lauren Nash APD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
+          </picture>
+        </div>
+
+        {/* stats card — mobile/tablet only */}
+        <div className="col-span-12 lg:hidden">
           <div
-            className="grid grid-cols-3 gap-4 md:gap-6 p-5 md:p-6 rounded-2xl w-full md:w-auto"
+            className="grid grid-cols-3 gap-4 p-5 rounded-2xl"
             style={{ background: 'rgba(0,0,0,.18)', border: `1px solid ${t.line}` }}
           >
             <Stat n={6} suffix="+" label="Sports I work in" theme={theme} />
@@ -97,7 +114,7 @@ function Hero({ headline, sub, theme }) {
       {/* scroll cue */}
       <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 mt-14 md:mt-24 pb-14 flex items-center justify-between font-mono text-[10px] md:text-[11px] uppercase tracking-[.2em]" style={{ color: t.sub }}>
         <span>scroll ↓  eat like you train</span>
-        <span className="hidden sm:inline">In-clinic with Front Runner Physio</span>
+        <span className="hidden sm:inline">In-clinic · Front Runner Sports, Osborne Park</span>
         <span>APD #LN-2024</span>
       </div>
     </section>

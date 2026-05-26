@@ -37,6 +37,7 @@ function App() {
       />
 
       <About theme={theme} />
+      <Photos />
 
       <Marquee
         items={['RUNNING', 'TRIATHLON', 'AFL', 'CROSSFIT', 'COMBAT SPORTS', 'SWIMMING', 'HORSE RACING', 'ULTRA']}
@@ -46,6 +47,7 @@ function App() {
 
       <Services theme={theme} />
       <Process theme={theme} />
+      <Clinic theme={theme} />
 
       <Marquee
         items={['BOOK A CALL', 'FREE 15 MIN', 'NO PRESSURE', 'GO UP']}
