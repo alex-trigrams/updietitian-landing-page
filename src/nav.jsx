@@ -23,6 +23,12 @@ function Nav({ theme }) {
           <a href="#services"   className="hover:opacity-70" data-blob-hover>Services</a>
           <a href="#process"    className="hover:opacity-70" data-blob-hover>Process</a>
           <a href="#contact"    className="hover:opacity-70" data-blob-hover>Contact</a>
+          <a
+            href="#clinic"
+            className="btn-shine inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold border"
+            style={{ borderColor: t.accent, color: t.accent }}
+            data-blob-hover
+          >Book In-Person</a>
         </nav>
         <a
           href={CALENDLY_URL}
@@ -48,6 +54,7 @@ function Nav({ theme }) {
           {['about','services','process','contact'].map(s => (
             <a key={s} href={`#${s}`} onClick={() => setOpen(false)} className="py-2 border-b" style={{ borderColor: t.line }}>{s}</a>
           ))}
+          <a href="#clinic" onClick={() => setOpen(false)} className="py-2 border-b font-bold" style={{ borderColor: t.line, color: t.accent }}>Book In-Person ↗</a>
           <a href={CALENDLY_URL} onClick={() => setOpen(false)} className="mt-3 px-5 py-3 rounded-full font-bold text-center" style={{ background: t.accent, color: '#EAE6D7' }}>Book a call →</a>
         </div>
       )}
