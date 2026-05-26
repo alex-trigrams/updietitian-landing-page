@@ -18,11 +18,20 @@ function Hero({ headline, sub, theme }) {
       className="relative noise scan overflow-hidden"
       style={{ background: t.bg, color: t.fg, minHeight: '100svh', paddingTop: 96 }}
     >
+      {/* full-bleed background image */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none select-none">
+        <picture>
+          <source srcSet="assets/images/hero/up-hero-banner.avif" type="image/avif" />
+          <img src="assets/images/hero/up-hero-banner.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
+        </picture>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.3) 35%, rgba(0,0,0,.55) 75%, rgba(0,0,0,.75) 100%)' }}></div>
+      </div>
+
       {/* big background UP mark */}
       <div
         aria-hidden
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
-        style={{ transform: `translate3d(0, ${offset * -0.15}px, 0)`, opacity: .14 }}
+        style={{ transform: `translate3d(0, ${offset * -0.15}px, 0)`, opacity: .06 }}
       >
         <img src="assets/logo-orange-icon.png" alt="" style={{ width: '92vw', maxWidth: 1400, height: 'auto', display: 'block' }} />
       </div>
@@ -45,7 +54,7 @@ function Hero({ headline, sub, theme }) {
             <h1
               className="font-display leading-[.86] tracking-tight"
               style={{
-                fontSize: 'clamp(64px, 18.5vw, 280px)',
+                fontSize: 'clamp(48px, 10vw, 160px)',
                 color: i === 1 ? t.accent : t.fg,
                 textShadow: i === 1 ? 'none' : 'none',
               }}
@@ -57,8 +66,8 @@ function Hero({ headline, sub, theme }) {
       </div>
 
       {/* sub copy + CTA cluster */}
-      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 mt-10 md:mt-14 grid grid-cols-12 gap-6 items-start">
-        <div className="col-span-12 lg:col-span-7">
+      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 mt-10 md:mt-14 grid grid-cols-12 gap-6 items-end">
+        <div className="col-span-12 md:col-span-7 lg:col-span-6">
           <p className="text-[15px] md:text-[18px] leading-snug max-w-[44ch]" style={{ color: t.sub }}>
             {sub}
           </p>
@@ -79,30 +88,13 @@ function Hero({ headline, sub, theme }) {
               data-blob-hover
             >See services</a>
           </div>
-          {/* stats — shown inline on desktop, separate card on mobile */}
-          <div
-            className="hidden lg:grid grid-cols-3 gap-6 mt-8 pt-8 border-t"
-            style={{ borderColor: t.line }}
-          >
-            <Stat n={6} suffix="+" label="Sports I work in" theme={theme} />
-            <Stat n={150} suffix="+" label="Athletes coached" theme={theme} />
-            <Stat n={24} suffix="hr" label="I reply within" theme={theme} />
-          </div>
         </div>
 
-        {/* hero image — desktop */}
-        <div className="hidden lg:block col-span-5 rounded-2xl overflow-hidden" style={{ aspectRatio: '4/5' }}>
-          <picture>
-            <source srcSet="assets/images/hero/up-hero-banner.avif" type="image/avif" />
-            <img src="assets/images/hero/up-hero-banner.jpg" alt="Up Dietitian — Lauren Nash APD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
-          </picture>
-        </div>
-
-        {/* stats card — mobile/tablet only */}
-        <div className="col-span-12 lg:hidden">
+        {/* stats card */}
+        <div className="col-span-12 md:col-span-5 lg:col-span-6 md:flex md:justify-end">
           <div
-            className="grid grid-cols-3 gap-4 p-5 rounded-2xl"
-            style={{ background: 'rgba(0,0,0,.18)', border: `1px solid ${t.line}` }}
+            className="grid grid-cols-3 gap-4 md:gap-6 p-5 md:p-6 rounded-2xl w-full md:w-auto"
+            style={{ background: 'rgba(0,0,0,.35)', border: `1px solid ${t.line}`, backdropFilter: 'blur(8px)' }}
           >
             <Stat n={6} suffix="+" label="Sports I work in" theme={theme} />
             <Stat n={150} suffix="+" label="Athletes coached" theme={theme} />

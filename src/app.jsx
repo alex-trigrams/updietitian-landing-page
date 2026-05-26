@@ -3,7 +3,7 @@
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "theme": "green",
   "headline": "EAT | LIKE YOU | TRAIN",
-  "sub": "I'm Lauren. I'm an APD in Perth and I race marathons and Ironmans, so I know what hitting the wall at km 32 feels like. I work with athletes who want their nutrition to do something for them, not just sit on a plate.",
+  "sub": "I'm Lauren — a sports dietitian in Perth. I race marathons and Ironmans. I help athletes eat the right things at the right times so they can train harder, recover faster, and race better.",
   "density": "regular"
 }/*EDITMODE-END*/;
 
