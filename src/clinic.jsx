@@ -1,8 +1,8 @@
 // Clinic — in-person booking section at Front Runner Sports, Osborne Park.
 const CLINIKO_URL = "https://front-runner-sports.au1.cliniko.com/bookings#location";
 
-// Drop a clinic photo into assets/images/clinic/ and update this path:
-const CLINIC_PHOTO = null; // e.g. 'assets/images/clinic/front-runner.avif'
+const CLINIC_PHOTO = 'assets/images/clinic/front-runner-physio-osbornepark.avif';
+const CLINIC_PHOTO_FALLBACK = 'assets/images/clinic/front-runner-physio-osbornepark.jpg';
 
 function Clinic({ theme }) {
   const t = THEMES[theme];
@@ -44,11 +44,14 @@ function Clinic({ theme }) {
               style={{ aspectRatio: '4/3', background: '#1D4032', minHeight: 280, position: 'relative' }}
             >
               {CLINIC_PHOTO ? (
-                <img
-                  src={CLINIC_PHOTO}
-                  alt="Front Runner Sports clinic, Osborne Park"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
-                />
+                <picture>
+                  <source srcSet={CLINIC_PHOTO} type="image/avif" />
+                  <img
+                    src={CLINIC_PHOTO_FALLBACK}
+                    alt="Front Runner Sports clinic, Osborne Park"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                  />
+                </picture>
               ) : (
                 /* placeholder — swap out once photo is added */
                 <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24, opacity: .5 }}>

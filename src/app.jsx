@@ -48,6 +48,8 @@ function App() {
       <Services theme={theme} />
       <Process theme={theme} />
       <Clinic theme={theme} />
+      <Resources theme={theme} />
+      <Merch theme={theme} />
 
       <Marquee
         items={['BOOK A CALL', 'FREE 15 MIN', 'NO PRESSURE', 'GO UP']}
