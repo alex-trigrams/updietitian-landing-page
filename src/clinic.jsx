@@ -44,14 +44,12 @@ function Clinic({ theme }) {
               style={{ aspectRatio: '4/3', background: '#1D4032', minHeight: 280, position: 'relative' }}
             >
               {CLINIC_PHOTO ? (
-                <picture style={{ display: 'block', width: '100%', height: '100%' }}>
-                  <source srcSet={CLINIC_PHOTO} type="image/avif" />
-                  <img
-                    src={CLINIC_PHOTO_FALLBACK}
-                    alt="Front Runner Sports clinic, Osborne Park"
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
-                  />
-                </picture>
+                <img
+                  src={CLINIC_PHOTO}
+                  onError={e => { e.currentTarget.src = CLINIC_PHOTO_FALLBACK; }}
+                  alt="Front Runner Sports clinic, Osborne Park"
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                />
               ) : (
                 /* placeholder — swap out once photo is added */
                 <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24, opacity: .5 }}>
