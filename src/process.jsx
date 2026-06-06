@@ -1,9 +1,9 @@
 // Process — 4 steps with scroll-progress line and orange tick marks.
 const STEPS = [
-  { n: '01', title: 'BOOK A FREE DISCOVERY CALL', desc: "A 15-minute call to understand your goals, your sport, and whether working with Lauren is the right fit for where you're at." },
-  { n: '02', title: 'DEEP DIVE ASSESSMENT',        desc: 'Detailed intake covering training load, race calendar, current diet, gut history, body composition goals and your race day non-negotiables.' },
-  { n: '03', title: 'YOUR PERSONALISED PLAN',      desc: 'A fully tailored nutrition strategy with meal timing, fuelling protocols, and race day specifics — built for your life, not copy-pasted from a generic template.' },
-  { n: '04', title: 'ONGOING REFINEMENT',          desc: 'Regular check-ins, plan adjustments through your training blocks, and full race season support so nothing gets left to chance on the day.' },
+  { n: '01', title: 'BOOK A FREE DISCOVERY CALL',         desc: "A complimentary 15-minute call to chat through your goals, your sport and whether working with UP Dietitian is the right fit for where you're at." },
+  { n: '02', title: 'INITIAL CONSULTATION & ASSESSMENT',  desc: "A deep dive into your nutrition, training, health and performance goals. We'll review your current habits, relevant blood test results and any health concerns before developing personalised nutrition strategies and clear next steps to help you perform, recover and feel your best." },
+  { n: '03', title: 'PERSONALISED NUTRITION PLAN',        desc: 'A tailored nutrition strategy designed around your training demands, performance goals and lifestyle, covering everything from daily nutrition and recovery to race-day fuelling and competition preparation.' },
+  { n: '04', title: 'ONGOING SUPPORT',                    desc: 'Ongoing support through every phase of your training, with regular check-ins, personalised nutrition adjustments and accountability to keep your fuelling aligned with your goals.' },
 ];
 
 function Process({ theme }) {

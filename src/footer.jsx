@@ -9,40 +9,49 @@ function Footer({ theme }) {
         </div>
 
         <h2 className="mt-6 font-display leading-[.85]" style={{ fontSize: 'clamp(64px, 14vw, 240px)' }}>
-          <span className="skew-italic">Go</span><br/>
-          <span className="skew-italic" style={{ color: '#FF6C00' }}>up.</span>
+          <span className="skew-italic">Level</span><br/>
+          <span className="skew-italic" style={{ color: '#FF6C00' }}>UP.</span>
         </h2>
 
         <div className="mt-10 grid grid-cols-12 gap-6 md:gap-10">
           <div className="col-span-12 md:col-span-6 lg:col-span-7">
             <a href={CALENDLY_URL} className="btn-shine inline-flex items-center gap-4 px-7 md:px-9 py-5 md:py-6 rounded-full font-mono text-[13px] md:text-[15px] uppercase tracking-[.18em] font-bold"
                style={{ background: '#FF6C00', color: '#EAE6D7' }} data-blob-hover>
-              Book a 15-min Discovery Call
+              Start your journey with UP Dietitian here
               <span style={{ fontFamily: 'Anton' }}>→</span>
             </a>
             <p className="mt-6 max-w-[52ch] text-[15px] md:text-[16px] leading-relaxed opacity-80">
-              Free. 15 minutes. We'll talk through your sport, your training block, and what's getting in the way. If I'm not the right fit, I'll say so.
+              Ready to take your nutrition to the next level but not sure if UP Dietitian is right for you? Book a complimentary call today and get ready for better fuelling, simplified.
             </p>
           </div>
 
-          <div className="col-span-12 md:col-span-6 lg:col-span-5 grid grid-cols-2 gap-6 md:gap-8 font-mono text-[12px] uppercase tracking-[.16em]">
-            <div className="flex flex-col gap-2.5">
-              <span className="opacity-50">Clinic</span>
-              <span>Front Runner<br/>Sports</span>
-              <span className="opacity-70 normal-case tracking-normal text-[13px]">Osborne Park, WA</span>
-            </div>
-            <div className="flex flex-col gap-2.5">
-              <span className="opacity-50">Online</span>
-              <span>Australia-wide<br/>via Zoom</span>
-              <span className="opacity-70 normal-case tracking-normal text-[13px]">Mon · Wed · Fri</span>
-            </div>
-            <div className="flex flex-col gap-2.5">
-              <span className="opacity-50">Email</span>
-              <a href="mailto:lauren@updietitian.com" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>lauren@updietitian.com</a>
-            </div>
-            <div className="flex flex-col gap-2.5">
-              <span className="opacity-50">Social</span>
-              <a href="https://instagram.com/updietitian" target="_blank" rel="noreferrer" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>@updietitian</a>
+          <div className="col-span-12 md:col-span-6 lg:col-span-5 flex flex-col gap-8">
+
+            {/* Contact details grid */}
+            <div className="grid grid-cols-2 gap-6 font-mono text-[12px] uppercase tracking-[.16em]">
+              <div className="flex flex-col gap-2.5">
+                <span className="opacity-50">Clinic</span>
+                <span>Front Runner<br/>Sports</span>
+                <span className="opacity-70 normal-case tracking-normal text-[13px]">Osborne Park, WA</span>
+              </div>
+              <div className="flex flex-col gap-2.5">
+                <span className="opacity-50">Online</span>
+                <span>Australia-wide<br/>&amp; internationally</span>
+                <span className="opacity-70 normal-case tracking-normal text-[13px]">via Zoom</span>
+              </div>
+              <div className="flex flex-col gap-2.5">
+                <span className="opacity-50">Email</span>
+                <a href="mailto:lauren@updietitian.com" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>lauren@updietitian.com</a>
+              </div>
+              <div className="flex flex-col gap-2.5">
+                <span className="opacity-50">Social</span>
+                <a href="https://www.instagram.com/up_dietitian/" target="_blank" rel="noreferrer" className="hover:text-orange normal-case tracking-normal text-[14px] flex items-center gap-2" data-blob-hover>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                  </svg>
+                  @up_dietitian
+                </a>
+              </div>
             </div>
           </div>
         </div>

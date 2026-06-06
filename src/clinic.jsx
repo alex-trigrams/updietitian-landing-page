@@ -15,22 +15,11 @@ function Clinic({ theme }) {
           <span>05 · In-person clinic</span>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
+        <div className="mt-6">
           <h2 className="font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
-            <span className="skew-italic">Come</span><br/>
-            <span className="skew-italic" style={{ color: '#FF6C00' }}>in.</span>
+            <span className="skew-italic">Face-to-</span><br/>
+            <span className="skew-italic" style={{ color: '#FF6C00' }}>face.</span>
           </h2>
-          <a
-            href={CLINIKO_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden md:inline-flex btn-shine items-center gap-2 px-5 py-3 rounded-full font-mono text-[12px] uppercase tracking-[.18em] font-bold mb-2"
-            style={{ background: '#FF6C00', color: '#EAE6D7' }}
-            data-blob-hover
-          >
-            Book at the clinic
-            <span style={{ fontFamily: 'Anton' }}>→</span>
-          </a>
         </div>
 
         {/* main content grid */}
@@ -63,7 +52,7 @@ function Clinic({ theme }) {
 
             {/* description */}
             <p className="text-[16px] md:text-[17px] leading-relaxed opacity-85">
-              Lauren consults in-person at Front Runner Sports in Osborne Park. If you prefer a face-to-face appointment, book directly through their online system.
+              For Perth locals, Lauren offers in-person consultations and nutrition planning for those who prefer face-to-face care. Now available two days per week at Front Runner Physiotherapy in Osborne Park — book direct through their website.
             </p>
 
             {/* location details */}
@@ -74,11 +63,11 @@ function Clinic({ theme }) {
               </div>
               <div className="flex flex-col gap-2 font-mono text-[12px] uppercase tracking-[.16em]">
                 <span className="opacity-50">Location</span>
-                <span className="leading-snug normal-case tracking-normal text-[14px]">Osborne Park<br/><span className="opacity-70">Perth, WA</span></span>
+                <span className="leading-snug normal-case tracking-normal text-[14px]">2/16 Baden Street,<br/>Osborne Park, WA</span>
               </div>
               <div className="flex flex-col gap-2 font-mono text-[12px] uppercase tracking-[.16em]">
                 <span className="opacity-50">Format</span>
-                <span className="leading-snug">In-person<br/><span className="opacity-70 normal-case tracking-normal text-[13px]">or online via Zoom</span></span>
+                <span className="leading-snug">In-person &amp;<br/>teleconsultations available</span>
               </div>
               <div className="flex flex-col gap-2 font-mono text-[12px] uppercase tracking-[.16em]">
                 <span className="opacity-50">Booking</span>

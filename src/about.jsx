@@ -19,26 +19,28 @@ function About({ theme }) {
             </h2>
 
             <div className="mt-8 max-w-[62ch] space-y-4 text-[15px] md:text-[17px] leading-relaxed text-ink/80">
-              <p>I'm Lauren. I'm an Accredited Practising Dietitian and I work clinically in sports nutrition out of Perth.</p>
-              <p>My athletes range from elite to weekend warrior. Runners (5K to ultra), triathletes, AFL players, CrossFitters, swimmers, jockeys, combat athletes. The plan changes. The approach doesn't.</p>
-              <p>I came up through CrossFit and endurance sport. I know what it feels like when training adaptations stall, when your gut wrecks a long run, when you're staring at a race plan 2 days out wondering if it's right.</p>
-              <p>So I translate the science into food you'll eat, on a schedule that fits a real training week.</p>
-              <p>I race marathons and Ironmans myself. Balance, for me, is a good coffee and banana bread after every long run.</p>
+              <p>Lauren Nash is an Accredited Practising Dietitian (APD) and Founder of UP Dietitian, based in Perth and specialising in sports nutrition for everyday to elite athletes. Working in-person & online across a wide range of sporting environments, Lauren has supported athletes locally and internationally in endurance, team, weight-category and strength-based sports. Her experience spans multiple sports, with a strong focus on helping athletes optimise performance while supporting long-term health.</p>
+              <p>Lauren is passionate about helping individuals fuel smarter to maximise training adaptations, improve recovery, manage gut issues and build confidence around race-day nutrition. Her approach is evidence-based, practical and realistic — translating complex sports nutrition science into sustainable strategies that fit real life. She strongly believes food should be viewed as fuel, not something to fear, overthink or unnecessarily restrict.</p>
+              <p>Whether working with elite competitors or recreational athletes chasing personal goals, Lauren aims to help clients build a healthy and sustainable relationship with food alongside performance outcomes.</p>
+              <p>Outside of clinic, Lauren is an endurance athlete herself and understands firsthand the demands of balancing training, recovery and everyday life. She has completed 2 Ironmans, 1 Ironman 70.3 and 2 marathons — experiences that continue to shape both her perspective and practice as a sports dietitian. UP Dietitian was created to help athletes fuel with more confidence, clarity and purpose — without overcomplicating nutrition.</p>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-2">
-              {['Sports Performance','Endurance','Combat Sports','Game-day Fueling','Injury Recovery','Coeliac','Gut Health'].map(tag => (
+            <div className="mt-8">
+            <div className="font-mono text-[11px] uppercase tracking-[.22em] opacity-60 mb-3">Lauren's specialty areas</div>
+            <div className="flex flex-wrap gap-2">
+              {['Sports Performance','Endurance','Body Composition','CrossFit & S&C','Combat Sports','Game-day Fueling','Injury Recovery','Coeliac','Gut Health'].map(tag => (
                 <span key={tag} data-blob-hover className="px-3.5 py-2 rounded-full font-mono text-[11px] uppercase tracking-[.14em] border border-ink/20 hover:border-orange hover:text-orange transition-colors">
                   {tag}
                 </span>
               ))}
             </div>
+            </div>
           </div>
 
           {/* sticker / portrait placeholder */}
           <div className="col-span-12 lg:col-span-5">
-            <div className="relative h-full">
-              <div className="aspect-[4/5] w-full rounded-3xl overflow-hidden">
+            <div className="relative aspect-[4/5] w-full rounded-3xl overflow-visible">
+              <div className="w-full h-full rounded-3xl overflow-hidden">
                 <picture>
                   <source srcSet="assets/images/about/about-image.avif" type="image/avif" />
                   <img src="assets/images/about/about-image.JPG" alt="Lauren Nash APD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
@@ -50,7 +52,7 @@ function About({ theme }) {
                 className="absolute -bottom-6 -left-3 md:-left-8 px-4 py-3 rounded-2xl font-mono text-[11px] uppercase tracking-[.16em] -rotate-3"
                 style={{ background: '#FF6C00', color: '#EAE6D7', boxShadow: '0 12px 24px rgba(32,28,18,.18)' }}
               >
-                Bach. Nutrition & Dietetics<br/>Griffith University
+                Lauren Nash — APD<br/>&amp; Founder of UP Dietitian
               </div>
             </div>
           </div>
@@ -65,22 +67,19 @@ function About({ theme }) {
 
 const TESTIMONIALS = [
   {
-    // photo: 'assets/images/testimonials/sarah.jpg',  // add photo when available
-    name: 'Sarah',
-    sport: 'Ironman 70.3',
-    quote: 'Lauren completely changed how I think about race day nutrition. My last 70.3 I held power all the way through T2 and ran my best half marathon split ever. Nutrition was never a limiter again.',
+    name: 'Jemma',
+    sport: 'Endurance Athlete',
+    quote: "Lauren has supported me through 2x Ironman 70.3s, 2x standard triathlons, 1x marathon and my first Ironman. The confidence I gained was knowing my body was being looked after — correct fuelling meant I could breeze through changing training loads with no injuries and minimal fatigue. She creates a race day fuel plan specific to how your body responds, and carries herself with so much kindness. Couldn't recommend UP Dietitian enough.",
   },
   {
-    // photo: 'assets/images/testimonials/tom.jpg',
-    name: 'Tom',
-    sport: 'Ultra Marathon',
-    quote: 'I used to bonk at 60km every single race. After working with Lauren I finished my first 100-miler with energy to spare. The gut training protocol alone was worth every cent.',
+    name: 'Nick',
+    sport: 'Endurance Athlete',
+    quote: "I approached Lauren after chronic cramping and poor nutrition after my first 70.3. Since then she's done my fuelling plan for 3x Ironman 70.3s, 3x Ironman (NZ, Austria, Challenge Roth), Ultraman Australia and the Rottnest Channel Swim Solo. Lauren is the best in the business — professional, personable and knows exactly how to tailor a strategy for you. I'd never go into a race without her guidance.",
   },
   {
-    // photo: 'assets/images/testimonials/mia.jpg',
-    name: 'Mia',
-    sport: 'CrossFit',
-    quote: 'I finally stopped feeling like I was undereating for my training. Lauren built a plan that worked with my schedule, not against it. My recovery time dropped noticeably within the first few weeks.',
+    name: 'Eimear',
+    sport: 'Professional MMA Athlete',
+    quote: "Lauren has helped me through back-to-back professional fight camps and made keeping on top of nutrition in and out of camp so easy. Weight cutting in combat sports can be dangerous and Lauren always keeps my health at the centre of our work. She's educated me on fuelling correctly to perform at my best while maintaining a positive body image — something I felt strongly about. If you have Lauren in your corner, you'll achieve your goals.",
   },
 ];
 
