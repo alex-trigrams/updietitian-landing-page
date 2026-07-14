@@ -17,11 +17,11 @@ function Footer({ theme }) {
           <div className="col-span-12 md:col-span-6 lg:col-span-7">
             <a href={CALENDLY_URL} className="btn-shine inline-flex items-center gap-4 px-7 md:px-9 py-5 md:py-6 rounded-full font-mono text-[13px] md:text-[15px] uppercase tracking-[.18em] font-bold"
                style={{ background: '#FF6C00', color: '#EAE6D7' }} data-blob-hover>
-              Start your journey with UP Dietitian here
+              {C('footer.ctaLabel', 'Start your journey with UP Dietitian here')}
               <span style={{ fontFamily: 'Anton' }}>→</span>
             </a>
             <p className="mt-6 max-w-[52ch] text-[15px] md:text-[16px] leading-relaxed opacity-80">
-              Ready to take your nutrition to the next level but not sure if UP Dietitian is right for you? Book a complimentary call today and get ready for better fuelling, simplified.
+              {C('footer.subCopy', 'Ready to take your nutrition to the next level but not sure if UP Dietitian is right for you? Book a complimentary call today and get ready for better fuelling, simplified.')}
             </p>
           </div>
 
@@ -41,7 +41,7 @@ function Footer({ theme }) {
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Email</span>
-                <a href="mailto:lauren@updietitian.com" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>lauren@updietitian.com</a>
+                <a href={`mailto:${C('footer.email', 'lauren@updietitian.com')}`} className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>{C('footer.email', 'lauren@updietitian.com')}</a>
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Social</span>
@@ -49,7 +49,7 @@ function Footer({ theme }) {
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
                   </svg>
-                  @up_dietitian
+                  {C('footer.instagramHandle', '@up_dietitian')}
                 </a>
               </div>
             </div>

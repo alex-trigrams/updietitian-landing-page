@@ -1,10 +1,11 @@
 // Process — 4 steps with scroll-progress line and orange tick marks.
-const STEPS = [
-  { n: '01', title: 'BOOK A FREE DISCOVERY CALL',         desc: "A complimentary 15-minute call to chat through your goals, your sport and whether working with UP Dietitian is the right fit for where you're at." },
-  { n: '02', title: 'INITIAL CONSULTATION & ASSESSMENT',  desc: "A deep dive into your nutrition, training, health and performance goals. We'll review your current habits, relevant blood test results and any health concerns before developing personalised nutrition strategies and clear next steps to help you perform, recover and feel your best." },
-  { n: '03', title: 'PERSONALISED NUTRITION PLAN',        desc: 'A tailored nutrition strategy designed around your training demands, performance goals and lifestyle, covering everything from daily nutrition and recovery to race-day fuelling and competition preparation.' },
-  { n: '04', title: 'ONGOING SUPPORT',                    desc: 'Ongoing support through every phase of your training, with regular check-ins, personalised nutrition adjustments and accountability to keep your fuelling aligned with your goals.' },
+const STEPS_DEFAULT = [
+  { title: 'BOOK A FREE DISCOVERY CALL',         desc: "A complimentary 15-minute call to chat through your goals, your sport and whether working with UP Dietitian is the right fit for where you're at." },
+  { title: 'INITIAL CONSULTATION & ASSESSMENT',  desc: "A deep dive into your nutrition, training, health and performance goals. We'll review your current habits, relevant blood test results and any health concerns before developing personalised nutrition strategies and clear next steps to help you perform, recover and feel your best." },
+  { title: 'PERSONALISED NUTRITION PLAN',        desc: 'A tailored nutrition strategy designed around your training demands, performance goals and lifestyle, covering everything from daily nutrition and recovery to race-day fuelling and competition preparation.' },
+  { title: 'ONGOING SUPPORT',                    desc: 'Ongoing support through every phase of your training, with regular check-ins, personalised nutrition adjustments and accountability to keep your fuelling aligned with your goals.' },
 ];
+const STEPS = (C('process.steps', STEPS_DEFAULT)).map((s, i) => ({ n: String(i + 1).padStart(2, '0'), ...s }));
 
 function Process({ theme }) {
   const ref = React.useRef(null);

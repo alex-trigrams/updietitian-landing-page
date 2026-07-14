@@ -52,7 +52,7 @@ function Clinic({ theme }) {
 
             {/* description */}
             <p className="text-[16px] md:text-[17px] leading-relaxed opacity-85">
-              For Perth locals, Lauren offers in-person consultations and nutrition planning for those who prefer face-to-face care. Now available two days per week at Front Runner Physiotherapy in Osborne Park — book direct through their website.
+              {C('clinic.description', 'For Perth locals, Lauren offers in-person consultations and nutrition planning for those who prefer face-to-face care. Now available two days per week at Front Runner Physiotherapy in Osborne Park — book direct through their website.')}
             </p>
 
             {/* location details */}
@@ -63,7 +63,13 @@ function Clinic({ theme }) {
               </div>
               <div className="flex flex-col gap-2 font-mono text-[12px] uppercase tracking-[.16em]">
                 <span className="opacity-50">Location</span>
-                <span className="leading-snug normal-case tracking-normal text-[14px]">2/16 Baden Street,<br/>Osborne Park, WA</span>
+                <span className="leading-snug normal-case tracking-normal text-[14px]">
+                  {(() => {
+                    const addr = C('clinic.address', '2/16 Baden Street, Osborne Park, WA');
+                    const i = addr.indexOf(', ');
+                    return i === -1 ? addr : <>{addr.slice(0, i + 1)}<br/>{addr.slice(i + 2)}</>;
+                  })()}
+                </span>
               </div>
               <div className="flex flex-col gap-2 font-mono text-[12px] uppercase tracking-[.16em]">
                 <span className="opacity-50">Format</span>
@@ -85,7 +91,7 @@ function Clinic({ theme }) {
                 <span className="font-mono text-[11px] uppercase tracking-[.2em] opacity-70">Taking in-person appointments</span>
               </div>
               <p className="text-[14px] leading-relaxed opacity-70">
-                Select your appointment type and preferred time directly through Front Runner Sports. Health fund rebates available.
+                {C('clinic.bookingNote', 'Select your appointment type and preferred time directly through Front Runner Sports. Health fund rebates available.')}
               </p>
               <a
                 href={CLINIKO_URL}

@@ -87,6 +87,36 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
+  <script>
+    // Load editable copy before components render. Synchronous XHR is fine here —
+    // the response is tiny and same-origin, and it must resolve before the
+    // babel-transpiled component scripts below execute and read window.SITE_CONTENT.
+    // /api/get-content reads the live Vercel Blob (falling back to the seed
+    // content.json shipped in the repo), so the client never needs to know
+    // the Blob's own URL.
+    (function () {
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api/get-content', false);
+        xhr.send(null);
+        window.SITE_CONTENT = xhr.status === 200 ? JSON.parse(xhr.responseText) : {};
+      } catch (e) {
+        window.SITE_CONTENT = {};
+      }
+      // path("about.bioParagraphs", fallback) — dot-path lookup with fallback
+      // for when content.json is missing, stale, or a key hasn't been added yet.
+      window.C = function (path, fallback) {
+        var parts = path.split('.');
+        var node = window.SITE_CONTENT;
+        for (var i = 0; i < parts.length; i++) {
+          if (node == null) return fallback;
+          node = node[parts[i]];
+        }
+        return node == null ? fallback : node;
+      };
+    })();
+  </script>
+
   <script type="text/babel" src="tweaks-panel.jsx"></script>
   <script type="text/babel" src="src/hooks.jsx"></script>
   <script type="text/babel" src="src/nav.jsx"></script>

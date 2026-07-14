@@ -12,7 +12,7 @@ function StickyCTA({ theme }) {
            style={{ background: '#FF6C00', color: '#EAE6D7' }}>
           <span className="flex items-center gap-2.5">
             <span className="inline-block w-2 h-2 rounded-full pulse-dot" style={{ background: '#EAE6D7' }}></span>
-            Book Discovery Call
+            {C('stickyCta.mobileLabel', 'Book Discovery Call')}
           </span>
           <span style={{ fontFamily: 'Anton', fontSize: 22 }}>→</span>
         </a>
@@ -24,7 +24,7 @@ function StickyCTA({ theme }) {
          style={{ background: '#FF6C00', color: '#EAE6D7', transform: visible ? 'translateY(0)' : 'translateY(180%)', opacity: visible ? 1 : 0 }}
          data-blob-hover>
         <span className="inline-block w-2 h-2 rounded-full pulse-dot" style={{ background: '#EAE6D7' }}></span>
-        Book a discovery call
+        {C('stickyCta.desktopLabel', 'Book a discovery call')}
         <span style={{ fontFamily: 'Anton' }}>→</span>
       </a>
     </>

@@ -19,16 +19,18 @@ function About({ theme }) {
             </h2>
 
             <div className="mt-8 max-w-[62ch] space-y-4 text-[15px] md:text-[17px] leading-relaxed text-ink/80">
-              <p>Lauren Nash is an Accredited Practising Dietitian (APD) and Founder of UP Dietitian, based in Perth and specialising in sports nutrition for everyday to elite athletes. Working in-person & online across a wide range of sporting environments, Lauren has supported athletes locally and internationally in endurance, team, weight-category and strength-based sports. Her experience spans multiple sports, with a strong focus on helping athletes optimise performance while supporting long-term health.</p>
-              <p>Lauren is passionate about helping individuals fuel smarter to maximise training adaptations, improve recovery, manage gut issues and build confidence around race-day nutrition. Her approach is evidence-based, practical and realistic — translating complex sports nutrition science into sustainable strategies that fit real life. She strongly believes food should be viewed as fuel, not something to fear, overthink or unnecessarily restrict.</p>
-              <p>Whether working with elite competitors or recreational athletes chasing personal goals, Lauren aims to help clients build a healthy and sustainable relationship with food alongside performance outcomes.</p>
-              <p>Outside of clinic, Lauren is an endurance athlete herself and understands firsthand the demands of balancing training, recovery and everyday life. She has completed 2 Ironmans, 1 Ironman 70.3 and 2 marathons — experiences that continue to shape both her perspective and practice as a sports dietitian. UP Dietitian was created to help athletes fuel with more confidence, clarity and purpose — without overcomplicating nutrition.</p>
+              {C('about.bioParagraphs', [
+                "Lauren Nash is an Accredited Practising Dietitian (APD) and Founder of UP Dietitian, based in Perth and specialising in sports nutrition for everyday to elite athletes. Working in-person & online across a wide range of sporting environments, Lauren has supported athletes locally and internationally in endurance, team, weight-category and strength-based sports. Her experience spans multiple sports, with a strong focus on helping athletes optimise performance while supporting long-term health.",
+                "Lauren is passionate about helping individuals fuel smarter to maximise training adaptations, improve recovery, manage gut issues and build confidence around race-day nutrition. Her approach is evidence-based, practical and realistic — translating complex sports nutrition science into sustainable strategies that fit real life. She strongly believes food should be viewed as fuel, not something to fear, overthink or unnecessarily restrict.",
+                "Whether working with elite competitors or recreational athletes chasing personal goals, Lauren aims to help clients build a healthy and sustainable relationship with food alongside performance outcomes.",
+                "Outside of clinic, Lauren is an endurance athlete herself and understands firsthand the demands of balancing training, recovery and everyday life. She has completed 2 Ironmans, 1 Ironman 70.3 and 2 marathons — experiences that continue to shape both her perspective and practice as a sports dietitian. UP Dietitian was created to help athletes fuel with more confidence, clarity and purpose — without overcomplicating nutrition.",
+              ]).map((p, i) => <p key={i}>{p}</p>)}
             </div>
 
             <div className="mt-8">
             <div className="font-mono text-[11px] uppercase tracking-[.22em] opacity-60 mb-3">Lauren's specialty areas</div>
             <div className="flex flex-wrap gap-2">
-              {['Sports Performance','Endurance','Body Composition','CrossFit & S&C','Combat Sports','Game-day Fueling','Injury Recovery','Coeliac','Gut Health'].map(tag => (
+              {C('about.specialtyTags', ['Sports Performance','Endurance','Body Composition','CrossFit & S&C','Combat Sports','Game-day Fueling','Injury Recovery','Coeliac','Gut Health']).map(tag => (
                 <span key={tag} data-blob-hover className="px-3.5 py-2 rounded-full font-mono text-[11px] uppercase tracking-[.14em] border border-ink/20 hover:border-orange hover:text-orange transition-colors">
                   {tag}
                 </span>
@@ -52,7 +54,7 @@ function About({ theme }) {
                 className="absolute -bottom-6 -left-3 md:-left-8 px-4 py-3 rounded-2xl font-mono text-[11px] uppercase tracking-[.16em] -rotate-3"
                 style={{ background: '#FF6C00', color: '#EAE6D7', boxShadow: '0 12px 24px rgba(32,28,18,.18)' }}
               >
-                Lauren Nash — APD<br/>&amp; Founder of UP Dietitian
+                {C('about.stickerBadge', 'Lauren Nash — APD & Founder of UP Dietitian')}
               </div>
             </div>
           </div>
@@ -65,7 +67,7 @@ function About({ theme }) {
   );
 }
 
-const TESTIMONIALS = [
+const TESTIMONIALS = C('about.testimonials', [
   {
     name: 'Jemma',
     sport: 'Endurance Athlete',
@@ -81,7 +83,7 @@ const TESTIMONIALS = [
     sport: 'Professional MMA Athlete',
     quote: "Lauren has helped me through back-to-back professional fight camps and made keeping on top of nutrition in and out of camp so easy. Weight cutting in combat sports can be dangerous and Lauren always keeps my health at the centre of our work. She's educated me on fuelling correctly to perform at my best while maintaining a positive body image — something I felt strongly about. If you have Lauren in your corner, you'll achieve your goals.",
   },
-];
+]);
 
 function TestimonialCard({ card, idx }) {
   const [flipped, setFlipped] = React.useState(false);

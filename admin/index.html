@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>UP Dietitian — Edit site content</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root { --sand:#EAE6D7; --ink:#201C12; --green:#1D4032; --orange:#FF6C00; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--sand); color:var(--ink); font-family:'Archivo',system-ui,sans-serif; }
+  header { position:sticky; top:0; z-index:10; background:var(--ink); color:var(--sand); padding:18px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  header h1 { font-size:15px; margin:0; letter-spacing:.04em; text-transform:uppercase; }
+  header .actions { display:flex; gap:10px; }
+  button { font-family:inherit; font-weight:600; font-size:13px; cursor:pointer; border:0; border-radius:8px; padding:10px 18px; }
+  .btn-primary { background:var(--orange); color:#fff; }
+  .btn-secondary { background:rgba(234,230,215,.15); color:var(--sand); }
+  main { max-width:760px; margin:0 auto; padding:32px 20px 80px; }
+  #login-view { max-width:360px; margin:80px auto; }
+  #login-view label { display:block; font-size:12px; text-transform:uppercase; letter-spacing:.08em; margin:16px 0 6px; opacity:.7; }
+  #login-view input { width:100%; padding:12px 14px; font-size:15px; border:1px solid rgba(32,28,18,.2); border-radius:8px; font-family:inherit; }
+  #login-view .error { color:#B3261E; font-size:13px; margin-top:10px; min-height:1em; }
+  section.group { background:#fff; border:1px solid rgba(32,28,18,.1); border-radius:14px; padding:22px 24px; margin-bottom:20px; }
+  section.group h2 { font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--orange); margin:0 0 16px; }
+  .field { margin-bottom:16px; }
+  .field:last-child { margin-bottom:0; }
+  .field label { display:block; font-size:12.5px; font-weight:600; margin-bottom:6px; opacity:.75; }
+  .field input, .field textarea { width:100%; padding:10px 12px; font-size:14px; font-family:inherit; border:1px solid rgba(32,28,18,.18); border-radius:8px; resize:vertical; background:#fbfaf6; }
+  .field textarea { min-height:70px; line-height:1.5; }
+  .list-item { border:1px dashed rgba(32,28,18,.2); border-radius:10px; padding:14px; margin-bottom:12px; }
+  .list-item .field { margin-bottom:10px; }
+  #status { position:fixed; bottom:20px; right:20px; padding:12px 18px; border-radius:10px; font-size:13px; font-weight:600; display:none; }
+  #status.show { display:block; }
+  #status.ok { background:#1D4032; color:#EAE6D7; }
+  #status.err { background:#B3261E; color:#fff; }
+  #app-view { display:none; }
+  .hint { font-size:12px; opacity:.55; margin-top:4px; }
+</style>
+</head>
+<body>
+
+<div id="login-view">
+  <h1 style="text-transform:uppercase;letter-spacing:.04em;font-size:20px;">UP Dietitian — Sign in</h1>
+  <form id="login-form">
+    <label for="u">Username</label>
+    <input id="u" name="username" autocomplete="username" required />
+    <label for="p">Password</label>
+    <input id="p" name="password" type="password" autocomplete="current-password" required />
+    <button class="btn-primary" type="submit" style="margin-top:20px;width:100%;">Sign in</button>
+    <div class="error" id="login-error"></div>
+  </form>
+</div>
+
+<div id="app-view">
+  <header>
+    <h1>Edit site content</h1>
+    <div class="actions">
+      <button class="btn-secondary" id="logout-btn">Log out</button>
+      <button class="btn-primary" id="save-btn">Save changes</button>
+    </div>
+  </header>
+  <main id="form-root"></main>
+</div>
+
+<div id="status"></div>
+
+<script>
+(function () {
+  const loginView = document.getElementById('login-view');
+  const appView = document.getElementById('app-view');
+  const formRoot = document.getElementById('form-root');
+  const statusEl = document.getElementById('status');
+
+  let content = null;
+
+  function showStatus(msg, ok) {
+    statusEl.textContent = msg;
+    statusEl.className = 'show ' + (ok ? 'ok' : 'err');
+    setTimeout(() => { statusEl.className = ''; }, 4000);
+  }
+
+  function getPath(obj, path) {
+    return path.split('.').reduce((n, k) => (n == null ? n : n[k]), obj);
+  }
+  function setPath(obj, path, value) {
+    const parts = path.split('.');
+    let node = obj;
+    for (let i = 0; i < parts.length - 1; i++) {
+      const key = parts[i];
+      if (node[key] == null) node[key] = /^\d+$/.test(parts[i + 1]) ? [] : {};
+      node = node[key];
+    }
+    node[parts[parts.length - 1]] = value;
+  }
+
+  // Declarative field map: label + path + kind ('text' | 'textarea' | 'list').
+  // 'list' paths point at an array of strings; each item gets its own textarea.
+  const SECTIONS = [
+    { title: 'Hero', fields: [
+      { label: 'Headline (use | to break into lines)', path: 'hero.headline', kind: 'text' },
+      { label: 'Sub copy', path: 'hero.sub', kind: 'textarea' },
+    ]},
+    { title: 'About', fields: [
+      { label: 'Bio paragraphs', path: 'about.bioParagraphs', kind: 'list' },
+      { label: 'Specialty tags (comma separated)', path: 'about.specialtyTags', kind: 'list-inline' },
+      { label: 'Sticker badge text', path: 'about.stickerBadge', kind: 'text' },
+    ]},
+    { title: 'Testimonials', fields: [
+      { label: 'Testimonials', path: 'about.testimonials', kind: 'testimonials' },
+    ]},
+    { title: 'Services', fields: [
+      { label: 'Hero cards (packages)', path: 'services.heroCards', kind: 'cards' },
+      { label: 'Tier cards (consult types)', path: 'services.tierCards', kind: 'cards' },
+      { label: 'Footer note', path: 'services.footerNote', kind: 'textarea' },
+    ]},
+    { title: 'Process', fields: [
+      { label: 'Steps', path: 'process.steps', kind: 'steps' },
+    ]},
+    { title: 'Clinic', fields: [
+      { label: 'Description', path: 'clinic.description', kind: 'textarea' },
+      { label: 'Address', path: 'clinic.address', kind: 'text' },
+      { label: 'Booking note', path: 'clinic.bookingNote', kind: 'textarea' },
+    ]},
+    { title: 'Footer', fields: [
+      { label: 'CTA button label', path: 'footer.ctaLabel', kind: 'text' },
+      { label: 'Sub copy', path: 'footer.subCopy', kind: 'textarea' },
+      { label: 'Email', path: 'footer.email', kind: 'text' },
+      { label: 'Instagram handle', path: 'footer.instagramHandle', kind: 'text' },
+    ]},
+    { title: 'Sticky call-to-action', fields: [
+      { label: 'Mobile button label', path: 'stickyCta.mobileLabel', kind: 'text' },
+      { label: 'Desktop button label', path: 'stickyCta.desktopLabel', kind: 'text' },
+    ]},
+  ];
+
+  function el(tag, attrs, children) {
+    const e = document.createElement(tag);
+    Object.entries(attrs || {}).forEach(([k, v]) => {
+      if (k === 'text') e.textContent = v; else e.setAttribute(k, v);
+    });
+    (children || []).forEach((c) => c && e.appendChild(c));
+    return e;
+  }
+
+  function renderTextField(field) {
+    const wrap = el('div', { class: 'field' });
+    wrap.appendChild(el('label', { text: field.label }));
+    const value = getPath(content, field.path) || '';
+    const input = field.kind === 'textarea' ? el('textarea') : el('input', { type: 'text' });
+    input.value = value;
+    input.addEventListener('input', () => setPath(content, field.path, input.value));
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  function renderListField(field) {
+    // Plain array of strings, one textarea per item (bio paragraphs).
+    const wrap = el('div', { class: 'field' });
+    wrap.appendChild(el('label', { text: field.label }));
+    const items = getPath(content, field.path) || [];
+    items.forEach((item, i) => {
+      const ta = el('textarea');
+      ta.value = item;
+      ta.addEventListener('input', () => { items[i] = ta.value; });
+      wrap.appendChild(ta);
+      wrap.appendChild(el('div', { style: 'height:8px' }));
+    });
+    return wrap;
+  }
+
+  function renderListInlineField(field) {
+    // Array of short strings rendered as one comma-separated input (tags).
+    const wrap = el('div', { class: 'field' });
+    wrap.appendChild(el('label', { text: field.label }));
+    const items = getPath(content, field.path) || [];
+    const input = el('input', { type: 'text' });
+    input.value = items.join(', ');
+    input.addEventListener('input', () => {
+      setPath(content, field.path, input.value.split(',').map((s) => s.trim()).filter(Boolean));
+    });
+    wrap.appendChild(input);
+    return wrap;
+  }
+
+  function renderTestimonials(field) {
+    const wrap = el('div', { class: 'field' });
+    wrap.appendChild(el('label', { text: field.label }));
+    const items = getPath(content, field.path) || [];
+    items.forEach((t) => {
+      const box = el('div', { class: 'list-item' });
+      const nameField = el('div', { class: 'field' });
+      nameField.appendChild(el('label', { text: 'Name' }));
+      const nameInput = el('input', { type: 'text' });
+      nameInput.value = t.name || '';
+      nameInput.addEventListener('input', () => { t.name = nameInput.value; });
+      nameField.appendChild(nameInput);
+
+      const sportField = el('div', { class: 'field' });
+      sportField.appendChild(el('label', { text: 'Sport / role' }));
+      const sportInput = el('input', { type: 'text' });
+      sportInput.value = t.sport || '';
+      sportInput.addEventListener('input', () => { t.sport = sportInput.value; });
+      sportField.appendChild(sportInput);
+
+      const quoteField = el('div', { class: 'field' });
+      quoteField.appendChild(el('label', { text: 'Quote' }));
+      const quoteInput = el('textarea');
+      quoteInput.value = t.quote || '';
+      quoteInput.addEventListener('input', () => { t.quote = quoteInput.value; });
+      quoteField.appendChild(quoteInput);
+
+      box.appendChild(nameField);
+      box.appendChild(sportField);
+      box.appendChild(quoteField);
+      wrap.appendChild(box);
+    });
+    return wrap;
+  }
+
+  function renderCards(field) {
+    const wrap = el('div', { class: 'field' });
+    wrap.appendChild(el('label', { text: field.label }));
+    const items = getPath(content, field.path) || [];
+    items.forEach((card) => {
+      const box = el('div', { class: 'list-item' });
+
+      if ('eyebrow' in card) {
+        const eyebrowField = el('div', { class: 'field' });
+        eyebrowField.appendChild(el('label', { text: 'Eyebrow tag' }));
+        const eyebrowInput = el('input', { type: 'text' });
+        eyebrowInput.value = card.eyebrow || '';
+        eyebrowInput.addEventListener('input', () => { card.eyebrow = eyebrowInput.value; });
+        eyebrowField.appendChild(eyebrowInput);
+        box.appendChild(eyebrowField);
+      }
+
+      const titleField = el('div', { class: 'field' });
+      titleField.appendChild(el('label', { text: 'Title' }));
+      const titleInput = el('input', { type: 'text' });
+      titleInput.value = card.title || '';
+      titleInput.addEventListener('input', () => { card.title = titleInput.value; });
+      titleField.appendChild(titleInput);
+      box.appendChild(titleField);
+
+      const bodyField = el('div', { class: 'field' });
+      bodyField.appendChild(el('label', { text: 'Body' }));
+      const bodyInput = el('textarea');
+      bodyInput.value = card.body || '';
+      bodyInput.addEventListener('input', () => { card.body = bodyInput.value; });
+      bodyField.appendChild(bodyInput);
+      box.appendChild(bodyField);
+
+      if (Array.isArray(card.bullets)) {
+        const bulletsField = el('div', { class: 'field' });
+        bulletsField.appendChild(el('label', { text: 'Bullets (one per line)' }));
+        const bulletsInput = el('textarea');
+        bulletsInput.style.minHeight = '110px';
+        bulletsInput.value = card.bullets.join('\n');
+        bulletsInput.addEventListener('input', () => {
+          card.bullets = bulletsInput.value.split('\n').map((s) => s.trim()).filter(Boolean);
+        });
+        bulletsField.appendChild(bulletsInput);
+        box.appendChild(bulletsField);
+      }
+
+      wrap.appendChild(box);
+    });
+    return wrap;
+  }
+
+  function renderSteps(field) {
+    const wrap = el('div', { class: 'field' });
+    wrap.appendChild(el('label', { text: field.label }));
+    const items = getPath(content, field.path) || [];
+    items.forEach((step, i) => {
+      const box = el('div', { class: 'list-item' });
+      box.appendChild(el('div', { class: 'hint', text: 'Step ' + (i + 1) }));
+
+      const titleField = el('div', { class: 'field' });
+      titleField.appendChild(el('label', { text: 'Title' }));
+      const titleInput = el('input', { type: 'text' });
+      titleInput.value = step.title || '';
+      titleInput.addEventListener('input', () => { step.title = titleInput.value; });
+      titleField.appendChild(titleInput);
+      box.appendChild(titleField);
+
+      const descField = el('div', { class: 'field' });
+      descField.appendChild(el('label', { text: 'Description' }));
+      const descInput = el('textarea');
+      descInput.value = step.desc || '';
+      descInput.addEventListener('input', () => { step.desc = descInput.value; });
+      descField.appendChild(descInput);
+      box.appendChild(descField);
+
+      wrap.appendChild(box);
+    });
+    return wrap;
+  }
+
+  function renderForm() {
+    formRoot.innerHTML = '';
+    SECTIONS.forEach((section) => {
+      const group = el('section', { class: 'group' });
+      group.appendChild(el('h2', { text: section.title }));
+      section.fields.forEach((field) => {
+        let node;
+        if (field.kind === 'text' || field.kind === 'textarea') node = renderTextField(field);
+        else if (field.kind === 'list') node = renderListField(field);
+        else if (field.kind === 'list-inline') node = renderListInlineField(field);
+        else if (field.kind === 'testimonials') node = renderTestimonials(field);
+        else if (field.kind === 'cards') node = renderCards(field);
+        else if (field.kind === 'steps') node = renderSteps(field);
+        if (node) group.appendChild(node);
+      });
+      formRoot.appendChild(group);
+    });
+  }
+
+  async function loadContent() {
+    const res = await fetch('/api/get-content', { cache: 'no-store' });
+    content = await res.json();
+    renderForm();
+  }
+
+  function showApp() {
+    loginView.style.display = 'none';
+    appView.style.display = 'block';
+    loadContent();
+  }
+
+  async function checkAuth() {
+    try {
+      const res = await fetch('/api/admin-check');
+      const data = await res.json();
+      if (data.authed) showApp();
+    } catch (e) { /* stay on login */ }
+  }
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorEl = document.getElementById('login-error');
+    errorEl.textContent = '';
+    const username = document.getElementById('u').value;
+    const password = document.getElementById('p').value;
+    try {
+      const res = await fetch('/api/admin-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        errorEl.textContent = data.error || 'Sign in failed.';
+        return;
+      }
+      showApp();
+    } catch (err) {
+      errorEl.textContent = 'Network error — try again.';
+    }
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await fetch('/api/admin-logout', { method: 'POST' });
+    location.reload();
+  });
+
+  document.getElementById('save-btn').addEventListener('click', async () => {
+    try {
+      const res = await fetch('/api/admin-save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(content),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { showStatus(data.error || 'Save failed.', false); return; }
+      showStatus('Saved — live in about a minute.', true);
+    } catch (err) {
+      showStatus('Network error — try again.', false);
+    }
+  });
+
+  checkAuth();
+})();
+</script>
+</body>
+</html>

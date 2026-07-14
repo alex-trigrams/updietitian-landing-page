@@ -3,7 +3,7 @@ const SVC_BG     = '#1D4032';
 const SVC_ACCENT = '#FF6C00';
 const SVC_CREAM  = '#EAE6D7';
 
-const HERO_CARDS = [
+const HERO_CARDS_DEFAULT = [
   {
     popular: true,
     eyebrow: null,
@@ -34,7 +34,7 @@ const HERO_CARDS = [
   },
 ];
 
-const TIER_CARDS = [
+const TIER_CARDS_DEFAULT = [
   {
     eyebrow: '01 · CONSULTATION',
     title: 'INITIAL NUTRITION CONSULTATION',
@@ -62,6 +62,17 @@ const TIER_CARDS = [
     tags: ['WEEKLY COACHING', '4 WEEK MIN', 'RACE SEASON'],
   },
 ];
+
+// Content-editable fields (title/body/bullets/eyebrow) are merged from
+// content.json by position; tags/popular stay hardcoded since they're
+// structural, not copy Lauren would edit.
+function mergeCards(defaults, overrides) {
+  if (!overrides) return defaults;
+  return defaults.map((d, i) => (overrides[i] ? { ...d, ...overrides[i] } : d));
+}
+
+const HERO_CARDS = mergeCards(HERO_CARDS_DEFAULT, C('services.heroCards', null));
+const TIER_CARDS = mergeCards(TIER_CARDS_DEFAULT, C('services.tierCards', null));
 
 function ServiceCard({ card, large }) {
   const [hov, setHov] = React.useState(false);
@@ -190,8 +201,7 @@ function Services({ theme }) {
           <div className="flex items-stretch gap-4">
             <div className="w-0.5 flex-shrink-0 rounded-full" style={{ background: SVC_ACCENT }}></div>
             <p className="text-[13px] leading-relaxed" style={{ color: 'rgba(234,230,215,.68)' }}>
-              Private health rebates available for participating funds. Payment plan options available on request.<br className="hidden md:block" />
-              All consults available in person (Perth, WA) or online.
+              {C('services.footerNote', 'Private health rebates available for participating funds. Payment plan options available on request. All consults available in person (Perth, WA) or online.')}
             </p>
           </div>
           <a

@@ -6,6 +6,10 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "sub": "Performance nutrition made practical. UP Dietitian supports active individuals with personalised nutrition strategies to optimise energy, recovery, race-day confidence and long-term health and performance.",
   "density": "regular"
 }/*EDITMODE-END*/;
+// content.json (edited via /admin) overrides the hero copy defaults above,
+// so Lauren's edits show up without touching this tweak-mode block.
+TWEAK_DEFAULTS.headline = C('hero.headline', TWEAK_DEFAULTS.headline);
+TWEAK_DEFAULTS.sub = C('hero.sub', TWEAK_DEFAULTS.sub);
 
 const HEADLINE_PRESETS = [
   "LEVEL UP | YOUR | PERFORMANCE",
