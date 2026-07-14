@@ -11,9 +11,9 @@ module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
 
   try {
-    const { BLOB_READ_WRITE_TOKEN } = process.env;
-    if (BLOB_READ_WRITE_TOKEN) {
-      const { blobs } = await list({ prefix: BLOB_PATHNAME, token: BLOB_READ_WRITE_TOKEN, limit: 1 });
+    const { BLOB_STORE_ID, BLOB_READ_WRITE_TOKEN } = process.env;
+    if (BLOB_STORE_ID || BLOB_READ_WRITE_TOKEN) {
+      const { blobs } = await list({ prefix: BLOB_PATHNAME, limit: 1 });
       const match = blobs.find((b) => b.pathname === BLOB_PATHNAME);
       if (match) {
         const blobRes = await fetch(match.url, { cache: 'no-store' });

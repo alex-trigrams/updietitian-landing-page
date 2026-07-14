@@ -11,8 +11,8 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { SESSION_SECRET, BLOB_READ_WRITE_TOKEN } = process.env;
-  if (!SESSION_SECRET || !BLOB_READ_WRITE_TOKEN) {
+  const { SESSION_SECRET, BLOB_STORE_ID, BLOB_READ_WRITE_TOKEN } = process.env;
+  if (!SESSION_SECRET || !(BLOB_STORE_ID || BLOB_READ_WRITE_TOKEN)) {
     res.status(500).json({ error: 'Server is not configured (missing Blob env vars)' });
     return;
   }
