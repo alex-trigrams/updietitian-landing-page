@@ -24,6 +24,7 @@ function Nav({ theme }) {
         <nav className="hidden md:flex items-center gap-8 font-mono text-[12px] uppercase tracking-[.18em]">
           <a href="#about"    className="hover:opacity-70" data-blob-hover>About</a>
           <a href="#services" className="hover:opacity-70" data-blob-hover>Services</a>
+          <a href="#seminars" className="hover:opacity-70" data-blob-hover>Seminars</a>
           <a href="#process"  className="hover:opacity-70" data-blob-hover>Process</a>
 
 <a href="#contact" className="hover:opacity-70" data-blob-hover>Contact</a>
@@ -58,7 +59,7 @@ function Nav({ theme }) {
 
       {open && (
         <div className="md:hidden px-5 pb-5 pt-1 flex flex-col gap-3 font-mono text-[14px] uppercase tracking-[.16em]" style={{ background: t.bg }}>
-          {['about','services','process'].map(s => (
+          {['about','services','seminars','process'].map(s => (
             <a key={s} href={`#${s}`} onClick={() => setOpen(false)} className="py-2 border-b" style={{ borderColor: t.line }}>{s}</a>
           ))}
 

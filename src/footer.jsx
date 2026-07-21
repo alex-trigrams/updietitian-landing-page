@@ -1,7 +1,7 @@
 // Footer — contact, location, big CTA, marquee close.
 function Footer({ theme }) {
   return (
-    <footer id="contact" data-screen-label="06 Footer" className="relative noise" style={{ background: '#201C12', color: '#EAE6D7', paddingTop: 'var(--pad-y, 96px)', paddingBottom: 48 }}>
+    <footer id="contact" data-screen-label="07 Footer" className="relative noise" style={{ background: '#201C12', color: '#EAE6D7', paddingTop: 'var(--pad-y, 96px)', paddingBottom: 48 }}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-8">
         <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] opacity-60">
           <span className="inline-block w-6 h-px bg-current"></span>

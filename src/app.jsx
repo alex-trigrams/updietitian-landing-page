@@ -44,6 +44,7 @@ function App() {
       <Photos />
 
       <Services theme={theme} />
+      <Seminars theme={theme} />
 
       <Marquee
         items={['RUNNING', 'TRIATHLON', 'AFL', 'CROSSFIT', 'COMBAT SPORTS', 'SWIMMING', 'HORSE RACING', 'ULTRA']}
@@ -64,11 +65,11 @@ function App() {
       />
 
       {/* HIDDEN — enquiry form section. Needs a form backend (e.g. Formspree) before going live so submissions reach Lauren's inbox without requiring a mail client. Uncomment when ready. */}
-      {false && <section id="enquire" data-screen-label="07 Enquire" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
+      {false && <section id="enquire" data-screen-label="08 Enquire" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] opacity-60">
             <span className="inline-block w-6 h-px bg-current"></span>
-            <span>07 · Enquire</span>
+            <span>08 · Enquire</span>
           </div>
           <div className="mt-6 grid grid-cols-12 gap-10 items-start">
             <div className="col-span-12 md:col-span-5">

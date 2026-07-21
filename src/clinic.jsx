@@ -6,7 +6,7 @@ const CLINIC_PHOTO = 'assets/images/clinic/front-runner-physio-osbornepark.avif'
 function Clinic({ theme }) {
   const t = THEMES[theme];
   return (
-    <section id="clinic" data-screen-label="05 Clinic" className="relative noise" style={{ background: '#201C12', color: '#EAE6D7', paddingBlock: 'var(--pad-y, 96px)' }}>
+    <section id="clinic" data-screen-label="06 Clinic" className="relative noise" style={{ background: '#201C12', color: '#EAE6D7', paddingBlock: 'var(--pad-y, 96px)' }}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-8">
 
         {/* eyebrow */}

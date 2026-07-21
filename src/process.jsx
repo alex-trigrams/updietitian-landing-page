@@ -22,7 +22,7 @@ function Process({ theme }) {
   }, [y]);
 
   return (
-    <section id="process" ref={ref} data-screen-label="04 Process" className="relative" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
+    <section id="process" ref={ref} data-screen-label="05 Process" className="relative" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-8">
 
         {/* Section header */}

@@ -81,6 +81,54 @@
     ],
     "footerNote": "Private health rebates available for participating funds. Payment plan options available on request. All consults available in person (Perth, WA) or online."
   },
+  "seminars": {
+    "eyebrow": "Group Education",
+    "intro": "One session, a whole room better fuelled. Lauren delivers practical, evidence-based nutrition education to workplaces, sporting clubs and community groups — translating sports nutrition science into advice people can act on the same week. Every seminar is built around your group rather than delivered off the shelf.",
+    "audiences": [
+      {
+        "eyebrow": "01 · WORKPLACE",
+        "title": "CORPORATE & WORKPLACE",
+        "body": "Practical nutrition education for teams who want more consistent energy through the working day. Cuts through diet noise with evidence-based guidance staff can actually use — no fads, no restriction.",
+        "bullets": [
+          "Energy, focus and the 3pm slump",
+          "Eating well around shift work and travel",
+          "Fuelling for staff who train before or after work",
+          "Cutting through nutrition misinformation"
+        ]
+      },
+      {
+        "eyebrow": "02 · CLUBS & TEAMS",
+        "title": "SPORTING CLUBS & TEAMS",
+        "body": "Squad-wide fuelling education that lifts the whole group at once. Built around your sport, your season and your competition demands — so athletes turn up to game day already knowing the plan.",
+        "bullets": [
+          "Training-day and game-day fuelling",
+          "Recovery nutrition between sessions",
+          "Hydration and travel for away fixtures",
+          "Supporting junior and developing athletes"
+        ]
+      },
+      {
+        "eyebrow": "03 · COMMUNITY",
+        "title": "COMMUNITY & EVENTS",
+        "body": "Guest speaking for run clubs, tri clubs, gyms and event expos. An engaging, jargon-free session that leaves the room with something they can apply to their next session or start line.",
+        "bullets": [
+          "Race-week and race-day fuelling",
+          "Gut training and avoiding GI issues",
+          "Everyday eating for recreational athletes",
+          "Q&A tailored to the room"
+        ]
+      }
+    ],
+    "inclusions": [
+      "A pre-session consult to tailor content to your group",
+      "A 45–60 minute presentation, in person (Perth) or online",
+      "Live Q&A so questions get answered in the room",
+      "Take-home resource pack for every attendee",
+      "Optional follow-up session or discounted 1-on-1 rate for attendees"
+    ],
+    "deckCopy": "A short guide covering session formats, topics, what your group walks away with, and pricing for your size and setting. Tell Lauren a little about your group and she'll send it through.",
+    "footerNote": "Pricing is quoted per group based on size, format and travel — get in touch for a tailored quote. Seminars are available in person across Perth, WA or online anywhere in Australia. Attendees receive a discounted rate on 1-on-1 consultations."
+  },
   "process": {
     "steps": [
       { "title": "BOOK A FREE DISCOVERY CALL", "desc": "A complimentary 15-minute call to chat through your goals, your sport and whether working with UP Dietitian is the right fit for where you're at." },
