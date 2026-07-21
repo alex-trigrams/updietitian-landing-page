@@ -114,6 +114,14 @@
       { label: 'Tier cards (consult types)', path: 'services.tierCards', kind: 'cards' },
       { label: 'Footer note', path: 'services.footerNote', kind: 'textarea' },
     ]},
+    { title: 'Seminars', fields: [
+      { label: 'Eyebrow tag', path: 'seminars.eyebrow', kind: 'text' },
+      { label: 'Intro paragraph', path: 'seminars.intro', kind: 'textarea' },
+      { label: 'Audience cards (workplace / clubs / community)', path: 'seminars.audiences', kind: 'cards' },
+      { label: "What's included (one per line)", path: 'seminars.inclusions', kind: 'list' },
+      { label: 'Seminar guide panel copy', path: 'seminars.deckCopy', kind: 'textarea' },
+      { label: 'Footer note (pricing & availability)', path: 'seminars.footerNote', kind: 'textarea' },
+    ]},
     { title: 'Process', fields: [
       { label: 'Steps', path: 'process.steps', kind: 'steps' },
     ]},
@@ -317,9 +325,31 @@
     });
   }
 
+  // Fills in keys the saved blob doesn't have yet from the seed content.json.
+  // The blob replaces the seed wholesale, so a section added to the repo after
+  // Lauren's last save would otherwise render as an empty, unusable group here.
+  // Anything already present in the blob wins — including arrays, so items she
+  // deleted don't come back from the seed.
+  function fillMissing(base, seed) {
+    if (!seed || typeof seed !== 'object' || Array.isArray(seed)) return base;
+    if (!base || typeof base !== 'object' || Array.isArray(base)) return base;
+    Object.keys(seed).forEach((k) => {
+      if (!(k in base)) base[k] = seed[k];
+      else fillMissing(base[k], seed[k]);
+    });
+    return base;
+  }
+
   async function loadContent() {
     const res = await fetch('/api/get-content', { cache: 'no-store' });
     content = await res.json();
+    try {
+      const seedRes = await fetch('/content.json', { cache: 'no-store' });
+      if (seedRes.ok) content = fillMissing(content, await seedRes.json());
+    } catch (err) {
+      // Seed unavailable — fall back to whatever the blob returned. Existing
+      // sections still edit fine; only brand-new ones would be missing.
+    }
     renderForm();
   }
 
