@@ -78,7 +78,8 @@
   /* override important: hide cursor blob on touch */
   @media (pointer: coarse) { #cursor-blob{ display:none } }
 </style>
-<!-- Vercel Web Analytics -->
+<!-- Vercel Web Analytics. The stub queues events fired before the script loads. -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body class="bg-sand text-ink">
@@ -135,5 +136,6 @@
   <script type="text/babel" src="src/footer.jsx"></script>
   <script type="text/babel" src="src/sticky-cta.jsx"></script>
   <script type="text/babel" src="src/app.jsx"></script>
+  <script type="text/babel" src="src/analytics.jsx"></script>
 </body>
 </html>
