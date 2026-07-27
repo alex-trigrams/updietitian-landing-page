@@ -1,4 +1,51 @@
-// Hero — kinetic type, scroll-parallax, no photo.
+// Hero — kinetic type over a cross-fading photo slideshow.
+//
+// The slideshow stands in for the planned hero video until it's ready. Headline
+// sized to fit the whole hero (type + sub-panel + cue) inside one screen — the
+// client asked for the opening words to fit on a single screen.
+
+const HERO_SLIDES = [
+  { avif: 'assets/images/hero/slideshow/slide-1.avif', jpg: 'assets/images/hero/slideshow/slide-1.jpg' },
+  { avif: 'assets/images/hero/slideshow/slide-2.avif', jpg: 'assets/images/hero/slideshow/slide-2.jpg' },
+  { avif: 'assets/images/hero/slideshow/slide-3.avif', jpg: 'assets/images/hero/slideshow/slide-3.jpg' },
+  { avif: 'assets/images/hero/slideshow/slide-4.avif', jpg: 'assets/images/hero/slideshow/slide-4.jpg' },
+  { avif: 'assets/images/hero/slideshow/slide-5.avif', jpg: 'assets/images/hero/slideshow/slide-5.jpg' },
+  { avif: 'assets/images/hero/slideshow/slide-6.avif', jpg: 'assets/images/hero/slideshow/slide-6.jpg' },
+];
+
+function HeroSlideshow() {
+  const [idx, setIdx] = React.useState(0);
+
+  React.useEffect(() => {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return; // hold the first frame for reduced-motion users
+    const id = setInterval(() => setIdx(i => (i + 1) % HERO_SLIDES.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div aria-hidden className="absolute inset-0 pointer-events-none select-none" style={{ background: '#201C12' }}>
+      {HERO_SLIDES.map((s, i) => (
+        <picture key={i}>
+          <source srcSet={s.avif} type="image/avif" />
+          <img
+            src={s.jpg}
+            alt=""
+            loading={i === 0 ? 'eager' : 'lazy'}
+            style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%',
+              objectFit: 'cover', objectPosition: 'center 30%', display: 'block',
+              opacity: i === idx ? 1 : 0, transition: 'opacity 1.4s ease-in-out',
+            }}
+          />
+        </picture>
+      ))}
+      {/* darkening gradient for text legibility */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.32) 35%, rgba(0,0,0,.55) 75%, rgba(0,0,0,.8) 100%)' }}></div>
+    </div>
+  );
+}
+
 function Hero({ headline, sub, theme }) {
   const t = THEMES[theme];
   const y = useScrollY();
@@ -15,17 +62,10 @@ function Hero({ headline, sub, theme }) {
       ref={ref}
       id="top"
       data-screen-label="01 Hero"
-      className="relative noise scan overflow-hidden"
+      className="relative noise scan overflow-hidden flex flex-col"
       style={{ background: t.bg, color: t.fg, minHeight: '100svh', paddingTop: 96 }}
     >
-      {/* full-bleed background image */}
-      <div aria-hidden className="absolute inset-0 pointer-events-none select-none">
-        <picture>
-          <source srcSet="assets/images/hero/up-hero-banner.avif" type="image/avif" />
-          <img src="assets/images/hero/up-hero-banner.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
-        </picture>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.3) 35%, rgba(0,0,0,.55) 75%, rgba(0,0,0,.75) 100%)' }}></div>
-      </div>
+      <HeroSlideshow />
 
       {/* big background UP mark */}
       <div
@@ -33,16 +73,17 @@ function Hero({ headline, sub, theme }) {
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         style={{ transform: `translate3d(0, ${offset * -0.15}px, 0)`, opacity: .06 }}
       >
-        <img src="assets/logo-orange-icon.png" alt="" style={{ width: '92vw', maxWidth: 1400, height: 'auto', display: 'block' }} />
+        <img src="assets/logo-orange-icon.png" alt="" style={{ width: '70vw', maxWidth: 900, height: 'auto', display: 'block' }} />
       </div>
 
       {/* status strip */}
-      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 flex items-center justify-between font-mono text-[11px] uppercase tracking-[.2em] opacity-80">
+      <div className="relative max-w-[1400px] mx-auto w-full px-5 md:px-8 flex items-center justify-between font-mono text-[11px] uppercase tracking-[.2em] opacity-80">
         <span className="flex items-center gap-2"><span className="inline-block w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: t.accent }}></span> Taking on athletes now</span>
+        <span className="hidden sm:inline">Interim reel · hero film coming soon</span>
       </div>
 
       {/* Kinetic headline */}
-      <div className="relative max-w-[1700px] mx-auto px-5 md:px-8 mt-10 md:mt-16">
+      <div className="relative max-w-[1700px] mx-auto w-full px-5 md:px-8 mt-8 md:mt-10">
         {rows.map((line, i) => (
           <div
             key={i}
@@ -52,9 +93,8 @@ function Hero({ headline, sub, theme }) {
             <h1
               className="font-display leading-[.86] tracking-tight"
               style={{
-                fontSize: 'clamp(64px, 18.5vw, 280px)',
+                fontSize: 'clamp(44px, 11vw, 132px)',
                 color: i === 1 ? t.accent : t.fg,
-                textShadow: i === 1 ? 'none' : 'none',
               }}
             >
               <span className="skew-italic">{line}</span>
@@ -64,31 +104,38 @@ function Hero({ headline, sub, theme }) {
       </div>
 
       {/* sub copy + CTA cluster */}
-      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 mt-10 md:mt-14 grid grid-cols-12 gap-6 items-end">
+      <div className="relative max-w-[1400px] mx-auto w-full px-5 md:px-8 mt-8 md:mt-10 grid grid-cols-12 gap-6 items-end">
         <div className="col-span-12 md:col-span-7 lg:col-span-6 p-5 md:p-6 rounded-2xl" style={{ background: 'rgba(0,0,0,.35)', backdropFilter: 'blur(8px)' }}>
-          <p className="text-[15px] md:text-[18px] leading-snug max-w-[44ch]" style={{ color: t.sub }}>
+          <p className="text-[14px] md:text-[16px] leading-snug max-w-[44ch]" style={{ color: t.sub }}>
             {sub}
           </p>
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <a
-              href="#services"
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <Link
+              href="/services"
               className="btn-shine inline-flex items-center gap-3 px-6 py-4 rounded-full font-mono text-[12px] md:text-[13px] uppercase tracking-[.18em] font-bold"
               style={{ background: t.accent, color: '#EAE6D7' }}
               data-blob-hover
             >
-              Skip to services
-              <span aria-hidden style={{ fontFamily: 'Anton' }}>↓</span>
+              Explore services
+              <span aria-hidden style={{ fontFamily: 'Anton' }}>→</span>
+            </Link>
+            <a
+              href={CALENDLY_URL}
+              className="inline-flex items-center gap-2 font-mono text-[12px] md:text-[13px] uppercase tracking-[.16em] font-bold underline underline-offset-4"
+              style={{ color: t.fg }}
+              data-blob-hover
+            >
+              Book a free call
             </a>
           </div>
         </div>
-
       </div>
 
       {/* scroll cue */}
-      <div className="relative max-w-[1400px] mx-auto px-5 md:px-8 mt-14 md:mt-24 pb-14 flex items-center justify-between font-mono text-[10px] md:text-[11px] uppercase tracking-[.2em]" style={{ color: t.sub }}>
+      <div className="relative max-w-[1400px] mx-auto w-full px-5 md:px-8 mt-auto pt-8 pb-8 flex items-center justify-between font-mono text-[10px] md:text-[11px] uppercase tracking-[.2em]" style={{ color: t.sub }}>
         <span>scroll ↓  level up your performance</span>
         <span className="hidden sm:inline">In-clinic · Front Runner Sports, Osborne Park</span>
-        <span>APD #LN-2024</span>
+        <span>APD</span>
       </div>
     </section>
   );

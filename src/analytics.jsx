@@ -30,13 +30,18 @@
     enquire: 'enquire'
   };
 
+  // Active section observer, torn down and rebuilt on each route change so a new
+  // page's sections are tracked fresh (and old ones stop firing).
+  let sectionIO = null;
+
   function watchSections() {
     // The footer carries id="contact" and is a <footer>, not a <section>.
     const sections = document.querySelectorAll('#root section[id], #root footer[id]');
     if (!sections.length) return false;
 
+    if (sectionIO) sectionIO.disconnect();
     const seen = new Set();
-    const io = new IntersectionObserver((entries) => {
+    sectionIO = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (!e.isIntersecting || seen.has(e.target.id)) return;
         seen.add(e.target.id);
@@ -44,13 +49,18 @@
       });
     }, { threshold: 0.33 });
 
-    sections.forEach((s) => io.observe(s));
+    sections.forEach((s) => sectionIO.observe(s));
     return true;
   }
 
   // ---- scroll depth --------------------------------------------------------
 
+  let scrollHandler = null;
+
   function watchScrollDepth() {
+    // Remove any handler from a previous page so milestones re-arm per route
+    // and don't stack up into duplicate events.
+    if (scrollHandler) window.removeEventListener('scroll', scrollHandler);
     const milestones = [25, 50, 75, 90];
     let hit = 0;
     let raf = 0;
@@ -66,10 +76,11 @@
         track('scroll_depth', { depth: milestones[hit] });
         hit++;
       }
-      if (hit >= milestones.length) window.removeEventListener('scroll', onScroll);
+      if (hit >= milestones.length) { window.removeEventListener('scroll', onScroll); scrollHandler = null; }
     };
 
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(check); };
+    scrollHandler = onScroll;
     window.addEventListener('scroll', onScroll, { passive: true });
     check();
   }
@@ -80,6 +91,9 @@
   function classify(href, el) {
     if (!href) return null;
     if (href.startsWith('#')) return { name: 'nav_click', data: { target: href.slice(1) || 'top' } };
+    // Internal router links (e.g. "/about"). Route pageviews are captured by the
+    // Vercel script on pushState; this records the click that triggered it.
+    if (href.startsWith('/') && !href.startsWith('//')) return { name: 'nav_click', data: { target: href.slice(1) || 'home' } };
     if (href.startsWith('mailto:')) {
       // Seminars uses a prefilled mailto, so separate it from the plain footer address.
       const seminar = href.includes('subject=') && /seminar/i.test(decodeURIComponent(href));
@@ -123,13 +137,24 @@
   // React renders into #root after this script parses, so wait for the sections
   // to actually exist before wiring the observers up.
 
-  function boot() {
-    watchClicks();
+  // Wire section + scroll-depth tracking for whatever page is currently rendered.
+  // Called on first boot and again on every client-side route change, since the
+  // SPA swaps the sections out from under the observers.
+  function initPageTracking() {
     watchScrollDepth();
-
     if (watchSections()) return;
     const mo = new MutationObserver(() => { if (watchSections()) mo.disconnect(); });
     mo.observe(document.getElementById('root') || document.body, { childList: true, subtree: true });
+  }
+
+  function boot() {
+    watchClicks(); // one delegated listener survives route changes
+    initPageTracking();
+    // Re-init on client-side navigation. The router dispatches `pushstate`;
+    // give React a frame to render the new page before re-observing.
+    const onRoute = () => requestAnimationFrame(() => requestAnimationFrame(initPageTracking));
+    window.addEventListener('pushstate', onRoute);
+    window.addEventListener('popstate', onRoute);
   }
 
   if (document.readyState === 'loading') {

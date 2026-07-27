@@ -56,11 +56,14 @@ function Footer({ theme }) {
           </div>
         </div>
 
-        {/* bottom line */}
-        <div className="mt-20 pt-6 border-t flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[.16em] opacity-55" style={{ borderColor: 'rgba(234,230,215,.16)' }}>
+        {/* legal + bottom line */}
+        <div className="mt-20 pt-6 border-t flex flex-wrap items-center gap-x-6 gap-y-3 font-mono text-[11px] uppercase tracking-[.16em] opacity-55" style={{ borderColor: 'rgba(234,230,215,.16)' }}>
           <span>© 2025 Up Dietitian · Lauren Nash APD</span>
-          <span>Built for athletes · Perth WA</span>
-          <span>v1.0 · designed by trigrams.studio</span>
+          <Link href="/privacy" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Privacy</Link>
+          <Link href="/cookies" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Cookies</Link>
+          <Link href="/contact" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Contact</Link>
+          <span className="ml-auto">Built for athletes · Perth WA</span>
+          <span>designed by trigrams.studio</span>
         </div>
       </div>
     </footer>

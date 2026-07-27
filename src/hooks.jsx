@@ -53,8 +53,10 @@ function useCounter(target, trigger, duration = 1400) {
   return v;
 }
 
-// Cursor blob micro-interaction
-function useCursorBlob() {
+// Cursor blob micro-interaction. Pass a changing `dep` (e.g. the current route)
+// to re-bind the hover listeners after a new page renders new [data-blob-hover]
+// elements.
+function useCursorBlob(dep) {
   React.useEffect(() => {
     const blob = document.getElementById('cursor-blob');
     if (!blob) return;
@@ -74,8 +76,12 @@ function useCursorBlob() {
       el.addEventListener('mouseleave', leaveBig);
     });
     raf = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('mousemove', move); };
-  }, []);
+    const unbind = () => document.querySelectorAll('[data-blob-hover]').forEach(el => {
+      el.removeEventListener('mouseenter', enterBig);
+      el.removeEventListener('mouseleave', leaveBig);
+    });
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('mousemove', move); unbind(); };
+  }, [dep]);
 }
 
 Object.assign(window, { CALENDLY_URL, THEMES, useScrollY, useInView, useCounter, useCursorBlob });
