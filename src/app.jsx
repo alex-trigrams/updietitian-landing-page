@@ -60,11 +60,18 @@ function AboutTeaser() {
 }
 
 function ServicesTeaser() {
+  // Read live package names/summaries from Blob (via C) so Home always matches
+  // what Lauren has published on the Services page. First sentence = summary.
+  const summarise = (body) => {
+    const s = String(body || '').match(/^[^.!?]*[.!?]/);
+    return s ? s[0].trim() : String(body || '');
+  };
+  const hero = C('services.heroCards', null) || [];
   const items = [
-    { t: 'Initial Consult + Performance Plan', d: 'A deep-dive consultation and a fully individualised nutrition plan built around your goals and training.' },
-    { t: 'Level UP Race Fuelling Pack', d: 'Complete race preparation — from initial consult through to an hour-by-hour race-day fuelling strategy.' },
-    { t: 'Consultations & Coaching', d: 'Initial and review consults, plus ongoing performance nutrition coaching through your training block.' },
-  ];
+    hero[0] && { t: hero[0].title, d: summarise(hero[0].body) },
+    hero[1] && { t: hero[1].title, d: summarise(hero[1].body) },
+    { t: 'Consultations & Coaching', d: 'Initial and review consultations, plus ongoing performance nutrition coaching through your training block.' },
+  ].filter(Boolean);
   return (
     <section className="relative noise" style={{ background: '#1D4032', color: '#EAE6D7', paddingBlock: 'var(--pad-y, 96px)' }}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-8">
@@ -81,7 +88,7 @@ function ServicesTeaser() {
         </div>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
           {items.map((it, i) => (
-            <Link key={i} href="/services" className="flex flex-col rounded-2xl p-6 transition-colors" style={{ background: 'rgba(255,255,255,.05)', border: '1px solid rgba(234,230,215,.1)' }} data-blob-hover>
+            <Link key={i} href={i < 2 ? `/services#${slugify(it.t)}` : '/services'} className="flex flex-col rounded-2xl p-6 transition-colors" style={{ background: 'rgba(255,255,255,.05)', border: '1px solid rgba(234,230,215,.1)' }} data-blob-hover>
               <h3 className="font-display leading-[.95]" style={{ fontSize: 'clamp(22px, 2.4vw, 30px)', color: '#EAE6D7' }}>
                 <span className="skew-italic">{it.t}</span>
               </h3>
@@ -172,6 +179,7 @@ function App() {
       <Nav theme={theme} route={route} />
       {page}
       {!isNotFound && <Footer theme={theme} />}
+      <EnquiryModal />
 
       {route === '/' && (
         <TweaksPanel>

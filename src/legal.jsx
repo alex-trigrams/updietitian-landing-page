@@ -164,6 +164,15 @@ function ContactPage() {
             </Link>
           </div>
         </div>
+
+        {/* Inline enquiry form (same component the modal uses) */}
+        <div className="mt-14 rounded-3xl p-6 md:p-10" style={{ background: '#EAE6D7', color: '#201C12' }}>
+          <div className="font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: '#FF6C00' }}>Send a message</div>
+          <h2 className="mt-3 mb-6 font-display leading-[.9]" style={{ fontSize: 'clamp(28px, 4vw, 44px)' }}>
+            <span className="skew-italic">Drop Lauren a </span><span className="skew-italic" style={{ color: '#FF6C00' }}>line.</span>
+          </h2>
+          <EnquiryForm topic="General" />
+        </div>
       </div>
     </section>
   );

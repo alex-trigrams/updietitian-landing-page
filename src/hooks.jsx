@@ -84,4 +84,13 @@ function useCursorBlob(dep) {
   }, [dep]);
 }
 
-Object.assign(window, { CALENDLY_URL, THEMES, useScrollY, useInView, useCounter, useCursorBlob });
+// Slug from a title, shared by the Services nav dropdown and the Services
+// cards so dropdown links (/services#<slug>) match card ids exactly.
+function slugify(str) {
+  return String(str || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+Object.assign(window, { CALENDLY_URL, THEMES, useScrollY, useInView, useCounter, useCursorBlob, slugify });
