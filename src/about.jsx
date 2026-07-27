@@ -101,8 +101,15 @@ const TESTIMONIALS = C('about.testimonials', [
   },
 ]);
 
+/* Athlete photos live in code, not in the editable content — keyed by name so
+   they still attach when the copy is served from Blob (which has no photo field). */
+const TESTIMONIAL_PHOTOS = {
+  Nick: { src: 'assets/images/about/nick-finish.JPG', pos: 'center 45%' },
+};
+
 function TestimonialCard({ card, idx }) {
   const [flipped, setFlipped] = React.useState(false);
+  const photo = card.photo ? { src: card.photo, pos: 'center top' } : TESTIMONIAL_PHOTOS[card.name];
 
   return (
     <div
@@ -132,8 +139,8 @@ function TestimonialCard({ card, idx }) {
         }}>
           {/* photo area */}
           <div style={{ flex: 1, position: 'relative', overflow: 'hidden', background: 'rgba(32,28,18,.35)' }}>
-            {card.photo
-              ? <img src={card.photo} alt={card.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
+            {photo
+              ? <img src={photo.src} alt={`${card.name} — ${card.sport}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: photo.pos, display: 'block' }} />
               : (
                 <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ fontFamily: 'Anton', fontSize: 'clamp(80px, 12vw, 120px)', color: '#FF6C00', opacity: .25, lineHeight: 1 }}>{card.name[0]}</span>
