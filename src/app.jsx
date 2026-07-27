@@ -67,10 +67,11 @@ function ServicesTeaser() {
     return s ? s[0].trim() : String(body || '');
   };
   const hero = C('services.heroCards', null) || [];
+  // Use the plain-English names (serviceName) with the brand name as a small tag.
   const items = [
-    hero[0] && { t: hero[0].title, d: summarise(hero[0].body) },
-    hero[1] && { t: hero[1].title, d: summarise(hero[1].body) },
-    { t: 'Consultations & Coaching', d: 'Initial and review consultations, plus ongoing performance nutrition coaching through your training block.' },
+    hero[0] && { t: serviceName(hero[0].title).name, brand: serviceName(hero[0].title).brand, slug: slugify(hero[0].title), d: summarise(hero[0].body) },
+    hero[1] && { t: serviceName(hero[1].title).name, brand: serviceName(hero[1].title).brand, slug: slugify(hero[1].title), d: summarise(hero[1].body) },
+    { t: 'Consultations & Coaching', brand: null, slug: null, d: 'Initial and review consultations, plus ongoing performance nutrition coaching through your training block.' },
   ].filter(Boolean);
   return (
     <section className="relative noise" style={{ background: '#1D4032', color: '#EAE6D7', paddingBlock: 'var(--pad-y, 96px)' }}>
@@ -88,7 +89,8 @@ function ServicesTeaser() {
         </div>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
           {items.map((it, i) => (
-            <Link key={i} href={i < 2 ? `/services#${slugify(it.t)}` : '/services'} className="flex flex-col rounded-2xl p-6 transition-colors" style={{ background: 'rgba(255,255,255,.05)', border: '1px solid rgba(234,230,215,.1)' }} data-blob-hover>
+            <Link key={i} href={it.slug ? `/services#${it.slug}` : '/services'} className="flex flex-col rounded-2xl p-6 transition-colors" style={{ background: 'rgba(255,255,255,.05)', border: '1px solid rgba(234,230,215,.1)' }} data-blob-hover>
+              {it.brand && <span className="font-mono text-[10px] uppercase tracking-[.2em] mb-2" style={{ color: '#FF6C00' }}>{it.brand}</span>}
               <h3 className="font-display leading-[.95]" style={{ fontSize: 'clamp(22px, 2.4vw, 30px)', color: '#EAE6D7' }}>
                 <span className="skew-italic">{it.t}</span>
               </h3>
@@ -117,7 +119,6 @@ function HomePage({ t, theme }) {
       <AboutTeaser />
       <Photos />
       <ServicesTeaser />
-      <Marquee items={['BOOK A CALL', 'FREE 15 MIN', 'NO PRESSURE', 'GO UP']} theme={theme} accent slow />
     </React.Fragment>
   );
 }
@@ -132,7 +133,6 @@ function ServicesPage({ theme }) {
   return (
     <React.Fragment>
       <Services theme={theme} />
-      <Marquee items={['RUNNING', 'TRIATHLON', 'AFL', 'CROSSFIT', 'COMBAT SPORTS', 'SWIMMING', 'HORSE RACING', 'ULTRA']} theme={theme} reverse />
       <Process theme={theme} />
     </React.Fragment>
   );
@@ -175,11 +175,12 @@ function App() {
   const isNotFound = !ROUTES.includes(route);
 
   return (
-    <div data-density={t.density} style={{ background: '#EAE6D7' }}>
+    <div data-density={t.density} className="pb-[68px] md:pb-0" style={{ background: '#EAE6D7' }}>
       <Nav theme={theme} route={route} />
       {page}
       {!isNotFound && <Footer theme={theme} />}
       <EnquiryModal />
+      {!isNotFound && <StickyCTA />}
 
       {route === '/' && (
         <TweaksPanel>

@@ -1,0 +1,153 @@
+// ExpandableCard — shared, obviously-clickable card used by Services and
+// Seminars. Collapsed: photo banner + title + tags + a clear ＋ toggle. Click
+// anywhere (or the toggle) to expand in place into the full detail (description
+// + inclusions + CTA); ✕ minimises it again. Works on dark (Services) and light
+// (Seminars) backgrounds via the `scheme` prop.
+
+// Plain-English names for Lauren's branded service titles, keyed by slug so it
+// survives copy tweaks. Falls back to the title itself when unmapped (e.g.
+// seminar cards, whose names are already clear). Hardcoded for now; could move
+// to editable content later.
+const SERVICE_NAME_MAP = {
+  'fuel-up-performance-plan':        { name: 'Nutrition Plan + Initial Consult', brand: 'Fuel UP Performance Plan' },
+  'initial-consult-performance-plan':{ name: 'Nutrition Plan + Initial Consult', brand: 'Fuel UP Performance Plan' },
+  'level-up-performance-plan':       { name: 'Event / Race Fuelling Package',    brand: 'Level UP Performance Plan' },
+  'level-up-race-fuelling-pack':     { name: 'Event / Race Fuelling Package',    brand: 'Level UP Race Fuelling Pack' },
+  'initial-nutrition-consultation':  { name: 'Initial Consultation',             brand: null },
+  'review-consultation':             { name: 'Follow-up Consultation',           brand: null },
+  'performance-nutrition-coaching':  { name: 'Ongoing Nutrition Coaching',       brand: null },
+};
+function serviceName(title) {
+  return SERVICE_NAME_MAP[slugify(title)] || { name: title, brand: null };
+}
+
+// Banner image area with a branded placeholder until real photos are dropped in.
+// Pass card.image = { avif, jpg, alt } to show a real photo.
+function CardBanner({ image, dark }) {
+  return (
+    <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16 / 9', background: dark ? '#16281f' : '#d9d3bf' }}>
+      {image ? (
+        <picture>
+          <source srcSet={image.avif} type="image/avif" />
+          <img src={image.jpg} alt={image.alt || ''} loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        </picture>
+      ) : (
+        <div className="grain-bg absolute inset-0 flex items-center justify-center" style={{ opacity: dark ? 1 : .9 }}>
+          <img src="assets/logo-orange-icon.png" alt="" aria-hidden style={{ width: '30%', maxWidth: 90, opacity: .18 }} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ExpandableCard({ card, scheme, displayName, brandTag, cta, expanded, onToggle, cardRef, large }) {
+  const [hov, setHov] = React.useState(false);
+  const dark = scheme === 'dark';
+  const CREAM = '#EAE6D7', INK = '#201C12', ACCENT = '#FF6C00';
+  const fg = dark ? CREAM : INK;
+  const sub = dark ? 'rgba(234,230,215,.72)' : 'rgba(32,28,18,.72)';
+  const line = (a) => (dark ? `rgba(234,230,215,${a})` : `rgba(32,28,18,${a})`);
+  const bg = dark ? 'rgba(255,255,255,.05)' : '#fff';
+  const name = displayName || card.title;
+  const hasDetail = !!(card.body || (card.bullets && card.bullets.length));
+
+  const stop = (e) => e.stopPropagation();
+
+  return (
+    <div
+      ref={cardRef}
+      id={slugify(card.title)}
+      className="relative flex flex-col rounded-2xl overflow-hidden transition-all duration-200 scroll-mt-28 cursor-pointer"
+      style={{
+        background: bg,
+        border: `1px solid ${line(expanded || hov ? '.28' : '.1')}`,
+        boxShadow: dark ? 'none' : (hov || expanded ? '0 6px 28px rgba(32,28,18,.1)' : '0 2px 14px rgba(32,28,18,.05)'),
+        transform: expanded ? 'none' : (hov ? 'translateY(-2px)' : 'none'),
+      }}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      onClick={onToggle}
+      data-blob-hover
+    >
+      {card.popular && (
+        <div className="flex items-center justify-center py-2 font-mono text-[10px] uppercase tracking-[.22em] font-bold flex-shrink-0" style={{ background: ACCENT, color: CREAM }}>
+          Most Popular
+        </div>
+      )}
+
+      <CardBanner image={card.image} dark={dark} />
+
+      <div className={`flex flex-col flex-1 ${large ? 'px-7 pt-5' : 'px-6 pt-5'} pb-6`}>
+        {/* eyebrow / brand tag + toggle */}
+        <div className="flex items-start justify-between gap-2">
+          <span className="font-mono text-[11px] uppercase tracking-[.2em]" style={{ color: ACCENT }}>
+            {brandTag || card.eyebrow || ' '}
+          </span>
+          <button
+            onClick={(e) => { stop(e); onToggle(); }}
+            aria-expanded={expanded}
+            aria-label={expanded ? 'Show less' : 'Show details'}
+            className="flex-shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full transition-all"
+            style={{ background: expanded ? ACCENT : line('.1'), color: expanded ? CREAM : fg, fontSize: 16, lineHeight: 1 }}
+          >
+            {expanded ? '✕' : '＋'}
+          </button>
+        </div>
+
+        <h3 className="mt-3 font-display leading-[.9]" style={{ fontSize: large ? 'clamp(24px, 2.6vw, 38px)' : 'clamp(20px, 2vw, 28px)', color: fg }}>
+          <span className="skew-italic">{name}</span>
+        </h3>
+
+        {/* tags — always visible for quick scanning */}
+        {card.tags && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {card.tags.map(tag => (
+              <span key={tag} className="px-2.5 py-1 rounded-full font-mono text-[9px] uppercase tracking-[.16em]" style={{ border: `1px solid ${line('.2')}`, color: fg }}>{tag}</span>
+            ))}
+          </div>
+        )}
+
+        {/* expandable detail */}
+        {hasDetail && (
+          <div style={{ display: 'grid', gridTemplateRows: expanded ? '1fr' : '0fr', transition: 'grid-template-rows .35s ease' }}>
+            <div style={{ overflow: 'hidden' }}>
+              {card.body && <p className="mt-4 text-[14px] leading-relaxed" style={{ color: sub }}>{card.body}</p>}
+              {card.bullets && (
+                <ul className="mt-4 space-y-2.5" aria-label="Includes">
+                  {card.bullets.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-[13px] leading-relaxed" style={{ color: dark ? 'rgba(234,230,215,.78)' : 'rgba(32,28,18,.78)' }}>
+                      <span className="mt-[5px] flex-shrink-0 w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} aria-hidden />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {cta && (
+                <div className="mt-6" onClick={stop}>
+                  {cta.type === 'enquiry' ? (
+                    <button onClick={() => openEnquiry(cta.topic || 'General')} className="btn-shine inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] uppercase tracking-[.18em] font-bold" style={{ background: ACCENT, color: CREAM }} data-blob-hover>
+                      {cta.label || 'Enquire'} <span style={{ fontFamily: 'Anton' }}>→</span>
+                    </button>
+                  ) : (
+                    <a href={CALENDLY_URL} className="btn-shine inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] uppercase tracking-[.18em] font-bold" style={{ background: ACCENT, color: CREAM }} data-blob-hover>
+                      {cta.label || 'Book a call'} <span style={{ fontFamily: 'Anton' }}>→</span>
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* collapsed hint */}
+        {hasDetail && !expanded && (
+          <span className="mt-4 font-mono text-[10px] uppercase tracking-[.18em]" style={{ color: dark ? 'rgba(234,230,215,.5)' : 'rgba(32,28,18,.45)' }}>
+            Tap for details
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { ExpandableCard, serviceName, SERVICE_NAME_MAP });

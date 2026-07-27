@@ -2,15 +2,19 @@
 // "Services" is a dropdown of the individual offerings; "Contact" opens the
 // enquiry modal rather than navigating.
 
-// Service items for the dropdown, derived from live content so the menu never
-// drifts from what's published on the Services page. Falls back to the seed
-// titles if the blob hasn't loaded them.
-function serviceMenuItems() {
+// Grouped service menu, using the plain-English names (serviceName) so visitors
+// can tell what each is. Derived from live content so it never drifts, grouped
+// so it's scannable.
+function serviceMenu() {
   const hero = C('services.heroCards', null) || [{ title: 'Initial Consult + Performance Plan' }, { title: 'Level UP Race Fuelling Pack' }];
   const tier = C('services.tierCards', null) || [{ title: 'Initial Nutrition Consultation' }, { title: 'Review Consultation' }, { title: 'Performance Nutrition Coaching' }];
-  return [...hero, ...tier]
-    .filter(c => c && c.title)
-    .map(c => ({ label: c.title, href: `/services#${slugify(c.title)}` }));
+  const item = (c) => ({ label: serviceName(c.title).name, href: `/services#${slugify(c.title)}` });
+  const isCoaching = (c) => /coaching/.test(slugify(c.title));
+  return [
+    { group: 'Plans & packages', items: hero.filter(c => c && c.title).map(item) },
+    { group: 'One-off consults', items: tier.filter(c => c && c.title && !isCoaching(c)).map(item) },
+    { group: 'Ongoing',          items: tier.filter(c => c && c.title && isCoaching(c)).map(item) },
+  ].filter(s => s.items.length);
 }
 
 function Nav({ theme, route }) {
@@ -21,7 +25,7 @@ function Nav({ theme, route }) {
   const y = useScrollY();
   // On sub-pages the hero sits below the bar, so keep it solid there always.
   const solid = y > 40 || route !== '/';
-  const items = serviceMenuItems();
+  const sections = serviceMenu();
 
   const goService = (href) => { setSvcOpen(false); setOpen(false); navigate(href.split('#')[0]);
     // set hash after route so the Services page picks it up
@@ -47,12 +51,17 @@ function Nav({ theme, route }) {
               Services <span style={{ fontSize: 9, transform: svcOpen ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>▼</span>
             </Link>
             {svcOpen && (
-              <div className="absolute left-0 top-full pt-3" style={{ minWidth: 300 }}>
+              <div className="absolute left-0 top-full pt-3" style={{ minWidth: 320 }}>
                 <div className="rounded-2xl overflow-hidden py-2" style={{ background: t.bg, border: `1px solid ${t.line}`, boxShadow: '0 20px 50px rgba(0,0,0,.35)' }}>
-                  {items.map((it) => (
-                    <button key={it.href} onClick={() => goService(it.href)} className="w-full text-left px-5 py-2.5 normal-case tracking-normal text-[13px] font-sans hover:bg-white/5 transition-colors" style={{ color: t.fg }} data-blob-hover>
-                      {it.label}
-                    </button>
+                  {sections.map((sec) => (
+                    <div key={sec.group} className="py-1.5">
+                      <div className="px-5 pt-1 pb-1.5 font-mono text-[9px] uppercase tracking-[.22em]" style={{ color: t.accent, opacity: .9 }}>{sec.group}</div>
+                      {sec.items.map((it) => (
+                        <button key={it.href} onClick={() => goService(it.href)} className="w-full text-left px-5 py-2 normal-case tracking-normal text-[13px] font-sans hover:bg-white/5 transition-colors" style={{ color: t.fg }} data-blob-hover>
+                          {it.label}
+                        </button>
+                      ))}
+                    </div>
                   ))}
                   <Link href="/services" onClick={() => setSvcOpen(false)} className="block px-5 py-2.5 mt-1 border-t text-[11px]" style={{ borderColor: t.line, color: t.accent }} data-blob-hover>All services →</Link>
                 </div>
@@ -99,10 +108,15 @@ function Nav({ theme, route }) {
             </button>
             {svcMobile && (
               <div className="pb-2 flex flex-col">
-                {items.map((it) => (
-                  <button key={it.href} onClick={() => goService(it.href)} className="text-left py-2 pl-3 normal-case tracking-normal text-[13px] font-sans opacity-80">{it.label}</button>
+                {sections.map((sec) => (
+                  <div key={sec.group} className="mt-1">
+                    <div className="pl-3 py-1 font-mono text-[9px] uppercase tracking-[.22em]" style={{ color: t.accent }}>{sec.group}</div>
+                    {sec.items.map((it) => (
+                      <button key={it.href} onClick={() => goService(it.href)} className="text-left py-2 pl-3 normal-case tracking-normal text-[13px] font-sans opacity-80">{it.label}</button>
+                    ))}
+                  </div>
                 ))}
-                <Link href="/services" onClick={() => setOpen(false)} className="py-2 pl-3 text-[11px]" style={{ color: t.accent }}>All services →</Link>
+                <Link href="/services" onClick={() => setOpen(false)} className="py-2 pl-3 mt-1 text-[11px]" style={{ color: t.accent }}>All services →</Link>
               </div>
             )}
           </div>

@@ -1,7 +1,7 @@
 // Services — two labelled tiers (Performance Plans + Consultations & Coaching)
-// with progressive disclosure: each card leads with a one-line summary and hides
-// the full description + inclusions behind a toggle, so the page reads clearly
-// instead of as a wall of text. Nav dropdown deep-links to a card via #slug.
+// rendered with the shared ExpandableCard: clear plain-English names up front,
+// Lauren's brand name as a small tag, full detail behind a click-to-expand.
+// Nav dropdown / Home deep-link to a card via /services#slug.
 const SVC_BG     = '#1D4032';
 const SVC_ACCENT = '#FF6C00';
 const SVC_CREAM  = '#EAE6D7';
@@ -66,9 +66,9 @@ const TIER_CARDS_DEFAULT = [
   },
 ];
 
-// Content-editable fields (title/body/bullets/eyebrow) are merged from
-// content.json by position; tags/popular stay hardcoded since they're
-// structural, not copy Lauren would edit.
+// Optional photos per card — drop { avif, jpg, alt } here later, keyed by slug.
+const SERVICE_IMAGES = {};
+
 function mergeCards(defaults, overrides) {
   if (!overrides) return defaults;
   return defaults.map((d, i) => (overrides[i] ? { ...d, ...overrides[i] } : d));
@@ -77,101 +77,6 @@ function mergeCards(defaults, overrides) {
 const HERO_CARDS = mergeCards(HERO_CARDS_DEFAULT, C('services.heroCards', null));
 const TIER_CARDS = mergeCards(TIER_CARDS_DEFAULT, C('services.tierCards', null));
 
-// First sentence of the body → the always-visible one-liner. The remainder is
-// revealed on expand, so no copy is lost, just tucked away.
-function splitBody(body) {
-  const text = String(body || '').trim();
-  const m = text.match(/^([^.!?]*[.!?])\s*(.*)$/s);
-  if (!m) return { summary: text, rest: '' };
-  return { summary: m[1].trim(), rest: (m[2] || '').trim() };
-}
-
-function ServiceCard({ card, large, expanded, onToggle, cardRef }) {
-  const [hov, setHov] = React.useState(false);
-  const { summary, rest } = splitBody(card.body);
-  const hasMore = !!(rest || (card.bullets && card.bullets.length));
-
-  return (
-    <div
-      ref={cardRef}
-      id={slugify(card.title)}
-      role="article"
-      className="relative flex flex-col rounded-2xl overflow-hidden transition-all duration-200 outline-none scroll-mt-28"
-      style={{
-        background: 'rgba(255,255,255,.05)',
-        border: `1px solid rgba(234,230,215,${expanded || hov ? '.28' : '.10'})`,
-        padding: large ? '0 0 24px' : '0 0 22px',
-      }}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      data-blob-hover
-    >
-      {card.popular && (
-        <div className="flex items-center justify-center py-2 font-mono text-[10px] uppercase tracking-[.22em] font-bold flex-shrink-0" style={{ background: SVC_ACCENT, color: SVC_CREAM }}>
-          Most Popular
-        </div>
-      )}
-
-      <div className={`flex flex-col flex-1 ${large ? 'px-7 pt-6' : 'px-6 pt-5'} gap-0`}>
-        <div className="flex items-start justify-between gap-2">
-          {card.eyebrow
-            ? <span className="font-mono text-[11px] uppercase tracking-[.2em]" style={{ color: SVC_ACCENT }}>{card.eyebrow}</span>
-            : <span aria-hidden />}
-          <a href={CALENDLY_URL} aria-label="Book a discovery call" className="flex-shrink-0 text-[20px] leading-none transition-transform duration-150" style={{ color: SVC_CREAM, transform: hov ? 'translate(2px,-2px)' : 'translate(0,0)', fontFamily: 'Anton' }}>↗</a>
-        </div>
-
-        <h3 className="mt-3 font-display leading-[.9]" style={{ fontSize: large ? 'clamp(24px, 2.6vw, 38px)' : 'clamp(20px, 2vw, 28px)', color: SVC_CREAM }}>
-          <span className="skew-italic">{card.title}</span>
-        </h3>
-
-        {/* Always-visible one-line summary */}
-        <p className="mt-3 text-[14px] leading-relaxed" style={{ color: 'rgba(234,230,215,.72)' }}>{summary}</p>
-
-        {/* Tags (kept visible — quick scan of what each is for) */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {card.tags.map(tag => (
-            <span key={tag} className="px-2.5 py-1 rounded-full font-mono text-[9px] uppercase tracking-[.16em]" style={{ border: '1px solid rgba(234,230,215,.2)', color: SVC_CREAM }}>{tag}</span>
-          ))}
-        </div>
-
-        {/* Expandable detail */}
-        {hasMore && (
-          <div style={{ display: 'grid', gridTemplateRows: expanded ? '1fr' : '0fr', transition: 'grid-template-rows .35s ease' }}>
-            <div style={{ overflow: 'hidden' }}>
-              {rest && <p className="mt-4 text-[14px] leading-relaxed" style={{ color: 'rgba(234,230,215,.72)' }}>{rest}</p>}
-              {card.bullets && (
-                <ul className="mt-4 space-y-2.5" aria-label="Includes">
-                  {card.bullets.map((b, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-[13px] leading-relaxed" style={{ color: 'rgba(234,230,215,.78)' }}>
-                      <span className="mt-[5px] flex-shrink-0 w-1.5 h-1.5 rounded-full" style={{ background: SVC_ACCENT }} aria-hidden />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Toggle + book */}
-        <div className="mt-5 flex flex-wrap items-center gap-4">
-          {hasMore && (
-            <button onClick={onToggle} aria-expanded={expanded} className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] hover:opacity-80" style={{ color: SVC_ACCENT }} data-blob-hover>
-              {expanded ? 'Show less' : 'See what’s included'}
-              <span style={{ display: 'inline-block', transition: 'transform .3s', transform: expanded ? 'rotate(180deg)' : 'none' }}>↓</span>
-            </button>
-          )}
-          <a href={CALENDLY_URL} className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] underline underline-offset-4 opacity-80 hover:opacity-100" style={{ color: SVC_CREAM }} data-blob-hover>
-            Book →
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Groups the two tiers, tracks which card is expanded, and opens/scrolls to a
-// card when arrived at via /services#slug (from the nav dropdown or Home).
 function Services({ theme }) {
   const [expanded, setExpanded] = React.useState({});
   const refs = React.useRef({});
@@ -194,11 +99,16 @@ function Services({ theme }) {
 
   const renderCard = (card, large) => {
     const slug = slugify(card.title);
+    const nm = serviceName(card.title);
     return (
-      <ServiceCard
+      <ExpandableCard
         key={slug}
-        card={card}
+        card={{ ...card, image: SERVICE_IMAGES[slug] }}
+        scheme="dark"
         large={large}
+        displayName={nm.name}
+        brandTag={nm.brand}
+        cta={{ type: 'calendly', label: 'Book a discovery call' }}
         expanded={!!expanded[slug]}
         onToggle={() => toggle(slug)}
         cardRef={(el) => { refs.current[slug] = el; }}
@@ -210,7 +120,6 @@ function Services({ theme }) {
     <section id="services" data-screen-label="03 Services" className="relative noise" style={{ background: SVC_BG, color: SVC_CREAM, paddingBlock: 'var(--pad-y, 96px)' }}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-8">
 
-        {/* Header */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: SVC_ACCENT }}>What we offer</div>
@@ -230,7 +139,7 @@ function Services({ theme }) {
         <div className="mt-12 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: 'rgba(234,230,215,.55)' }}>
           <span className="inline-block w-6 h-px bg-current"></span><span>Performance plans</span>
         </div>
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
           {HERO_CARDS.map((card) => renderCard(card, true))}
         </div>
 
@@ -238,7 +147,7 @@ function Services({ theme }) {
         <div className="mt-12 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: 'rgba(234,230,215,.55)' }}>
           <span className="inline-block w-6 h-px bg-current"></span><span>Consultations &amp; coaching</span>
         </div>
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
           {TIER_CARDS.map((card) => renderCard(card, false))}
         </div>
 

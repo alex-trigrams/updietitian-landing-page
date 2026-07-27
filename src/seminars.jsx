@@ -53,84 +53,16 @@ const SEMINAR_INCLUSIONS_DEFAULT = [
   'Optional follow-up session or discounted 1-on-1 rate for attendees',
 ];
 
-function splitSeminarBody(body) {
-  const text = String(body || '').trim();
-  const m = text.match(/^([^.!?]*[.!?])\s*(.*)$/s);
-  if (!m) return { summary: text, rest: '' };
-  return { summary: m[1].trim(), rest: (m[2] || '').trim() };
-}
-
-function SeminarCard({ card }) {
-  const [hov, setHov] = React.useState(false);
-  const [expanded, setExpanded] = React.useState(false);
-  const { summary, rest } = splitSeminarBody(card.body);
-  const hasMore = !!(rest || (card.bullets && card.bullets.length));
-
-  return (
-    <div
-      role="article"
-      className="relative flex flex-col rounded-2xl overflow-hidden transition-all duration-200 outline-none"
-      style={{
-        background: '#fff',
-        border: `1px solid rgba(32,28,18,${expanded || hov ? '.22' : '.1'})`,
-        boxShadow: hov ? '0 6px 28px rgba(32,28,18,.1)' : '0 2px 14px rgba(32,28,18,.05)',
-        padding: '0 0 22px',
-      }}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      data-blob-hover
-    >
-      <div className="flex flex-col flex-1 px-6 pt-5 gap-0">
-        <div className="flex items-start justify-between gap-2">
-          <span className="font-mono text-[11px] uppercase tracking-[.2em]" style={{ color: SEM_ACCENT }}>{card.eyebrow}</span>
-          <button onClick={() => openEnquiry('Seminar')} aria-label={`Enquire about ${card.title.toLowerCase()} seminars`} className="flex-shrink-0 text-[20px] leading-none transition-transform duration-150" style={{ color: SEM_INK, transform: hov ? 'translate(2px,-2px)' : 'translate(0,0)', fontFamily: 'Anton' }}>↗</button>
-        </div>
-
-        <h3 className="mt-3 font-display leading-[.9]" style={{ fontSize: 'clamp(20px, 2vw, 30px)', color: SEM_INK }}>
-          <span className="skew-italic">{card.title}</span>
-        </h3>
-
-        <p className="mt-3 text-[14px] leading-relaxed" style={{ color: 'rgba(32,28,18,.72)' }}>{summary}</p>
-
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {card.tags.map(tag => (
-            <span key={tag} className="px-2.5 py-1 rounded-full font-mono text-[9px] uppercase tracking-[.16em]" style={{ border: '1px solid rgba(32,28,18,.18)', color: SEM_INK }}>{tag}</span>
-          ))}
-        </div>
-
-        {hasMore && (
-          <div style={{ display: 'grid', gridTemplateRows: expanded ? '1fr' : '0fr', transition: 'grid-template-rows .35s ease' }}>
-            <div style={{ overflow: 'hidden' }}>
-              {rest && <p className="mt-4 text-[14px] leading-relaxed" style={{ color: 'rgba(32,28,18,.72)' }}>{rest}</p>}
-              {card.bullets && (
-                <ul className="mt-4 space-y-2.5" aria-label="Topics covered">
-                  {card.bullets.map((b, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-[13px] leading-relaxed" style={{ color: 'rgba(32,28,18,.78)' }}>
-                      <span className="mt-[5px] flex-shrink-0 w-1.5 h-1.5 rounded-full" style={{ background: SEM_ACCENT }} aria-hidden />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </div>
-        )}
-
-        {hasMore && (
-          <button onClick={() => setExpanded(v => !v)} aria-expanded={expanded} className="mt-5 self-start inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] hover:opacity-70" style={{ color: SEM_ACCENT }} data-blob-hover>
-            {expanded ? 'Show less' : 'Topics covered'}
-            <span style={{ display: 'inline-block', transition: 'transform .3s', transform: expanded ? 'rotate(180deg)' : 'none' }}>↓</span>
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
+// Optional photos per seminar card — drop { avif, jpg, alt } here later, keyed
+// by slug of the card title.
+const SEMINAR_IMAGES = {};
 
 function Seminars({ theme }) {
+  const [expanded, setExpanded] = React.useState({});
   const audiences = C('seminars.audiences', null) || SEMINAR_AUDIENCES_DEFAULT;
   const cards = SEMINAR_AUDIENCES_DEFAULT.map((d, i) => (audiences[i] ? { ...d, ...audiences[i] } : d));
   const inclusions = C('seminars.inclusions', SEMINAR_INCLUSIONS_DEFAULT);
+  const toggle = (slug) => setExpanded(e => ({ ...e, [slug]: !e[slug] }));
 
   return (
     <section id="seminars" data-screen-label="04 Seminars" className="relative noise" style={{ background: SEM_CREAM, color: SEM_INK, paddingBlock: 'var(--pad-y, 96px)' }}>
@@ -155,8 +87,22 @@ function Seminars({ theme }) {
         </p>
 
         {/* Audience cards */}
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
-          {cards.map((card, i) => <SeminarCard key={i} card={card} />)}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+          {cards.map((card) => {
+            const slug = slugify(card.title);
+            return (
+              <ExpandableCard
+                key={slug}
+                card={{ ...card, image: SEMINAR_IMAGES[slug] }}
+                scheme="light"
+                displayName={card.title}
+                brandTag={card.eyebrow}
+                cta={{ type: 'enquiry', topic: 'Seminar', label: 'Enquire about this' }}
+                expanded={!!expanded[slug]}
+                onToggle={() => toggle(slug)}
+              />
+            );
+          })}
         </div>
 
         {/* What's included + guide request */}
