@@ -41,7 +41,7 @@ function About({ theme }) {
 
           {/* sticker / portrait placeholder */}
           <div className="col-span-12 lg:col-span-5">
-            <div className="relative aspect-[4/5] w-full rounded-3xl overflow-visible">
+            <div className="relative aspect-[4/5] w-[86%] rounded-3xl overflow-visible">
               <div className="w-full h-full rounded-3xl overflow-hidden">
                 <picture>
                   <source srcSet="assets/images/about/about-image.avif" type="image/avif" />
@@ -55,6 +55,22 @@ function About({ theme }) {
                 style={{ background: '#FF6C00', color: '#EAE6D7', boxShadow: '0 12px 24px rgba(32,28,18,.18)' }}
               >
                 {C('about.stickerBadge', 'Lauren Nash — APD & Founder of UP Dietitian')}
+              </div>
+            </div>
+
+            {/* racing photo — inset and tilted so it reads as a second beat,
+                not a second column. Right-aligned to clear the sticker badge. */}
+            <div className="mt-10 ml-auto w-[72%] rotate-2">
+              <div className="rounded-3xl overflow-hidden" style={{ position: 'relative', paddingBottom: '115%', boxShadow: '0 16px 32px rgba(32,28,18,.14)' }}>
+                <picture>
+                  <source srcSet="assets/images/about/racing-image.avif" type="image/avif" />
+                  <img
+                    src="assets/images/about/racing-image.JPG"
+                    alt="Lauren Nash racing the run leg of an Ironman in UP Dietitian kit"
+                    loading="lazy"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 45%', display: 'block' }}
+                  />
+                </picture>
               </div>
             </div>
           </div>
