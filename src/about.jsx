@@ -182,3 +182,4 @@ function Testimonials() {
 }
 
 window.About = About;
+window.Testimonials = Testimonials;

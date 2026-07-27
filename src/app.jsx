@@ -23,6 +23,30 @@ const HEADLINE_PRESETS = [
   "TRAIN HARD. | EAT SMART. | GO UP."
 ];
 
+// Scroll-progress bar — a thin orange fill at the very top that tracks how far
+// down the page you are, so progress toward the bottom is always visible.
+// On-brand orange; remounted per route (key) so it resets on navigation.
+function ScrollProgress() {
+  const [pct, setPct] = React.useState(0);
+  React.useEffect(() => {
+    let raf = 0;
+    const calc = () => {
+      raf = 0;
+      const d = document.documentElement;
+      const scrollable = d.scrollHeight - window.innerHeight;
+      setPct(scrollable > 0 ? Math.min(1, (window.scrollY || 0) / scrollable) : 0);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(calc); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    calc();
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
+  }, []);
+  return (
+    <div aria-hidden style={{ position: 'fixed', top: 0, left: 0, height: 3, width: `${pct * 100}%`, background: '#FF6C00', zIndex: 50, transition: 'width .08s linear', boxShadow: '0 0 8px rgba(255,108,0,.5)' }} />
+  );
+}
+
 // ---- Home-only teasers ----------------------------------------------------
 // Short intros that point to the full pages, so the home page stays a tight
 // overview instead of carrying every section in full.
@@ -119,6 +143,11 @@ function HomePage({ t, theme }) {
       <AboutTeaser />
       <Photos />
       <ServicesTeaser />
+      <section className="relative" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8">
+          <Testimonials />
+        </div>
+      </section>
     </React.Fragment>
   );
 }
@@ -176,6 +205,7 @@ function App() {
 
   return (
     <div data-density={t.density} className="pb-[68px] md:pb-0" style={{ background: '#EAE6D7' }}>
+      <ScrollProgress key={route} />
       <Nav theme={theme} route={route} />
       {page}
       {!isNotFound && <Footer theme={theme} />}

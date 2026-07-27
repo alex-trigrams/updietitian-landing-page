@@ -37,8 +37,7 @@ function Nav({ theme, route }) {
       style={{ backgroundColor: solid ? t.bg : 'transparent', color: t.fg, borderBottom: solid ? `1px solid ${t.line}` : '1px solid transparent' }}
     >
       <div className="max-w-[1400px] mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5" data-blob-hover>
-          <img src="assets/logo-orange-icon.png" alt="Up Dietitian" style={{ height: 30, width: 'auto', display: 'block' }} />
+        <Link href="/" className="flex items-center" data-blob-hover>
           <img src="assets/logo-wordmark-sand.png" alt="UP Dietitian" style={{ height: 22, width: 'auto', display: 'block' }} />
         </Link>
 
