@@ -34,11 +34,11 @@ function EnquiryForm({ topic, onDone, dark }) {
         if (window.va) window.va('event', { name: 'enquiry_submit', data: { topic: topic || 'General' } });
       } else {
         const body = await res.json().catch(() => ({}));
-        setError((body.errors && body.errors.map(x => x.message).join(', ')) || 'Something went wrong. Please email lauren@updietitian.com.');
+        setError((body.errors && body.errors.map(x => x.message).join(', ')) || 'Something went wrong. Please email hello@updietitian.com.');
         setStatus('error');
       }
     } catch (_) {
-      setError('Network error. Please try again, or email lauren@updietitian.com.');
+      setError('Network error. Please try again, or email hello@updietitian.com.');
       setStatus('error');
     }
   };
@@ -85,7 +85,7 @@ function EnquiryForm({ topic, onDone, dark }) {
       </div>
       <label className="flex flex-col gap-1.5">
         <span className="font-mono text-[10px] uppercase tracking-[.2em]" style={{ color: labelCol }}>Message</span>
-        <textarea name="message" required rows={4} placeholder={topic === 'Seminar' ? 'Tell Lauren about your group — organisation, type, rough size, format and timing…' : 'Tell Lauren a little about your goals, your sport, and how she can help…'} className="w-full px-4 py-3 rounded-xl text-[14px] outline-none resize-none focus:border-orange" style={fieldStyle} />
+        <textarea name="message" required rows={4} placeholder={topic === 'Seminar' ? 'Tell us about your group — organisation, type, rough size, format and timing…' : 'Tell us about your goals, your sport and how we can help.'} className="w-full px-4 py-3 rounded-xl text-[14px] outline-none resize-none focus:border-orange" style={fieldStyle} />
       </label>
 
       {status === 'error' && (
@@ -168,9 +168,11 @@ function EnquiryModal() {
         <div className="font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: '#FF6C00' }}>
           {topic === 'Seminar' ? 'Seminar enquiry' : "Let's talk"}
         </div>
+        {/* The skewed spans are inline-block, so a trailing space inside one is
+            collapsed away ("Book aseminar"). Keep the space between the spans. */}
         <h2 className="mt-3 mb-6 font-display leading-[.9]" style={{ fontSize: 'clamp(34px, 5vw, 56px)' }}>
-          <span className="skew-italic">{topic === 'Seminar' ? 'Book a ' : 'Get in '}</span>
-          <span className="skew-italic" style={{ color: '#FF6C00' }}>{topic === 'Seminar' ? 'seminar.' : 'touch.'}</span>
+          <span className="skew-italic">{topic === 'Seminar' ? 'Book a' : 'Ready to'}</span>{' '}
+          <span className="skew-italic" style={{ color: '#FF6C00' }}>{topic === 'Seminar' ? 'seminar.' : 'Level UP?'}</span>
         </h2>
 
         <EnquiryForm topic={topic} onDone={close} />

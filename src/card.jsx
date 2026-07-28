@@ -21,21 +21,26 @@ function serviceName(title) {
   return SERVICE_NAME_MAP[slugify(title)] || { name: title, brand: null };
 }
 
-// Banner image area with a branded placeholder until real photos are dropped in.
-// Pass card.image = { avif, jpg, alt } to show a real photo.
-function CardBanner({ image, dark }) {
+// Card eyebrows used to carry a running number ("01 · CONSULTATION"). Those
+// numbers went out of order once the sections were split across pages, so the
+// client asked for them to go. Stripped at render rather than edited out of the
+// content, because the card copy is served from Blob (Lauren's /admin edits) —
+// this way it's fixed without touching, or waiting on, her saved content.
+function stripLeadNumber(label) {
+  return String(label || '').replace(/^\s*\d+\s*[·.\-–—:)]\s*/, '');
+}
+
+// Banner image area. Renders only when a real photo is supplied — the branded
+// placeholder was removed at the client's request ("these probably don't need
+// images"), so image-less cards are now purely typographic.
+function CardBanner({ image }) {
+  if (!image) return null;
   return (
-    <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16 / 9', background: dark ? '#16281f' : '#d9d3bf' }}>
-      {image ? (
-        <picture>
-          <source srcSet={image.avif} type="image/avif" />
-          <img src={image.jpg} alt={image.alt || ''} loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        </picture>
-      ) : (
-        <div className="grain-bg absolute inset-0 flex items-center justify-center" style={{ opacity: dark ? 1 : .9 }}>
-          <img src="assets/logo-orange-icon.png" alt="" aria-hidden style={{ width: '30%', maxWidth: 90, opacity: .18 }} />
-        </div>
-      )}
+    <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16 / 9' }}>
+      <picture>
+        <source srcSet={image.avif} type="image/avif" />
+        <img src={image.jpg} alt={image.alt || ''} loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+      </picture>
     </div>
   );
 }
@@ -75,13 +80,13 @@ function ExpandableCard({ card, scheme, displayName, brandTag, cta, expanded, on
         </div>
       )}
 
-      <CardBanner image={card.image} dark={dark} />
+      <CardBanner image={card.image} />
 
       <div className={`flex flex-col flex-1 ${large ? 'px-7 pt-5' : 'px-6 pt-5'} pb-6`}>
         {/* eyebrow / brand tag + toggle */}
         <div className="flex items-start justify-between gap-2">
           <span className="font-mono text-[11px] uppercase tracking-[.2em]" style={{ color: ACCENT }}>
-            {brandTag || card.eyebrow || ' '}
+            {stripLeadNumber(brandTag || card.eyebrow) || ' '}
           </span>
           <button
             onClick={(e) => { stop(e); onToggle(); }}
@@ -129,7 +134,7 @@ function ExpandableCard({ card, scheme, displayName, brandTag, cta, expanded, on
                       {cta.label || 'Enquire'} <span style={{ fontFamily: 'Anton' }}>→</span>
                     </button>
                   ) : (
-                    <a href={CALENDLY_URL} className="btn-shine inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] uppercase tracking-[.18em] font-bold" style={{ background: ACCENT, color: CREAM }} data-blob-hover>
+                    <a href={cta.url || CALENDLY_URL} className="btn-shine inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] uppercase tracking-[.18em] font-bold" style={{ background: ACCENT, color: CREAM }} data-blob-hover>
                       {cta.label || 'Book a call'} <span style={{ fontFamily: 'Anton' }}>→</span>
                     </a>
                   )}

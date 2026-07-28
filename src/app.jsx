@@ -138,10 +138,11 @@ function ServicesTeaser() {
 function HomePage({ t, theme }) {
   return (
     <React.Fragment>
+      {/* The "everyday to elite" marquee and the auto-scrolling photo strip
+          were removed at the client's request — the home page reads calmer
+          without two moving bands competing with the hero slideshow. */}
       <Hero headline={t.headline} sub={t.sub} theme={theme} />
-      <Marquee items={['ULTRA PERFORMANCE NUTRITION FOR THE EVERYDAY TO ELITE']} theme={theme} accent />
       <AboutTeaser />
-      <Photos />
       <ServicesTeaser />
       <section className="relative" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
@@ -198,6 +199,7 @@ function App() {
     case '/contact':  page = <ContactPage />; break;
     case '/privacy':  page = <Privacy />; break;
     case '/cookies':  page = <Cookies />; break;
+    case '/terms':    page = <Terms />; break;
     default:          page = <NotFound />; break;
   }
 

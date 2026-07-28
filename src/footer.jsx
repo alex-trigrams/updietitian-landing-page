@@ -5,7 +5,7 @@ function Footer({ theme }) {
       <div className="max-w-[1400px] mx-auto px-5 md:px-8">
         <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] opacity-60">
           <span className="inline-block w-6 h-px bg-current"></span>
-          <span>06 · The next step</span>
+          <span>The next step</span>
         </div>
 
         <h2 className="mt-6 font-display leading-[.85]" style={{ fontSize: 'clamp(64px, 14vw, 240px)' }}>
@@ -41,7 +41,7 @@ function Footer({ theme }) {
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Email</span>
-                <a href={`mailto:${C('footer.email', 'lauren@updietitian.com')}`} className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>{C('footer.email', 'lauren@updietitian.com')}</a>
+                <a href={`mailto:${C('footer.email', 'hello@updietitian.com')}`} className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>{C('footer.email', 'hello@updietitian.com')}</a>
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Social</span>
@@ -58,9 +58,10 @@ function Footer({ theme }) {
 
         {/* legal + bottom line */}
         <div className="mt-20 pt-6 border-t flex flex-wrap items-center gap-x-6 gap-y-3 font-mono text-[11px] uppercase tracking-[.16em] opacity-55" style={{ borderColor: 'rgba(234,230,215,.16)' }}>
-          <span>© 2025 Up Dietitian · Lauren Nash APD</span>
+          <span>© {new Date().getFullYear()} Up Dietitian · Lauren Nash APD</span>
           <Link href="/privacy" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Privacy</Link>
           <Link href="/cookies" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Cookies</Link>
+          <Link href="/terms" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Payment &amp; Cancellation</Link>
           <Link href="/contact" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Contact</Link>
           <span className="ml-auto">Built for athletes · Perth WA</span>
           <span>designed by trigrams.studio</span>

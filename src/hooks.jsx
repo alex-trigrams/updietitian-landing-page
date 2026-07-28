@@ -2,6 +2,19 @@
 
 const CALENDLY_URL = "https://calendly.com/updietitian/15min";
 
+// Direct booking links for the consultations that can be booked outright,
+// rather than routed through the free discovery call. Keyed by service slug.
+const CALENDLY_LINKS = {
+  'initial-nutrition-consultation': {
+    url: 'https://calendly.com/updietitian/up-dietitian-initial-consultation',
+    label: 'Book an initial consultation',
+  },
+  'review-consultation': {
+    url: 'https://calendly.com/updietitian/up-dietitian-review-consultation',
+    label: 'Book a review consultation',
+  },
+};
+
 const THEMES = {
   green:  { bg: "#1D4032", fg: "#EAE6D7", accent: "#FF6C00", sub: "rgba(234,230,215,.65)", line: "rgba(234,230,215,.18)" },
   orange: { bg: "#FF6C00", fg: "#201C12", accent: "#1D4032", sub: "rgba(32,28,18,.72)",    line: "rgba(32,28,18,.18)"   },
@@ -93,4 +106,4 @@ function slugify(str) {
     .replace(/(^-|-$)/g, '');
 }
 
-Object.assign(window, { CALENDLY_URL, THEMES, useScrollY, useInView, useCounter, useCursorBlob, slugify });
+Object.assign(window, { CALENDLY_URL, CALENDLY_LINKS, THEMES, useScrollY, useInView, useCounter, useCursorBlob, slugify });

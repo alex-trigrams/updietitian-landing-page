@@ -6,7 +6,7 @@
 // (APPs) but is a template — Lauren should confirm the business/ABN details and
 // have it reviewed. It is not legal advice.
 
-const LEGAL_UPDATED = 'July 2025';
+const LEGAL_UPDATED = 'July 2026';
 
 // Shared prose wrapper — sand page, mono eyebrow, Anton heading, readable column.
 function LegalPage({ eyebrow, title, accent, children }) {
@@ -77,13 +77,13 @@ function Privacy() {
       <p>We take reasonable steps to protect your information from misuse, loss and unauthorised access. Clinical records are retained for the period required by law and professional standards, then securely destroyed or de-identified.</p>
 
       <h2>Accessing &amp; correcting your information</h2>
-      <p>You can request access to the personal information we hold about you, ask us to correct it, or withdraw consent, by emailing <a href="mailto:lauren@updietitian.com">lauren@updietitian.com</a>. We will respond within a reasonable time.</p>
+      <p>You can request access to the personal information we hold about you, ask us to correct it, or withdraw consent, by emailing <a href="mailto:hello@updietitian.com">hello@updietitian.com</a>. We will respond within a reasonable time.</p>
 
       <h2>Complaints</h2>
       <p>If you have a privacy concern, please contact us first so we can resolve it. If you are not satisfied, you can contact the Office of the Australian Information Commissioner (OAIC) at <a href="https://www.oaic.gov.au" target="_blank" rel="noreferrer">oaic.gov.au</a>.</p>
 
       <h2>Contact</h2>
-      <p>UP Dietitian — Lauren Nash, APD<br/>Email: <a href="mailto:lauren@updietitian.com">lauren@updietitian.com</a><br/>Perth, Western Australia</p>
+      <p>UP Dietitian — Lauren Nash, APD<br/>Email: <a href="mailto:hello@updietitian.com">hello@updietitian.com</a><br/>Perth, Western Australia</p>
 
       <p className="note"><strong>Note for the business owner:</strong> confirm your registered legal/business name and ABN before publishing, and consider having this policy reviewed by a professional. This template is a starting point, not legal advice.</p>
     </LegalPage>
@@ -114,6 +114,44 @@ function Cookies() {
   );
 }
 
+// Payment & cancellation policy — Lauren's own wording, supplied 2026-07-28.
+// Replaces the earlier generic placeholder template. Any change to fees or
+// notice periods here must match what she sends in booking confirmations.
+function Terms() {
+  return (
+    <LegalPage eyebrow="Legal · Payment & cancellation" title="Payment &" accent="Cancellation Policy">
+      <p className="meta">Last updated: {LEGAL_UPDATED}</p>
+
+      <h2>Consultation fees</h2>
+      <p>All consultations with UP Dietitian are paid services, unless a prior agreement has been made. An invoice will be issued following your appointment and sent to the email address provided at the time of booking.</p>
+
+      <h2>Payment terms</h2>
+      <p>Payment is due within 7 days of the invoice date unless otherwise agreed.</p>
+
+      <h2>Nutrition plans</h2>
+      <p>Nutrition plans and other personalised resources prepared by UP Dietitian will be provided once payment has been received, and within 5 business days from your consultation.</p>
+
+      <h2>Cancellations &amp; rescheduling</h2>
+      <ul>
+        <li>Appointments may be cancelled or rescheduled free of charge with at least 24 hours' notice.</li>
+        <li>Cancellations made within 24 hours of the scheduled appointment time may incur a cancellation fee of 50% of the consultation fee.</li>
+      </ul>
+
+      <h2>Missed appointments (no-shows)</h2>
+      <p>Clients who do not attend their scheduled appointment without prior notice may be charged 100% of the consultation fee.</p>
+
+      <h2>Late arrivals</h2>
+      <p>If you arrive late, your consultation may need to be shortened to avoid delaying other appointments. The full consultation fee will still apply.</p>
+
+      <h2>Special circumstances</h2>
+      <p>UP Dietitian understands that unexpected situations can arise. Cancellation fees may be waived at the discretion of the practitioner in cases of genuine emergencies or unforeseen circumstances.</p>
+
+      <h2>Questions</h2>
+      <p>For more information, please do not hesitate to contact <a href="mailto:hello@updietitian.com">hello@updietitian.com</a>.</p>
+    </LegalPage>
+  );
+}
+
 function ContactPage() {
   React.useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
@@ -124,7 +162,7 @@ function ContactPage() {
           <span>Get in touch</span>
         </div>
         <h1 className="mt-6 font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 10vw, 150px)' }}>
-          <span className="skew-italic">Let's </span>
+          <span className="skew-italic">Let's</span>{' '}
           <span className="skew-italic" style={{ color: '#FF6C00' }}>talk.</span>
         </h1>
 
@@ -144,7 +182,7 @@ function ContactPage() {
             <div className="grid grid-cols-2 gap-6 font-mono text-[12px] uppercase tracking-[.16em]">
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Email</span>
-                <a href="mailto:lauren@updietitian.com" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>lauren@updietitian.com</a>
+                <a href="mailto:hello@updietitian.com" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>hello@updietitian.com</a>
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Social</span>
@@ -169,7 +207,7 @@ function ContactPage() {
         <div className="mt-14 rounded-3xl p-6 md:p-10" style={{ background: '#EAE6D7', color: '#201C12' }}>
           <div className="font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: '#FF6C00' }}>Send a message</div>
           <h2 className="mt-3 mb-6 font-display leading-[.9]" style={{ fontSize: 'clamp(28px, 4vw, 44px)' }}>
-            <span className="skew-italic">Drop Lauren a </span><span className="skew-italic" style={{ color: '#FF6C00' }}>line.</span>
+            <span className="skew-italic">Ready to</span>{' '}<span className="skew-italic" style={{ color: '#FF6C00' }}>Level UP?</span>
           </h2>
           <EnquiryForm topic="General" />
         </div>
@@ -197,4 +235,4 @@ function NotFound() {
   );
 }
 
-Object.assign(window, { Privacy, Cookies, ContactPage, NotFound });
+Object.assign(window, { Privacy, Cookies, Terms, ContactPage, NotFound });

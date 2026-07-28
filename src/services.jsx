@@ -100,6 +100,9 @@ function Services({ theme }) {
   const renderCard = (card, large) => {
     const slug = slugify(card.title);
     const nm = serviceName(card.title);
+    // Consultations that can be booked outright link straight to their own
+    // Calendly event; everything else still routes via the free discovery call.
+    const direct = CALENDLY_LINKS[slug];
     return (
       <ExpandableCard
         key={slug}
@@ -108,7 +111,9 @@ function Services({ theme }) {
         large={large}
         displayName={nm.name}
         brandTag={nm.brand}
-        cta={{ type: 'calendly', label: 'Book a discovery call' }}
+        cta={direct
+          ? { type: 'calendly', url: direct.url, label: direct.label }
+          : { type: 'calendly', label: 'Book a discovery call' }}
         expanded={!!expanded[slug]}
         onToggle={() => toggle(slug)}
         cardRef={(el) => { refs.current[slug] = el; }}

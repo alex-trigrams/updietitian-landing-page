@@ -12,7 +12,7 @@ function Clinic({ theme }) {
         {/* eyebrow */}
         <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] opacity-60">
           <span className="inline-block w-6 h-px bg-current"></span>
-          <span>05 · In-person clinic</span>
+          <span>In-person clinic</span>
         </div>
 
         <div className="mt-6">

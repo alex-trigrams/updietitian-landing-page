@@ -67,19 +67,10 @@ function Hero({ headline, sub, theme }) {
     >
       <HeroSlideshow />
 
-      {/* big background UP mark */}
-      <div
-        aria-hidden
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
-        style={{ transform: `translate3d(0, ${offset * -0.15}px, 0)`, opacity: .06 }}
-      >
-        <img src="assets/logo-orange-icon.png" alt="" style={{ width: '70vw', maxWidth: 900, height: 'auto', display: 'block' }} />
-      </div>
-
-      {/* status strip */}
+      {/* status strip — the "interim reel" note and the big UP watermark were
+          removed at the client's request; the slideshow now stands on its own. */}
       <div className="relative max-w-[1400px] mx-auto w-full px-5 md:px-8 flex items-center justify-between font-mono text-[11px] uppercase tracking-[.2em] opacity-80">
         <span className="flex items-center gap-2"><span className="inline-block w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: t.accent }}></span> Taking on athletes now</span>
-        <span className="hidden sm:inline">Interim reel · hero film coming soon</span>
       </div>
 
       {/* Kinetic headline */}

@@ -6,7 +6,7 @@
 // per-page pageviews. Links stay real <a> tags so right-click / SEO / new-tab
 // all keep working; only plain left-clicks are intercepted.
 
-const ROUTES = ['/', '/about', '/services', '/seminars', '/clinic', '/contact', '/privacy', '/cookies'];
+const ROUTES = ['/', '/about', '/services', '/seminars', '/clinic', '/contact', '/privacy', '/cookies', '/terms'];
 
 // Per-route <title> + meta description, applied on navigation. Client-rendered,
 // so this is best-effort SEO — enough for browser tabs, history and sharing.
@@ -19,6 +19,7 @@ const ROUTE_META = {
   '/contact':  { title: 'Contact · UP Dietitian', desc: 'Get in touch with UP Dietitian — Perth WA and online, Australia-wide and internationally.' },
   '/privacy':  { title: 'Privacy Policy · UP Dietitian', desc: 'How UP Dietitian collects, uses and protects your personal information.' },
   '/cookies':  { title: 'Cookie Policy · UP Dietitian', desc: 'How UP Dietitian uses cookies and analytics.' },
+  '/terms':    { title: 'Payment & Cancellation Policy · UP Dietitian', desc: 'Consultation fees, payment terms and cancellation policy for UP Dietitian appointments.' },
 };
 
 function applyRouteMeta(path) {

@@ -7,7 +7,7 @@ function About({ theme }) {
         {/* eyebrow */}
         <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em] opacity-70">
           <span className="inline-block w-6 h-px bg-current"></span>
-          <span>01 · Meet your dietitian</span>
+          <span>Meet your dietitian</span>
         </div>
 
         <div className="mt-6 grid grid-cols-12 gap-6 md:gap-10">
@@ -104,7 +104,10 @@ const TESTIMONIALS = C('about.testimonials', [
 /* Athlete photos live in code, not in the editable content — keyed by name so
    they still attach when the copy is served from Blob (which has no photo field). */
 const TESTIMONIAL_PHOTOS = {
+  // JPG, not AVIF: sips silently produced a blank AVIF from this source photo.
+  Jemma: { src: 'assets/images/about/jemma-race.JPG', pos: '55% center' },
   Nick: { src: 'assets/images/about/nick-finish.JPG', pos: 'center 45%' },
+  Eimear: { src: 'assets/images/about/eimear-fight.avif', pos: 'center 20%' },
 };
 
 function TestimonialCard({ card, idx }) {
@@ -190,9 +193,9 @@ function Testimonials() {
     <div className="mt-20 md:mt-28">
       <div className="flex flex-wrap items-end justify-between gap-3 mb-8">
         <div>
-          <div className="font-mono text-[11px] uppercase tracking-[.22em] opacity-70">02 · Athlete stories</div>
+          <div className="font-mono text-[11px] uppercase tracking-[.22em] opacity-70">Client Testimonials</div>
           <h3 className="font-display mt-2 leading-[.95]" style={{ fontSize: 'clamp(34px, 5.5vw, 72px)' }}>
-            <span className="skew-italic">What they </span><span className="skew-italic" style={{ color: '#FF6C00' }}>say.</span>
+            <span className="skew-italic">Athlete</span>{' '}<span className="skew-italic" style={{ color: '#FF6C00' }}>Stories.</span>
           </h3>
         </div>
         <div className="font-mono text-[11px] uppercase tracking-[.2em] opacity-50 hidden sm:block">hover or tap to flip ↻</div>
