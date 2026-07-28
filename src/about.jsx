@@ -101,8 +101,11 @@ const TESTIMONIALS = C('about.testimonials', [
   },
 ]);
 
-/* Athlete photos live in code, not in the editable content — keyed by name so
-   they still attach when the copy is served from Blob (which has no photo field). */
+/* Athlete photos live in code, not in the editable content — keyed by first
+   name so they still attach when the copy is served from Blob (which has no
+   photo field). Matched on the first name only, and case-insensitively: Lauren
+   edits these names in /admin and has already changed "Jemma" to "Jemma W",
+   which silently detached every photo when the lookup was an exact match. */
 const TESTIMONIAL_PHOTOS = {
   // JPG, not AVIF: sips silently produced a blank AVIF from this source photo.
   Jemma: { src: 'assets/images/about/jemma-race.JPG', pos: '55% center' },
@@ -110,9 +113,15 @@ const TESTIMONIAL_PHOTOS = {
   Eimear: { src: 'assets/images/about/eimear-fight.avif', pos: 'center 20%' },
 };
 
+function testimonialPhoto(name) {
+  const first = String(name || '').trim().split(/\s+/)[0].toLowerCase();
+  const key = Object.keys(TESTIMONIAL_PHOTOS).find((k) => k.toLowerCase() === first);
+  return key ? TESTIMONIAL_PHOTOS[key] : undefined;
+}
+
 function TestimonialCard({ card, idx }) {
   const [flipped, setFlipped] = React.useState(false);
-  const photo = card.photo ? { src: card.photo, pos: 'center top' } : TESTIMONIAL_PHOTOS[card.name];
+  const photo = card.photo ? { src: card.photo, pos: 'center top' } : testimonialPhoto(card.name);
 
   return (
     <div
