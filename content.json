@@ -10,26 +10,40 @@
       "Whether working with elite competitors or recreational athletes chasing personal goals, Lauren aims to help clients build a healthy and sustainable relationship with food alongside performance outcomes.",
       "Outside of clinic, Lauren is an endurance athlete herself and understands firsthand the demands of balancing training, recovery and everyday life. She has completed 2 Ironmans, 1 Ironman 70.3 and 2 marathons — experiences that continue to shape both her perspective and practice as a sports dietitian. UP Dietitian was created to help athletes fuel with more confidence, clarity and purpose — without overcomplicating nutrition."
     ],
-    "specialtyTags": ["Sports Performance", "Endurance", "Body Composition", "CrossFit & S&C", "Combat Sports", "Game-day Fueling", "Injury Recovery", "Coeliac", "Gut Health"],
+    "specialtyTags": [
+      "Sports Performance",
+      "Endurance",
+      "Body Composition",
+      "CrossFit & S&C",
+      "Combat Sports",
+      "Game-day Fueling",
+      "Injury Recovery",
+      "Coeliac",
+      "Gut Health"
+    ],
     "stickerBadge": "Lauren Nash — APD & Founder of UP Dietitian",
     "testimonials": [
       {
-        "name": "Jemma",
+        "id": "jemma",
+        "name": "Jemma W",
         "sport": "Endurance Athlete",
         "quote": "Lauren has supported me through 2x Ironman 70.3s, 2x standard triathlons, 1x marathon and my first Ironman. The confidence I gained was knowing my body was being looked after — correct fuelling meant I could breeze through changing training loads with no injuries and minimal fatigue. She creates a race day fuel plan specific to how your body responds, and carries herself with so much kindness. Couldn't recommend UP Dietitian enough."
       },
       {
-        "name": "Nick",
+        "id": "nick",
+        "name": "Nick C",
         "sport": "Endurance Athlete",
-        "quote": "I approached Lauren after chronic cramping and poor nutrition after my first 70.3. Since then she's done my fuelling plan for 3x Ironman 70.3s, 3x Ironman (NZ, Austria, Challenge Roth), Ultraman Australia and the Rottnest Channel Swim Solo. Lauren is the best in the business — professional, personable and knows exactly how to tailor a strategy for you. I'd never go into a race without her guidance."
+        "quote": "I approached Lauren after chronic cramping and poor nutrition during my first 70.3. Since then she's done my fuelling plan for 3x Ironman 70.3s, 3x Ironman (NZ, Austria, Challenge Roth), Ultraman Australia and the Rottnest Channel Swim Solo. Lauren is the best in the business — professional, personable and knows exactly how to tailor a strategy for you. I'd never go into a race without her guidance."
       },
       {
-        "name": "Eimear",
+        "id": "eimear",
+        "name": "Eimear D",
         "sport": "Professional MMA Athlete",
         "quote": "Lauren has helped me through back-to-back professional fight camps and made keeping on top of nutrition in and out of camp so easy. Weight cutting in combat sports can be dangerous and Lauren always keeps my health at the centre of our work. She's educated me on fuelling correctly to perform at my best while maintaining a positive body image — something I felt strongly about. If you have Lauren in your corner, you'll achieve your goals."
       },
       {
-        "name": "Cam",
+        "id": "cam",
+        "name": "Cam W",
         "sport": "Triathlete",
         "quote": "I engaged with Lauren before my first triathlon at T100 Gold Coast after realising my sessions were always cut short or completed with poor execution. Lauren has completely changed my life with how I fuel for races and how I fuel for overall wellbeing. I've since signed up for Cairns Ironman and Lauren will be on board — I can't wait to see how well I perform with the best nutrition under her guidance. I no longer worry about cutting sessions short or gut problems. My nutrition levelled UP ✅"
       }
@@ -38,6 +52,7 @@
   "services": {
     "heroCards": [
       {
+        "id": "initial-consult-performance",
         "title": "INITIAL CONSULT + PERFORMANCE PLAN",
         "body": "The full picture. A deep-dive initial consultation followed by a completely individualised performance nutrition plan — built around your goals, training demands, race calendar, and lifestyle.",
         "bullets": [
@@ -49,6 +64,7 @@
         ]
       },
       {
+        "id": "level-up-race",
         "eyebrow": "RACE PACKAGE",
         "title": "LEVEL UP RACE FUELLING PACK",
         "body": "The complete race preparation package. Everything you need to arrive at the start line with a tested nutrition and fuelling strategy — from initial consult through to race morning.",
@@ -63,16 +79,19 @@
     ],
     "tierCards": [
       {
+        "id": "initial-nutrition-consultation",
         "eyebrow": "01 · CONSULTATION",
         "title": "INITIAL NUTRITION CONSULTATION",
         "body": "A focused 1-on-1 session to understand your goals, training load, lifestyle and nutrition history. Walk away with personalised advice and clear targets to act on straight away."
       },
       {
+        "id": "review-consultation",
         "eyebrow": "02 · FOLLOW-UP",
         "title": "REVIEW CONSULTATION",
         "body": "A 30-minute follow-up to assess progress, address new challenges, and refine your nutrition plan. Keeps you accountable and moving forward with confidence between full consults."
       },
       {
+        "id": "performance-nutrition-coaching",
         "eyebrow": "03 · COACHING",
         "title": "PERFORMANCE NUTRITION COACHING",
         "body": "Ongoing weekly support, accountability, and plan adjustments across your training block. Ideal for athletes with a busy race calendar who need nutrition that adapts as training does.",
@@ -91,6 +110,7 @@
     "intro": "One session, a whole room better fuelled. Lauren delivers practical, evidence-based nutrition education to workplaces, sporting clubs and community groups — translating sports nutrition science into advice people can act on the same week. Every seminar is built around your group rather than delivered off the shelf.",
     "audiences": [
       {
+        "id": "corporate-workplace",
         "eyebrow": "01 · WORKPLACE",
         "title": "CORPORATE & WORKPLACE",
         "body": "Practical nutrition education for teams who want more consistent energy through the working day. Cuts through diet noise with evidence-based guidance staff can actually use — no fads, no restriction.",
@@ -102,6 +122,7 @@
         ]
       },
       {
+        "id": "sporting-clubs-teams",
         "eyebrow": "02 · CLUBS & TEAMS",
         "title": "SPORTING CLUBS & TEAMS",
         "body": "Squad-wide fuelling education that lifts the whole group at once. Built around your sport, your season and your competition demands — so athletes turn up to game day already knowing the plan.",
@@ -113,6 +134,7 @@
         ]
       },
       {
+        "id": "community-events",
         "eyebrow": "03 · COMMUNITY",
         "title": "COMMUNITY & EVENTS",
         "body": "Guest speaking for run clubs, tri clubs, gyms and event expos. An engaging, jargon-free session that leaves the room with something they can apply to their next session or start line.",
@@ -136,10 +158,26 @@
   },
   "process": {
     "steps": [
-      { "title": "BOOK A FREE DISCOVERY CALL", "desc": "A complimentary 15-minute call to chat through your goals, your sport and whether working with UP Dietitian is the right fit for where you're at." },
-      { "title": "INITIAL CONSULTATION & ASSESSMENT", "desc": "A deep dive into your nutrition, training, health and performance goals. We'll review your current habits, relevant blood test results and any health concerns before developing personalised nutrition strategies and clear next steps to help you perform, recover and feel your best." },
-      { "title": "PERSONALISED NUTRITION PLAN", "desc": "A tailored nutrition strategy designed around your training demands, performance goals and lifestyle, covering everything from daily nutrition and recovery to race-day fuelling and competition preparation." },
-      { "title": "ONGOING SUPPORT", "desc": "Ongoing support through every phase of your training, with regular check-ins, personalised nutrition adjustments and accountability to keep your fuelling aligned with your goals." }
+      {
+        "id": "book-a-free",
+        "title": "BOOK A FREE DISCOVERY CALL",
+        "desc": "A complimentary 15-minute call to chat through your goals, your sport and whether working with UP Dietitian is the right fit for where you're at."
+      },
+      {
+        "id": "initial-consultation-assessment",
+        "title": "INITIAL CONSULTATION & ASSESSMENT",
+        "desc": "A deep dive into your nutrition, training, health and performance goals. We'll review your current habits, relevant blood test results and any health concerns before developing personalised nutrition strategies and clear next steps to help you perform, recover and feel your best."
+      },
+      {
+        "id": "personalised-nutrition-plan",
+        "title": "PERSONALISED NUTRITION PLAN",
+        "desc": "A tailored nutrition strategy designed around your training demands, performance goals and lifestyle, covering everything from daily nutrition and recovery to race-day fuelling and competition preparation."
+      },
+      {
+        "id": "ongoing-support",
+        "title": "ONGOING SUPPORT",
+        "desc": "Ongoing support through every phase of your training, with regular check-ins, personalised nutrition adjustments and accountability to keep your fuelling aligned with your goals."
+      }
     ]
   },
   "clinic": {

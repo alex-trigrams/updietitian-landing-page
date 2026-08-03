@@ -85,44 +85,47 @@ function About({ theme }) {
 
 const TESTIMONIALS = C('about.testimonials', [
   {
-    name: 'Jemma',
+    id: 'jemma',
+    name: 'Jemma W',
     sport: 'Endurance Athlete',
     quote: "Lauren has supported me through 2x Ironman 70.3s, 2x standard triathlons, 1x marathon and my first Ironman. The confidence I gained was knowing my body was being looked after — correct fuelling meant I could breeze through changing training loads with no injuries and minimal fatigue. She creates a race day fuel plan specific to how your body responds, and carries herself with so much kindness. Couldn't recommend UP Dietitian enough.",
   },
   {
-    name: 'Nick',
+    id: 'nick',
+    name: 'Nick C',
     sport: 'Endurance Athlete',
-    quote: "I approached Lauren after chronic cramping and poor nutrition after my first 70.3. Since then she's done my fuelling plan for 3x Ironman 70.3s, 3x Ironman (NZ, Austria, Challenge Roth), Ultraman Australia and the Rottnest Channel Swim Solo. Lauren is the best in the business — professional, personable and knows exactly how to tailor a strategy for you. I'd never go into a race without her guidance.",
+    quote: "I approached Lauren after chronic cramping and poor nutrition during my first 70.3. Since then she's done my fuelling plan for 3x Ironman 70.3s, 3x Ironman (NZ, Austria, Challenge Roth), Ultraman Australia and the Rottnest Channel Swim Solo. Lauren is the best in the business — professional, personable and knows exactly how to tailor a strategy for you. I'd never go into a race without her guidance.",
   },
   {
-    name: 'Eimear',
+    id: 'eimear',
+    name: 'Eimear D',
     sport: 'Professional MMA Athlete',
     quote: "Lauren has helped me through back-to-back professional fight camps and made keeping on top of nutrition in and out of camp so easy. Weight cutting in combat sports can be dangerous and Lauren always keeps my health at the centre of our work. She's educated me on fuelling correctly to perform at my best while maintaining a positive body image — something I felt strongly about. If you have Lauren in your corner, you'll achieve your goals.",
   },
   {
-    name: 'Cam',
+    id: 'cam',
+    name: 'Cam W',
     sport: 'Triathlete',
     quote: "I engaged with Lauren before my first triathlon at T100 Gold Coast after realising my sessions were always cut short or completed with poor execution. Lauren has completely changed my life with how I fuel for races and how I fuel for overall wellbeing. I've since signed up for Cairns Ironman and Lauren will be on board — I can't wait to see how well I perform with the best nutrition under her guidance. I no longer worry about cutting sessions short or gut problems. My nutrition levelled UP ✅",
   },
 ]);
 
-/* Athlete photos live in code, not in the editable content — keyed by first
-   name so they still attach when the copy is served from Blob (which has no
-   photo field). Matched on the first name only, and case-insensitively: Lauren
-   edits these names in /admin and has already changed "Jemma" to "Jemma W",
-   which silently detached every photo when the lookup was an exact match. */
+/* Athlete photos live in code, not in the editable content, and are keyed by
+   the testimonial's stable id — which survives Lauren renaming "Jemma" to
+   "Jemma W" in /admin. Falls back to matching the first name for any
+   testimonial added through /admin, which won't carry a seed id. */
 const TESTIMONIAL_PHOTOS = {
   // JPG, not AVIF: sips silently produced a blank AVIF from this source photo.
-  Jemma: { src: 'assets/images/about/jemma-race.JPG', pos: '55% center' },
-  Nick: { src: 'assets/images/about/nick-finish.JPG', pos: 'center 45%' },
-  Eimear: { src: 'assets/images/about/eimear-fight.avif', pos: 'center 20%' },
-  Cam: { src: 'assets/images/about/cam-bike.avif', pos: '42% 25%' },
+  jemma: { src: 'assets/images/about/jemma-race.JPG', pos: '55% center' },
+  nick: { src: 'assets/images/about/nick-finish.JPG', pos: 'center 45%' },
+  eimear: { src: 'assets/images/about/eimear-fight.avif', pos: 'center 20%' },
+  cam: { src: 'assets/images/about/cam-bike.avif', pos: '42% 25%' },
 };
 
-function testimonialPhoto(name) {
-  const first = String(name || '').trim().split(/\s+/)[0].toLowerCase();
-  const key = Object.keys(TESTIMONIAL_PHOTOS).find((k) => k.toLowerCase() === first);
-  return key ? TESTIMONIAL_PHOTOS[key] : undefined;
+function testimonialPhoto(card) {
+  if (card.id && TESTIMONIAL_PHOTOS[card.id]) return TESTIMONIAL_PHOTOS[card.id];
+  const first = String(card.name || '').trim().split(/\s+/)[0].toLowerCase();
+  return TESTIMONIAL_PHOTOS[first];
 }
 
 /* The back face is a fixed height, so a long quote in a narrow 4-up column
@@ -136,7 +139,7 @@ function quoteType(quote) {
 
 function TestimonialCard({ card, idx }) {
   const [flipped, setFlipped] = React.useState(false);
-  const photo = card.photo ? { src: card.photo, pos: 'center top' } : testimonialPhoto(card.name);
+  const photo = card.photo ? { src: card.photo, pos: 'center top' } : testimonialPhoto(card);
   const type = quoteType(card.quote);
 
   return (

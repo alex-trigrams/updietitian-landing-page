@@ -1,12 +1,22 @@
 const fs = require('fs');
 const path = require('path');
 const { list } = require('@vercel/blob');
+const { mergeContent } = require('./_merge');
 
 const BLOB_PATHNAME = 'content.json';
 
-// Reusable across client projects: reads the live content blob if one has
-// been saved, otherwise falls back to the seed content.json shipped in the
-// repo (used until the first save from /admin, or if Blob isn't configured).
+function readSeed() {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(process.cwd(), 'content.json'), 'utf8'));
+  } catch (err) {
+    return null;
+  }
+}
+
+// Reusable across client projects: merges the live content blob over the seed
+// content.json shipped in the repo. The seed supplies structure and anything
+// added since the last /admin save; the blob supplies Lauren's edits. Falls
+// back to the bare seed if no blob has been saved or Blob isn't configured.
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
 
@@ -19,7 +29,8 @@ module.exports = async (req, res) => {
         const blobRes = await fetch(match.url, { cache: 'no-store' });
         if (blobRes.ok) {
           const json = await blobRes.json();
-          res.status(200).json(json);
+          const seed = readSeed();
+          res.status(200).json(seed ? mergeContent(seed, json) : json);
           return;
         }
       }
@@ -29,11 +40,6 @@ module.exports = async (req, res) => {
     // the live site down, it should just serve last-known-good content.
   }
 
-  try {
-    const seedPath = path.join(process.cwd(), 'content.json');
-    const seed = JSON.parse(fs.readFileSync(seedPath, 'utf8'));
-    res.status(200).json(seed);
-  } catch (err) {
-    res.status(200).json({});
-  }
+  const seed = readSeed();
+  res.status(200).json(seed || {});
 };
