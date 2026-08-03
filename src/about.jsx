@@ -125,9 +125,19 @@ function testimonialPhoto(name) {
   return key ? TESTIMONIAL_PHOTOS[key] : undefined;
 }
 
+/* The back face is a fixed height, so a long quote in a narrow 4-up column
+   would otherwise cram. Step the type down by quote length instead — the
+   cards keep matching heights and the copy keeps its breathing room. */
+function quoteType(quote) {
+  const len = String(quote || '').length;
+  if (len > 380) return { fontSize: 13, lineHeight: 1.8 };
+  return { fontSize: 14, lineHeight: 1.8 };
+}
+
 function TestimonialCard({ card, idx }) {
   const [flipped, setFlipped] = React.useState(false);
   const photo = card.photo ? { src: card.photo, pos: 'center top' } : testimonialPhoto(card.name);
+  const type = quoteType(card.quote);
 
   return (
     <div
@@ -135,7 +145,7 @@ function TestimonialCard({ card, idx }) {
       tabIndex={0}
       aria-label={`${card.name} — ${card.sport}. Tap to read testimonial.`}
       className="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-orange"
-      style={{ perspective: '1000px', height: 420 }}
+      style={{ perspective: '1000px', height: 480 }}
       onClick={() => setFlipped(f => !f)}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
@@ -186,11 +196,14 @@ function TestimonialCard({ card, idx }) {
           transform: 'rotateY(180deg)',
           borderRadius: 20, overflow: 'hidden',
           background: '#FF6C00', color: '#EAE6D7',
-          padding: '28px 26px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+          padding: 30, display: 'flex', flexDirection: 'column',
         }}>
-          <div style={{ fontFamily: 'Anton', fontSize: 72, lineHeight: .8, opacity: .25 }}>"</div>
-          <p style={{ fontFamily: 'Archivo', fontSize: 15, lineHeight: 1.65, flex: 1, display: 'flex', alignItems: 'center' }}>{card.quote}</p>
-          <div style={{ borderTop: '1px solid rgba(234,230,215,.3)', paddingTop: 16 }}>
+          <div style={{ fontFamily: 'Anton', fontSize: 28, lineHeight: .8, opacity: .35, marginBottom: 14, flexShrink: 0 }}>"</div>
+          <p style={{
+            fontFamily: 'Archivo', fontSize: type.fontSize, lineHeight: type.lineHeight,
+            flex: 1, minHeight: 0, overflowY: 'auto',
+          }}>{card.quote}</p>
+          <div style={{ borderTop: '1px solid rgba(234,230,215,.3)', marginTop: 20, paddingTop: 16, flexShrink: 0 }}>
             <div style={{ fontFamily: 'Anton', fontSize: 22, lineHeight: .95 }}>
               <span style={{ display: 'inline-block', transform: 'skew(-8deg)' }}>{card.name}</span>
             </div>
