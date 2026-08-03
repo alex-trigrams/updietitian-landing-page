@@ -99,6 +99,11 @@ const TESTIMONIALS = C('about.testimonials', [
     sport: 'Professional MMA Athlete',
     quote: "Lauren has helped me through back-to-back professional fight camps and made keeping on top of nutrition in and out of camp so easy. Weight cutting in combat sports can be dangerous and Lauren always keeps my health at the centre of our work. She's educated me on fuelling correctly to perform at my best while maintaining a positive body image — something I felt strongly about. If you have Lauren in your corner, you'll achieve your goals.",
   },
+  {
+    name: 'Cam',
+    sport: 'Triathlete',
+    quote: "I engaged with Lauren before my first triathlon at T100 Gold Coast after realising my sessions were always cut short or completed with poor execution. Lauren has completely changed my life with how I fuel for races and how I fuel for overall wellbeing. I've since signed up for Cairns Ironman and Lauren will be on board — I can't wait to see how well I perform with the best nutrition under her guidance. I no longer worry about cutting sessions short or gut problems. My nutrition levelled UP ✅",
+  },
 ]);
 
 /* Athlete photos live in code, not in the editable content — keyed by first
@@ -111,6 +116,7 @@ const TESTIMONIAL_PHOTOS = {
   Jemma: { src: 'assets/images/about/jemma-race.JPG', pos: '55% center' },
   Nick: { src: 'assets/images/about/nick-finish.JPG', pos: 'center 45%' },
   Eimear: { src: 'assets/images/about/eimear-fight.avif', pos: 'center 20%' },
+  Cam: { src: 'assets/images/about/cam-bike.avif', pos: '42% 25%' },
 };
 
 function testimonialPhoto(name) {
@@ -209,7 +215,7 @@ function Testimonials() {
         </div>
         <div className="font-mono text-[11px] uppercase tracking-[.2em] opacity-50 hidden sm:block">hover or tap to flip ↻</div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {TESTIMONIALS.map((card, i) => <TestimonialCard key={i} card={card} idx={i} />)}
       </div>
     </div>
