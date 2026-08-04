@@ -25,6 +25,33 @@ function isPlainObject(v) {
   return v !== null && typeof v === 'object' && !Array.isArray(v);
 }
 
+// Every title a card has gone by in the Blob, oldest first, for the cards
+// Lauren rewrote in /admin before ids existed. Her rewrite doesn't resemble
+// the title it replaced, so nothing can match them automatically and the Blob
+// ends up holding both — the old copy and the new one — with no way to tell
+// which is current. Listing them in order says which: the last one wins, the
+// rest are dropped. Safe to delete once the Blob has been saved with ids.
+const TITLE_HISTORY = {
+  'initial-consult-performance': ['initial consult + performance plan', "'set yourself up' performance plan"],
+  'level-up-race': ['level up race fuelling pack', "'level up' performance plan"],
+};
+
+function titleKey(item) {
+  if (!isPlainObject(item) || item.id || !item.title) return null;
+  return String(item.title).trim().toLowerCase();
+}
+
+// The Blob items that are all versions of one seed card, newest last.
+function titleHistoryMatches(seedItem, blob, claimed) {
+  const history = seedItem.id && TITLE_HISTORY[seedItem.id];
+  if (!history) return [];
+  return blob
+    .map((b, i) => ({ i, at: history.indexOf(titleKey(b)) }))
+    .filter((m) => m.at !== -1 && !claimed.has(m.i))
+    .sort((a, b) => a.at - b.at)
+    .map((m) => m.i);
+}
+
 // Legacy Blob items predate ids. Fall back to the first word of whatever field
 // identifies the item to a human, which is how these lists are keyed elsewhere
 // (testimonial photos match on first name for the same reason).
@@ -58,7 +85,18 @@ function mergeArrays(seed, blob, deleted, path) {
 
   const out = [];
   seed.forEach((seedItem, seedIndex) => {
-    const i = findBlobItem(seedItem, seedIndex);
+    // Older versions of the same card are claimed so they can't come through
+    // as extras; the newest is the one that gets merged.
+    const versions = titleHistoryMatches(seedItem, blob, claimed);
+    versions.forEach((v) => claimed.add(v));
+    const newest = versions.length ? versions[versions.length - 1] : -1;
+    if (newest !== -1) {
+      // Any copy still carrying the card's id holds the wording she replaced.
+      const superseded = findBlobItem(seedItem, seedIndex);
+      if (superseded !== -1) claimed.add(superseded);
+    }
+
+    const i = newest !== -1 ? newest : findBlobItem(seedItem, seedIndex);
     if (i !== -1) claimed.add(i);
     const merged = i === -1 ? seedItem : mergeValue(seedItem, blob[i], deleted, path + '[]');
     // Seed items carry the canonical id even when the Blob copy predates it.

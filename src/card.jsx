@@ -4,15 +4,12 @@
 // + inclusions + CTA); ✕ minimises it again. Works on dark (Services) and light
 // (Seminars) backgrounds via the `scheme` prop.
 
-// Plain-English names for Lauren's branded service titles, keyed by slug so it
-// survives copy tweaks. Falls back to the title itself when unmapped (e.g.
-// seminar cards, whose names are already clear). Hardcoded for now; could move
-// to editable content later.
+// Light tidy-ups of the consultation titles (sentence case, no shouting),
+// keyed by slug. Falls back to the title itself when unmapped, which is the
+// case for every card whose wording Lauren owns. The plan cards used to be
+// listed here too, under names that replaced rather than tidied hers, so the
+// title she typed in /admin never reached the page — removed.
 const SERVICE_NAME_MAP = {
-  'fuel-up-performance-plan':        { name: 'Nutrition Plan + Initial Consult', brand: 'Fuel UP Performance Plan' },
-  'initial-consult-performance-plan':{ name: 'Nutrition Plan + Initial Consult', brand: 'Fuel UP Performance Plan' },
-  'level-up-performance-plan':       { name: 'Event / Race Fuelling Package',    brand: 'Level UP Performance Plan' },
-  'level-up-race-fuelling-pack':     { name: 'Event / Race Fuelling Package',    brand: 'Level UP Race Fuelling Pack' },
   'initial-nutrition-consultation':  { name: 'Initial Consultation',             brand: null },
   'review-consultation':             { name: 'Follow-up Consultation',           brand: null },
   'performance-nutrition-coaching':  { name: 'Ongoing Nutrition Coaching',       brand: null },
@@ -61,7 +58,7 @@ function ExpandableCard({ card, scheme, displayName, brandTag, cta, expanded, on
   return (
     <div
       ref={cardRef}
-      id={slugify(card.title)}
+      id={card.anchor || slugify(card.title)}
       className="relative flex flex-col rounded-2xl overflow-hidden transition-all duration-200 scroll-mt-28 cursor-pointer"
       style={{
         background: bg,

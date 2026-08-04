@@ -3,7 +3,10 @@
 const CALENDLY_URL = "https://calendly.com/updietitian/15min";
 
 // Direct booking links for the consultations that can be booked outright,
-// rather than routed through the free discovery call. Keyed by service slug.
+// rather than routed through the free discovery call. Keyed by the card's id,
+// not a slug of its title — retitling a card in /admin used to silently drop
+// its booking link back to the generic discovery call. Lauren can override
+// either of these per card from /admin (bookingUrl / bookingLabel).
 const CALENDLY_LINKS = {
   'initial-nutrition-consultation': {
     url: 'https://calendly.com/updietitian/up-dietitian-initial-consultation',

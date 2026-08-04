@@ -118,8 +118,8 @@
     //     { label: 'Testimonials', path: 'about.testimonials', kind: 'testimonials' },
     //   ]},
     { title: 'Services', fields: [
-      { label: 'Hero cards (packages)', path: 'services.heroCards', kind: 'cards' },
-      { label: 'Tier cards (consult types)', path: 'services.tierCards', kind: 'cards' },
+      { label: 'Packages', path: 'services.heroCards', kind: 'cards', booking: true },
+      { label: 'Consultations & coaching', path: 'services.tierCards', kind: 'cards', booking: true },
       { label: 'Footer note', path: 'services.footerNote', kind: 'textarea' },
     ]},
     { title: 'Seminars', fields: [
@@ -294,6 +294,39 @@
       bodyInput.addEventListener('input', () => { card.body = bodyInput.value; });
       bodyField.appendChild(bodyInput);
       box.appendChild(bodyField);
+
+      // Booking button. Left blank, the card keeps whichever link it already
+      // has (a direct Calendly event, or the free discovery call).
+      if (field.booking) {
+        const urlField = el('div', { class: 'field' });
+        urlField.appendChild(el('label', { text: 'Booking link (leave blank to keep the current one)' }));
+        const urlInput = el('input', { type: 'text' });
+        urlInput.placeholder = 'https://calendly.com/updietitian/…';
+        urlInput.value = card.bookingUrl || '';
+        urlInput.addEventListener('input', () => { card.bookingUrl = urlInput.value.trim(); });
+        urlField.appendChild(urlInput);
+        box.appendChild(urlField);
+
+        const labelField = el('div', { class: 'field' });
+        labelField.appendChild(el('label', { text: 'Booking button wording' }));
+        const labelInput = el('input', { type: 'text' });
+        labelInput.placeholder = 'Book a discovery call';
+        labelInput.value = card.bookingLabel || '';
+        labelInput.addEventListener('input', () => { card.bookingLabel = labelInput.value; });
+        labelField.appendChild(labelInput);
+        box.appendChild(labelField);
+
+        const popField = el('div', { class: 'field' });
+        const popLabel = el('label', { style: 'display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0' });
+        const popInput = el('input', { type: 'checkbox' });
+        popInput.style.width = 'auto';
+        popInput.checked = !!card.popular;
+        popInput.addEventListener('change', () => { card.popular = popInput.checked; });
+        popLabel.appendChild(popInput);
+        popLabel.appendChild(document.createTextNode('Show the orange “Most Popular” banner on this card'));
+        popField.appendChild(popLabel);
+        box.appendChild(popField);
+      }
 
       const bulletsField = el('div', { class: 'field' });
       bulletsField.appendChild(el('label', { text: 'Inclusions (one per line)' }));

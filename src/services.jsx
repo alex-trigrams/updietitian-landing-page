@@ -9,29 +9,29 @@ const SVC_CREAM  = '#EAE6D7';
 const HERO_CARDS_DEFAULT = [
   {
     popular: true,
-    eyebrow: null,
-    title: 'INITIAL CONSULT + PERFORMANCE PLAN',
-    body: 'The full picture. A deep-dive initial consultation followed by a completely individualised performance nutrition plan — built around your goals, training demands, race calendar, and lifestyle.',
+    eyebrow: 'FUEL UP PERFORMANCE PLAN',
+    title: "'SET YOURSELF UP' PERFORMANCE PLAN",
+    body: 'This is the ultimate starting point towards better nutrition and health. This package includes an Initial Consultation + Performance Nutrition Plan + 1 x Review Consultation. You will receive an individualised performance nutrition plan built around your goals, training demands, race calendar and lifestyle.',
     bullets: [
-      '30–45 min initial nutrition consultation',
-      'Tailored nutrition plan for your primary goal',
-      'Sports performance, body composition, race fuelling, injury recovery or health outcomes',
-      'Meal timing, training-day fuelling, and recovery protocols',
-      'Private health rebates available',
+      '30 minute initial nutrition consultation',
+      'Tailored nutrition plan based around your lifestyle & goals',
+      'Sports performance, fight camp, body composition, race fuelling, injury recovery or general health outcomes',
+      'Covers meal timing, training-day fuelling, supplementation and recovery protocols',
+      'Ongoing support available',
     ],
     tags: ['ALL SPORTS', 'RACE PREP', 'BODY COMPOSITION', 'HEALTH OUTCOMES'],
   },
   {
     popular: false,
     eyebrow: 'RACE PACKAGE',
-    title: 'LEVEL UP RACE FUELLING PACK',
-    body: 'The complete race preparation package. Everything you need to arrive at the start line with a tested nutrition and fuelling strategy — from initial consult through to race morning.',
+    title: "'LEVEL UP' PERFORMANCE PLAN",
+    body: 'Set yourself up for success with an Initial Consultation, Performance Nutrition Plan and 8 weeks of Nutrition Coaching to dial in your fuelling ahead of an event. This package is designed for individuals going into a race build and want to optimise every step of the way. From training to race morning, every aspect of your fuelling will be optimised to help you arrive at the start line confident in your approach.',
     bullets: [
-      '1 × 30-min initial nutrition consultation',
+      '30 minute initial online nutrition consultation',
       'Individualised performance nutrition plan',
-      '8 weeks of nutrition coaching (fortnightly on request)',
-      'Full race day fuelling plan — hour by hour',
-      'Carb loading protocol for race week',
+      '8 weeks of online nutrition coaching (fortnightly available on request)',
+      'Performance supplement suggestions',
+      'Race week nutrition plan including carbohydrate loading protocols, supplementation & race day planning',
     ],
     tags: ['IRONMAN', 'UTMB / ULTRA', 'MARATHON', '70.3'],
   },
@@ -102,21 +102,24 @@ function Services({ theme }) {
   const toggle = (slug) => setExpanded(e => ({ ...e, [slug]: !e[slug] }));
 
   const renderCard = (card, large) => {
-    const slug = slugify(card.title);
+    const slug = card.id || slugify(card.title);
     const nm = serviceName(card.title);
     // Consultations that can be booked outright link straight to their own
     // Calendly event; everything else still routes via the free discovery call.
-    const direct = CALENDLY_LINKS[slug];
+    // A link set in /admin wins over the built-in one.
+    const direct = card.bookingUrl
+      ? { url: card.bookingUrl, label: card.bookingLabel || 'Book now' }
+      : CALENDLY_LINKS[slug];
     return (
       <ExpandableCard
         key={slug}
-        card={{ ...card, image: SERVICE_IMAGES[slug] }}
+        card={{ ...card, anchor: slug, image: SERVICE_IMAGES[slug] }}
         scheme="dark"
         large={large}
         displayName={nm.name}
         brandTag={nm.brand}
         cta={direct
-          ? { type: 'calendly', url: direct.url, label: direct.label }
+          ? { type: 'calendly', url: direct.url, label: card.bookingLabel || direct.label }
           : { type: 'calendly', label: 'Book a discovery call' }}
         expanded={!!expanded[slug]}
         onToggle={() => toggle(slug)}

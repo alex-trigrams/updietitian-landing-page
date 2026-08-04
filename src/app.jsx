@@ -91,10 +91,17 @@ function ServicesTeaser() {
     return s ? s[0].trim() : String(body || '');
   };
   const hero = C('services.heroCards', null) || [];
-  // Use the plain-English names (serviceName) with the brand name as a small tag.
+  // Name and tag exactly as they read on the Services page, and deep-link on
+  // the card's id so a retitle in /admin doesn't break the link.
+  const teaser = (c) => ({
+    t: serviceName(c.title).name,
+    brand: c.eyebrow || serviceName(c.title).brand,
+    slug: c.id || slugify(c.title),
+    d: summarise(c.body),
+  });
   const items = [
-    hero[0] && { t: serviceName(hero[0].title).name, brand: serviceName(hero[0].title).brand, slug: slugify(hero[0].title), d: summarise(hero[0].body) },
-    hero[1] && { t: serviceName(hero[1].title).name, brand: serviceName(hero[1].title).brand, slug: slugify(hero[1].title), d: summarise(hero[1].body) },
+    hero[0] && teaser(hero[0]),
+    hero[1] && teaser(hero[1]),
     { t: 'Consultations & Coaching', brand: null, slug: null, d: 'Initial and review consultations, plus ongoing performance nutrition coaching through your training block.' },
   ].filter(Boolean);
   return (
