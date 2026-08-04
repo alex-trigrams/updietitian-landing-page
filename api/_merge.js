@@ -95,7 +95,11 @@ function mergeContent(seed, blob) {
   if (!isPlainObject(seed)) return blob;
   const deleted = new Set(Array.isArray(blob._deleted) ? blob._deleted : []);
   const out = mergeValue(seed, blob, deleted, '');
-  delete out._deleted;
+  // Carried through rather than stripped: /admin edits the merged content and
+  // saves it straight back, so dropping the list here would resurrect every
+  // deleted item on the save after next. Nothing renders it.
+  if (deleted.size) out._deleted = Array.from(deleted);
+  else delete out._deleted;
   return out;
 }
 

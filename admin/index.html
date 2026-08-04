@@ -30,6 +30,9 @@
   .field textarea { min-height:70px; line-height:1.5; }
   .list-item { border:1px dashed rgba(32,28,18,.2); border-radius:10px; padding:14px; margin-bottom:12px; }
   .list-item .field { margin-bottom:10px; }
+  .remove-btn { float:right; margin:-4px 0 0 8px; background:none; border:1px solid rgba(32,28,18,.25); color:rgba(32,28,18,.6);
+                border-radius:999px; padding:4px 12px; font-size:12px; cursor:pointer; }
+  .remove-btn:hover { border-color:#E2662A; color:#E2662A; }
   #status { position:fixed; bottom:20px; right:20px; padding:12px 18px; border-radius:10px; font-size:13px; font-weight:600; display:none; }
   #status.show { display:block; }
   #status.ok { background:#1D4032; color:#EAE6D7; }
@@ -237,6 +240,22 @@
     const items = getPath(content, field.path) || [];
     items.forEach((card) => {
       const box = el('div', { class: 'list-item' });
+
+      // Removing a card. Cards that ship with the site come back from the seed
+      // on the next load unless they're listed in _deleted (see api/_merge.js),
+      // so record the id as well as dropping it from the list.
+      const removeBtn = el('button', { type: 'button', class: 'remove-btn', text: 'Remove this card' });
+      removeBtn.addEventListener('click', () => {
+        if (!window.confirm('Remove "' + (card.title || 'this card') + '" from the site?')) return;
+        const i = items.indexOf(card);
+        if (i !== -1) items.splice(i, 1);
+        if (card.id) {
+          if (!Array.isArray(content._deleted)) content._deleted = [];
+          if (!content._deleted.includes(card.id)) content._deleted.push(card.id);
+        }
+        renderForm();
+      });
+      box.appendChild(removeBtn);
 
       // Always offered, even on cards that arrived without one — a card with no
       // tag yet is exactly the case where you want to add it.
