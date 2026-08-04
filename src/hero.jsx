@@ -125,7 +125,7 @@ function Hero({ headline, sub, theme }) {
       {/* scroll cue */}
       <div className="relative max-w-[1400px] mx-auto w-full px-5 md:px-8 mt-auto pt-8 pb-8 flex items-center justify-between font-mono text-[10px] md:text-[11px] uppercase tracking-[.2em]" style={{ color: t.sub }}>
         <span>scroll ↓  level up your performance</span>
-        <span className="hidden sm:inline">In-clinic · Front Runner Sports, Osborne Park</span>
+        <span className="hidden sm:inline">In-clinic · Front Runner Physiotherapy, Osborne Park</span>
         <span>APD</span>
       </div>
     </section>

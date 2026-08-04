@@ -68,7 +68,7 @@ function Privacy() {
       <p>We use trusted providers to run our practice and website. Each has its own privacy policy:</p>
       <ul>
         <li><strong>Calendly</strong> — discovery-call scheduling.</li>
-        <li><strong>Front Runner Sports / Cliniko</strong> — in-person clinic bookings and clinical records.</li>
+        <li><strong>Front Runner Physiotherapy / Cliniko</strong> — in-person clinic bookings and clinical records.</li>
         <li><strong>Vercel</strong> — website hosting and privacy-friendly, cookieless analytics.</li>
         <li><strong>Instagram (Meta)</strong> — if you choose to visit or contact us via social media.</li>
       </ul>
@@ -104,7 +104,7 @@ function Cookies() {
       <p>The only cookie this site can set is a session cookie used by the private administration area, which is used exclusively by the site owner to edit website content. It is never set for ordinary visitors browsing the public site.</p>
 
       <h2>Third-party links</h2>
-      <p>When you book through Calendly or Front Runner Sports, or visit our Instagram, those services may set their own cookies under their own policies. Please refer to their respective privacy and cookie policies.</p>
+      <p>When you book through Calendly or Front Runner Physiotherapy, or visit our Instagram, those services may set their own cookies under their own policies. Please refer to their respective privacy and cookie policies.</p>
 
       <h2>Managing cookies</h2>
       <p>Because we set no tracking cookies, there is nothing to consent to or opt out of here. You can still control or clear cookies at any time through your browser settings.</p>
@@ -190,7 +190,7 @@ function ContactPage() {
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">In person</span>
-                <span className="normal-case tracking-normal text-[14px] leading-snug">Front Runner Sports<br/>Osborne Park, WA</span>
+                <span className="normal-case tracking-normal text-[14px] leading-snug">Front Runner Physiotherapy<br/>Osborne Park, WA</span>
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Online</span>

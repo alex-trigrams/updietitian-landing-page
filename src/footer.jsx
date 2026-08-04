@@ -31,7 +31,7 @@ function Footer({ theme }) {
             <div className="grid grid-cols-2 gap-6 font-mono text-[12px] uppercase tracking-[.16em]">
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Clinic</span>
-                <span>Front Runner<br/>Sports</span>
+                <span>Front Runner<br/>Physiotherapy</span>
                 <span className="opacity-70 normal-case tracking-normal text-[13px]">Osborne Park, WA</span>
               </div>
               <div className="flex flex-col gap-2.5">

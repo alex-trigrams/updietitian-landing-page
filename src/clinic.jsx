@@ -1,4 +1,4 @@
-// Clinic — in-person booking section at Front Runner Sports, Osborne Park.
+// Clinic — in-person booking section at Front Runner Physiotherapy, Osborne Park.
 const CLINIKO_URL = "https://front-runner-sports.au1.cliniko.com/bookings#location";
 
 const CLINIC_PHOTO = 'assets/images/clinic/front-runner-physio-osbornepark.avif';
@@ -34,7 +34,7 @@ function Clinic({ theme }) {
               {CLINIC_PHOTO ? (
                 <img
                   src={CLINIC_PHOTO}
-                  alt="Front Runner Sports clinic, Osborne Park"
+                  alt="Front Runner Physiotherapy clinic, Osborne Park"
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                 />
               ) : (
@@ -59,7 +59,7 @@ function Clinic({ theme }) {
             <div className="grid grid-cols-2 gap-5 border-t border-b py-6" style={{ borderColor: 'rgba(234,230,215,.12)' }}>
               <div className="flex flex-col gap-2 font-mono text-[12px] uppercase tracking-[.16em]">
                 <span className="opacity-50">Clinic</span>
-                <span className="leading-snug">Front Runner<br/>Sports</span>
+                <span className="leading-snug">Front Runner<br/>Physiotherapy</span>
               </div>
               <div className="flex flex-col gap-2 font-mono text-[12px] uppercase tracking-[.16em]">
                 <span className="opacity-50">Location</span>
@@ -77,7 +77,7 @@ function Clinic({ theme }) {
               </div>
               <div className="flex flex-col gap-2 font-mono text-[12px] uppercase tracking-[.16em]">
                 <span className="opacity-50">Booking</span>
-                <span className="leading-snug opacity-70 normal-case tracking-normal text-[13px]">Direct through<br/>Front Runner Sports</span>
+                <span className="leading-snug opacity-70 normal-case tracking-normal text-[13px]">Direct through<br/>Front Runner Physiotherapy</span>
               </div>
             </div>
 
@@ -91,7 +91,7 @@ function Clinic({ theme }) {
                 <span className="font-mono text-[11px] uppercase tracking-[.2em] opacity-70">Taking in-person appointments</span>
               </div>
               <p className="text-[14px] leading-relaxed opacity-70">
-                {C('clinic.bookingNote', 'Select your appointment type and preferred time directly through Front Runner Sports. Health fund rebates available.')}
+                {C('clinic.bookingNote', 'Select your appointment type and preferred time directly through Front Runner Physiotherapy. Health fund rebates available.')}
               </p>
               <a
                 href={CLINIKO_URL}

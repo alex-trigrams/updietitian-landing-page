@@ -15,7 +15,7 @@ const ROUTE_META = {
   '/about':    { title: 'About Lauren Nash · UP Dietitian', desc: 'Meet Lauren Nash — Accredited Practising Dietitian, endurance athlete and founder of UP Dietitian.' },
   '/services': { title: 'Services · UP Dietitian', desc: 'Performance nutrition plans, race fuelling packages, consultations and ongoing coaching for athletes.' },
   '/seminars': { title: 'Seminars & Talks · UP Dietitian', desc: 'Sports nutrition seminars for corporate teams, clubs and community groups.' },
-  '/clinic':   { title: 'In-Person Clinic · UP Dietitian', desc: 'Face-to-face nutrition consultations at Front Runner Sports, Osborne Park WA.' },
+  '/clinic':   { title: 'In-Person Clinic · UP Dietitian', desc: 'Face-to-face nutrition consultations at Front Runner Physiotherapy, Osborne Park WA.' },
   '/contact':  { title: 'Contact · UP Dietitian', desc: 'Get in touch with UP Dietitian — Perth WA and online, Australia-wide and internationally.' },
   '/privacy':  { title: 'Privacy Policy · UP Dietitian', desc: 'How UP Dietitian collects, uses and protects your personal information.' },
   '/cookies':  { title: 'Cookie Policy · UP Dietitian', desc: 'How UP Dietitian uses cookies and analytics.' },

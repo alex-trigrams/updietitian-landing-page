@@ -53,7 +53,14 @@
     "heroCards": [
       {
         "id": "initial-consult-performance",
+        "eyebrow": "FUEL UP PERFORMANCE PLAN",
         "title": "INITIAL CONSULT + PERFORMANCE PLAN",
+        "tags": [
+          "ALL SPORTS",
+          "RACE PREP",
+          "BODY COMPOSITION",
+          "HEALTH OUTCOMES"
+        ],
         "body": "The full picture. A deep-dive initial consultation followed by a completely individualised performance nutrition plan — built around your goals, training demands, race calendar, and lifestyle.",
         "bullets": [
           "30–45 min initial nutrition consultation",
@@ -67,6 +74,12 @@
         "id": "level-up-race",
         "eyebrow": "RACE PACKAGE",
         "title": "LEVEL UP RACE FUELLING PACK",
+        "tags": [
+          "IRONMAN",
+          "UTMB / ULTRA",
+          "MARATHON",
+          "70.3"
+        ],
         "body": "The complete race preparation package. Everything you need to arrive at the start line with a tested nutrition and fuelling strategy — from initial consult through to race morning.",
         "bullets": [
           "1 × 30-min initial nutrition consultation",
@@ -82,18 +95,33 @@
         "id": "initial-nutrition-consultation",
         "eyebrow": "01 · CONSULTATION",
         "title": "INITIAL NUTRITION CONSULTATION",
+        "tags": [
+          "30–45 MIN",
+          "IN PERSON OR ONLINE",
+          "HEALTH REBATES"
+        ],
         "body": "A focused 1-on-1 session to understand your goals, training load, lifestyle and nutrition history. Walk away with personalised advice and clear targets to act on straight away."
       },
       {
         "id": "review-consultation",
         "eyebrow": "02 · FOLLOW-UP",
         "title": "REVIEW CONSULTATION",
+        "tags": [
+          "30 MIN",
+          "PLAN UPDATE",
+          "ACCOUNTABILITY"
+        ],
         "body": "A 30-minute follow-up to assess progress, address new challenges, and refine your nutrition plan. Keeps you accountable and moving forward with confidence between full consults."
       },
       {
         "id": "performance-nutrition-coaching",
         "eyebrow": "03 · COACHING",
         "title": "PERFORMANCE NUTRITION COACHING",
+        "tags": [
+          "WEEKLY COACHING",
+          "4 WEEK MIN",
+          "RACE SEASON"
+        ],
         "body": "Ongoing weekly support, accountability, and plan adjustments across your training block. Ideal for athletes with a busy race calendar who need nutrition that adapts as training does.",
         "bullets": [
           "1 × weekly 15-min check-in call (Zoom or phone)",
@@ -183,7 +211,7 @@
   "clinic": {
     "description": "For Perth locals, Lauren offers in-person consultations and nutrition planning for those who prefer face-to-face care. Now available two days per week at Front Runner Physiotherapy in Osborne Park — book direct through their website.",
     "address": "2/16 Baden Street, Osborne Park, WA",
-    "bookingNote": "Select your appointment type and preferred time directly through Front Runner Sports. Health fund rebates available."
+    "bookingNote": "Select your appointment type and preferred time directly through Front Runner Physiotherapy. Health fund rebates available."
   },
   "footer": {
     "ctaLabel": "Start your journey with UP Dietitian here",

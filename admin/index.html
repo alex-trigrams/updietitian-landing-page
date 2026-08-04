@@ -238,15 +238,15 @@
     items.forEach((card) => {
       const box = el('div', { class: 'list-item' });
 
-      if ('eyebrow' in card) {
-        const eyebrowField = el('div', { class: 'field' });
-        eyebrowField.appendChild(el('label', { text: 'Eyebrow tag' }));
-        const eyebrowInput = el('input', { type: 'text' });
-        eyebrowInput.value = card.eyebrow || '';
-        eyebrowInput.addEventListener('input', () => { card.eyebrow = eyebrowInput.value; });
-        eyebrowField.appendChild(eyebrowInput);
-        box.appendChild(eyebrowField);
-      }
+      // Always offered, even on cards that arrived without one — a card with no
+      // tag yet is exactly the case where you want to add it.
+      const eyebrowField = el('div', { class: 'field' });
+      eyebrowField.appendChild(el('label', { text: 'Tag (small line above the title)' }));
+      const eyebrowInput = el('input', { type: 'text' });
+      eyebrowInput.value = card.eyebrow || '';
+      eyebrowInput.addEventListener('input', () => { card.eyebrow = eyebrowInput.value; });
+      eyebrowField.appendChild(eyebrowInput);
+      box.appendChild(eyebrowField);
 
       const titleField = el('div', { class: 'field' });
       titleField.appendChild(el('label', { text: 'Title' }));
@@ -256,6 +256,18 @@
       titleField.appendChild(titleInput);
       box.appendChild(titleField);
 
+      // The small pills under the title.
+      const tagsField = el('div', { class: 'field' });
+      tagsField.appendChild(el('label', { text: 'Pills under the title (one per line)' }));
+      const tagsInput = el('textarea');
+      tagsInput.style.minHeight = '80px';
+      tagsInput.value = Array.isArray(card.tags) ? card.tags.join('\n') : '';
+      tagsInput.addEventListener('input', () => {
+        card.tags = tagsInput.value.split('\n').map((s) => s.trim()).filter(Boolean);
+      });
+      tagsField.appendChild(tagsInput);
+      box.appendChild(tagsField);
+
       const bodyField = el('div', { class: 'field' });
       bodyField.appendChild(el('label', { text: 'Body' }));
       const bodyInput = el('textarea');
@@ -264,18 +276,16 @@
       bodyField.appendChild(bodyInput);
       box.appendChild(bodyField);
 
-      if (Array.isArray(card.bullets)) {
-        const bulletsField = el('div', { class: 'field' });
-        bulletsField.appendChild(el('label', { text: 'Bullets (one per line)' }));
-        const bulletsInput = el('textarea');
-        bulletsInput.style.minHeight = '110px';
-        bulletsInput.value = card.bullets.join('\n');
-        bulletsInput.addEventListener('input', () => {
-          card.bullets = bulletsInput.value.split('\n').map((s) => s.trim()).filter(Boolean);
-        });
-        bulletsField.appendChild(bulletsInput);
-        box.appendChild(bulletsField);
-      }
+      const bulletsField = el('div', { class: 'field' });
+      bulletsField.appendChild(el('label', { text: 'Inclusions (one per line)' }));
+      const bulletsInput = el('textarea');
+      bulletsInput.style.minHeight = '110px';
+      bulletsInput.value = Array.isArray(card.bullets) ? card.bullets.join('\n') : '';
+      bulletsInput.addEventListener('input', () => {
+        card.bullets = bulletsInput.value.split('\n').map((s) => s.trim()).filter(Boolean);
+      });
+      bulletsField.appendChild(bulletsInput);
+      box.appendChild(bulletsField);
 
       wrap.appendChild(box);
     });

@@ -69,9 +69,13 @@ const TIER_CARDS_DEFAULT = [
 // Optional photos per card — drop { avif, jpg, alt } here later, keyed by slug.
 const SERVICE_IMAGES = {};
 
+// The content list is the source of truth for how many cards there are — cards
+// Lauren adds in /admin used to be dropped here, because this mapped over the
+// hardcoded defaults. Defaults still supply what /admin doesn't edit (the
+// "Most Popular" flag) for the cards that shipped with the site.
 function mergeCards(defaults, overrides) {
   if (!overrides) return defaults;
-  return defaults.map((d, i) => (overrides[i] ? { ...d, ...overrides[i] } : d));
+  return overrides.map((o, i) => ({ ...(defaults[i] || {}), ...o }));
 }
 
 const HERO_CARDS = mergeCards(HERO_CARDS_DEFAULT, C('services.heroCards', null));

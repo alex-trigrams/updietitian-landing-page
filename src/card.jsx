@@ -83,10 +83,12 @@ function ExpandableCard({ card, scheme, displayName, brandTag, cta, expanded, on
       <CardBanner image={card.image} />
 
       <div className={`flex flex-col flex-1 ${large ? 'px-7 pt-5' : 'px-6 pt-5'} pb-6`}>
-        {/* eyebrow / brand tag + toggle */}
+        {/* eyebrow / brand tag + toggle. The tag Lauren saves in /admin wins;
+            the branded name is only a fallback for cards that have never had
+            one set, so editing it in /admin now actually shows on the site. */}
         <div className="flex items-start justify-between gap-2">
           <span className="font-mono text-[11px] uppercase tracking-[.2em]" style={{ color: ACCENT }}>
-            {stripLeadNumber(brandTag || card.eyebrow) || ' '}
+            {stripLeadNumber(card.eyebrow || brandTag) || ' '}
           </span>
           <button
             onClick={(e) => { stop(e); onToggle(); }}
