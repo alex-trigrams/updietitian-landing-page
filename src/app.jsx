@@ -163,22 +163,6 @@ function HomePage({ t, theme }) {
       <section className="relative" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           <Testimonials />
-          {/* Closing image — the bottom of the home page ran out of content on
-              the right before the footer, so a branded shot fills the gap and
-              hands off into the dark footer. Decorative, hence alt="". */}
-          <div className="mt-10 md:mt-12 flex justify-center md:justify-end">
-            <div className="relative w-full rounded-3xl overflow-hidden" style={{ paddingBottom: 'min(125%, 475px)', maxWidth: 380 }}>
-              <picture>
-                <source srcSet="assets/images/misc/Socials_5.avif" type="image/avif" />
-                <img
-                  src="assets/images/misc/Socials_5.jpg"
-                  alt=""
-                  loading="lazy"
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                />
-              </picture>
-            </div>
-          </div>
         </div>
       </section>
     </React.Fragment>

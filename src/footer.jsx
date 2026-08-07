@@ -8,10 +8,29 @@ function Footer({ theme }) {
           <span>The next step</span>
         </div>
 
-        <h2 className="mt-6 font-display leading-[.85]" style={{ fontSize: 'clamp(64px, 14vw, 240px)' }}>
-          <span className="skew-italic">Level</span><br/>
-          <span className="skew-italic" style={{ color: '#FF6C00' }}>UP.</span>
-        </h2>
+        {/* "Level UP." only ever fills the left of its line, so the right of
+            the footer sat empty. A branded shot squares it off; it drops below
+            the type on narrow screens rather than shrinking to nothing.
+            Decorative, hence alt="". */}
+        <div className="mt-6 grid grid-cols-12 gap-6 md:gap-10 items-center">
+          <h2 className="col-span-12 md:col-span-7 font-display leading-[.85]" style={{ fontSize: 'clamp(64px, 14vw, 240px)' }}>
+            <span className="skew-italic">Level</span><br/>
+            <span className="skew-italic" style={{ color: '#FF6C00' }}>UP.</span>
+          </h2>
+          <div className="col-span-12 md:col-span-5 flex justify-center md:justify-end">
+            <div className="relative w-full rounded-3xl overflow-hidden" style={{ paddingBottom: 'min(125%, 460px)', maxWidth: 368 }}>
+              <picture>
+                <source srcSet="assets/images/misc/Socials_5.avif" type="image/avif" />
+                <img
+                  src="assets/images/misc/Socials_5.jpg"
+                  alt=""
+                  loading="lazy"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              </picture>
+            </div>
+          </div>
+        </div>
 
         <div className="mt-10 grid grid-cols-12 gap-6 md:gap-10">
           <div className="col-span-12 md:col-span-6 lg:col-span-7">
