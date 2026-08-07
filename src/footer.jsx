@@ -20,9 +20,9 @@ function Footer({ theme }) {
           <div className="col-span-12 md:col-span-5 flex justify-center md:justify-end">
             <div className="relative w-full rounded-3xl overflow-hidden" style={{ paddingBottom: 'min(125%, 460px)', maxWidth: 368 }}>
               <picture>
-                <source srcSet="assets/images/misc/Socials_5.avif" type="image/avif" />
+                <source srcSet="assets/images/misc/footer-ride.avif" type="image/avif" />
                 <img
-                  src="assets/images/misc/Socials_5.jpg"
+                  src="assets/images/misc/footer-ride.jpg"
                   alt=""
                   loading="lazy"
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
