@@ -45,6 +45,10 @@ const TITLE_HISTORY = {
 // Each entry lists every wording the seed has left behind, so a card renamed
 // more than once still lands. Safe to delete once /admin has been saved again.
 const RENAMED_TITLES = {
+  // The two package titles, recased only — the wording here is Lauren's own,
+  // copied from the Blob, so the entries below swap nothing but the capitals.
+  'initial-consult-performance':     ['set yourself up nutrition plan'],
+  'level-up-race':                   ['level up performance plan'],
   'initial-nutrition-consultation':  ['initial nutrition consultation'],
   'review-consultation':             ['review consultation', 'follow-up review'],
   'performance-nutrition-coaching':  ['performance nutrition coaching'],

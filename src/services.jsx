@@ -10,7 +10,7 @@ const HERO_CARDS_DEFAULT = [
   {
     popular: true,
     eyebrow: 'FUEL UP PERFORMANCE PLAN',
-    title: "'Set Yourself Up' Performance Plan",
+    title: "Set Yourself Up Nutrition Plan",
     body: 'This is the ultimate starting point towards better nutrition and health. This package includes an Initial Consultation + Performance Nutrition Plan + 1 x Review Consultation. You will receive an individualised performance nutrition plan built around your goals, training demands, race calendar and lifestyle.',
     bullets: [
       '30 minute initial nutrition consultation',
@@ -24,7 +24,7 @@ const HERO_CARDS_DEFAULT = [
   {
     popular: false,
     eyebrow: 'RACE PACKAGE',
-    title: "'Level Up' Performance Plan",
+    title: "Level Up Performance Plan",
     body: 'Set yourself up for success with an Initial Consultation, Performance Nutrition Plan and 8 weeks of Nutrition Coaching to dial in your fuelling ahead of an event. This package is designed for individuals going into a race build and want to optimise every step of the way. From training to race morning, every aspect of your fuelling will be optimised to help you arrive at the start line confident in your approach.',
     bullets: [
       '30 minute initial online nutrition consultation',
