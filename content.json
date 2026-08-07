@@ -55,7 +55,7 @@
         "id": "initial-consult-performance",
         "popular": true,
         "eyebrow": "FUEL UP PERFORMANCE PLAN",
-        "title": "'SET YOURSELF UP' PERFORMANCE PLAN",
+        "title": "'Set Yourself Up' Performance Plan",
         "tags": [
           "ALL SPORTS",
           "RACE PREP",
@@ -75,7 +75,7 @@
         "id": "level-up-race",
         "popular": false,
         "eyebrow": "RACE PACKAGE",
-        "title": "'LEVEL UP' PERFORMANCE PLAN",
+        "title": "'Level Up' Performance Plan",
         "tags": [
           "IRONMAN",
           "UTMB / ULTRA",
@@ -107,7 +107,7 @@
       {
         "id": "review-consultation",
         "eyebrow": "02 · FOLLOW-UP",
-        "title": "Follow-up Review",
+        "title": "Review Consultation",
         "tags": [
           "30 MIN",
           "PLAN UPDATE",
@@ -133,7 +133,7 @@
         ]
       }
     ],
-    "teaserTag": "ONE-OFF & ONGOING SUPPORT",
+    "teaserTag": "CONSULTS & ONGOING SUPPORT",
     "teaserCopy": "Initial and follow-up consultations, plus ongoing performance nutrition coaching through your training block.",
     "footerNote": "Private health rebates available for participating funds. Payment plan options available on request. All consults available in person (Perth, WA) or online."
   },

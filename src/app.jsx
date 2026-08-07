@@ -108,7 +108,7 @@ function ServicesTeaser() {
     // it used to be the only card on the row without the orange line.
     {
       t: 'Consultations & Coaching',
-      brand: C('services.teaserTag', 'ONE-OFF & ONGOING SUPPORT'),
+      brand: C('services.teaserTag', 'CONSULTS & ONGOING SUPPORT'),
       slug: null,
       d: C('services.teaserCopy', 'Initial and follow-up consultations, plus ongoing performance nutrition coaching through your training block.'),
     },

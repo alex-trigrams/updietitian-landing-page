@@ -42,20 +42,28 @@ const TITLE_HISTORY = {
 // to begin with (they were rewritten in code on the way to the page until the
 // override in src/card.jsx was removed). If the Blob still holds exactly the
 // superseded title, the seed title wins; anything else she has typed is kept.
-// Safe to delete once /admin has been saved again.
+// Each entry lists every wording the seed has left behind, so a card renamed
+// more than once still lands. Safe to delete once /admin has been saved again.
 const RENAMED_TITLES = {
-  'initial-nutrition-consultation':  'initial nutrition consultation',
-  'review-consultation':             'review consultation',
-  'performance-nutrition-coaching':  'performance nutrition coaching',
+  'initial-nutrition-consultation':  ['initial nutrition consultation'],
+  'review-consultation':             ['review consultation', 'follow-up review'],
+  'performance-nutrition-coaching':  ['performance nutrition coaching'],
 };
 
 function applyRenames(seedItem, merged) {
   const old = seedItem.id && RENAMED_TITLES[seedItem.id];
-  if (old && String(merged.title || '').trim().toLowerCase() === old) {
+  if (old && old.includes(String(merged.title || '').trim().toLowerCase())) {
     merged.title = seedItem.title;
   }
   return merged;
 }
+
+// The same idea for plain string fields, which have no id to match on: keyed by
+// dotted content path, listing the wordings the seed has superseded. Only used
+// when the Blob still holds one of them exactly.
+const RENAMED_FIELDS = {
+  'services.teaserTag': ['one-off & ongoing support'],
+};
 
 function titleKey(item) {
   if (!isPlainObject(item) || item.id || !item.title) return null;
@@ -138,6 +146,10 @@ function mergeArrays(seed, blob, deleted, path) {
 function mergeValue(seed, blob, deleted, path) {
   if (blob === undefined) return seed;
   if (CODE_OWNED.includes(path)) return seed;
+  if (typeof seed === 'string' && typeof blob === 'string') {
+    const superseded = RENAMED_FIELDS[path];
+    if (superseded && superseded.includes(blob.trim().toLowerCase())) return seed;
+  }
   if (Array.isArray(seed) && Array.isArray(blob)) return mergeArrays(seed, blob, deleted, path);
   if (!isPlainObject(seed) || !isPlainObject(blob)) return blob;
 
