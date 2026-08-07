@@ -36,6 +36,27 @@ const TITLE_HISTORY = {
   'level-up-race': ['level up race fuelling pack', "'level up' performance plan"],
 };
 
+// Titles the repo has renamed since the Blob last saved them. The Blob normally
+// wins field-by-field, so a rename in the seed would never reach the page while
+// the old wording sat in Lauren's saved copy — and these three were never hers
+// to begin with (they were rewritten in code on the way to the page until the
+// override in src/card.jsx was removed). If the Blob still holds exactly the
+// superseded title, the seed title wins; anything else she has typed is kept.
+// Safe to delete once /admin has been saved again.
+const RENAMED_TITLES = {
+  'initial-nutrition-consultation':  'initial nutrition consultation',
+  'review-consultation':             'review consultation',
+  'performance-nutrition-coaching':  'performance nutrition coaching',
+};
+
+function applyRenames(seedItem, merged) {
+  const old = seedItem.id && RENAMED_TITLES[seedItem.id];
+  if (old && String(merged.title || '').trim().toLowerCase() === old) {
+    merged.title = seedItem.title;
+  }
+  return merged;
+}
+
 function titleKey(item) {
   if (!isPlainObject(item) || item.id || !item.title) return null;
   return String(item.title).trim().toLowerCase();
@@ -98,7 +119,7 @@ function mergeArrays(seed, blob, deleted, path) {
 
     const i = newest !== -1 ? newest : findBlobItem(seedItem, seedIndex);
     if (i !== -1) claimed.add(i);
-    const merged = i === -1 ? seedItem : mergeValue(seedItem, blob[i], deleted, path + '[]');
+    const merged = i === -1 ? seedItem : applyRenames(seedItem, mergeValue(seedItem, blob[i], deleted, path + '[]'));
     // Seed items carry the canonical id even when the Blob copy predates it.
     if (seedItem.id) merged.id = seedItem.id;
     if (!merged.id || !deleted.has(merged.id)) out.push(merged);

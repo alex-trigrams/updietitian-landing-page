@@ -4,18 +4,14 @@
 // + inclusions + CTA); ✕ minimises it again. Works on dark (Services) and light
 // (Seminars) backgrounds via the `scheme` prop.
 
-// Light tidy-ups of the consultation titles (sentence case, no shouting),
-// keyed by slug. Falls back to the title itself when unmapped, which is the
-// case for every card whose wording Lauren owns. The plan cards used to be
-// listed here too, under names that replaced rather than tidied hers, so the
-// title she typed in /admin never reached the page — removed.
-const SERVICE_NAME_MAP = {
-  'initial-nutrition-consultation':  { name: 'Initial Consultation',             brand: null },
-  'review-consultation':             { name: 'Follow-up Consultation',           brand: null },
-  'performance-nutrition-coaching':  { name: 'Ongoing Nutrition Coaching',       brand: null },
-};
+// Card titles come straight from the content — every one of them is Lauren's
+// to write in /admin. There used to be a slug-keyed map here that rewrote the
+// three consultation titles on the way to the page ("Follow-up Consultation"
+// and friends); it silently overrode anything she typed, so retitling a
+// consultation in /admin did nothing. The tidied wording now lives in the
+// content itself instead, where she can change it.
 function serviceName(title) {
-  return SERVICE_NAME_MAP[slugify(title)] || { name: title, brand: null };
+  return { name: title, brand: null };
 }
 
 // Card eyebrows used to carry a running number ("01 · CONSULTATION"). Those
@@ -154,4 +150,4 @@ function ExpandableCard({ card, scheme, displayName, brandTag, cta, expanded, on
   );
 }
 
-Object.assign(window, { ExpandableCard, serviceName, SERVICE_NAME_MAP });
+Object.assign(window, { ExpandableCard, serviceName });

@@ -40,21 +40,21 @@ const HERO_CARDS_DEFAULT = [
 const TIER_CARDS_DEFAULT = [
   {
     eyebrow: '01 · CONSULTATION',
-    title: 'INITIAL NUTRITION CONSULTATION',
+    title: 'Initial Consultation',
     body: 'A focused 1-on-1 session to understand your goals, training load, lifestyle and nutrition history. Walk away with personalised advice and clear targets to act on straight away.',
     bullets: null,
     tags: ['30–45 MIN', 'IN PERSON OR ONLINE', 'HEALTH REBATES'],
   },
   {
     eyebrow: '02 · FOLLOW-UP',
-    title: 'REVIEW CONSULTATION',
+    title: 'Follow-up Review',
     body: 'A 30-minute follow-up to assess progress, address new challenges, and refine your nutrition plan. Keeps you accountable and moving forward with confidence between full consults.',
     bullets: null,
     tags: ['30 MIN', 'PLAN UPDATE', 'ACCOUNTABILITY'],
   },
   {
     eyebrow: '03 · COACHING',
-    title: 'PERFORMANCE NUTRITION COACHING',
+    title: 'Ongoing Nutrition Coaching',
     body: 'Ongoing weekly support, accountability, and plan adjustments across your training block. Ideal for athletes with a busy race calendar who need nutrition that adapts as training does.',
     bullets: [
       '1 × weekly 15-min check-in call (Zoom or phone)',

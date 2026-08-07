@@ -102,7 +102,16 @@ function ServicesTeaser() {
   const items = [
     hero[0] && teaser(hero[0]),
     hero[1] && teaser(hero[1]),
-    { t: 'Consultations & Coaching', brand: null, slug: null, d: 'Initial and review consultations, plus ongoing performance nutrition coaching through your training block.' },
+    // The third card links to the Services page as a whole rather than one
+    // service, so it has no card of its own to borrow an eyebrow from. Its
+    // accent tag and summary are their own content keys, editable in /admin —
+    // it used to be the only card on the row without the orange line.
+    {
+      t: 'Consultations & Coaching',
+      brand: C('services.teaserTag', 'ONE-OFF & ONGOING SUPPORT'),
+      slug: null,
+      d: C('services.teaserCopy', 'Initial and follow-up consultations, plus ongoing performance nutrition coaching through your training block.'),
+    },
   ].filter(Boolean);
   return (
     <section className="relative noise" style={{ background: '#1D4032', color: '#EAE6D7', paddingBlock: 'var(--pad-y, 96px)' }}>
@@ -154,6 +163,22 @@ function HomePage({ t, theme }) {
       <section className="relative" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           <Testimonials />
+          {/* Closing image — the bottom of the home page ran out of content on
+              the right before the footer, so a branded shot fills the gap and
+              hands off into the dark footer. Decorative, hence alt="". */}
+          <div className="mt-10 md:mt-12 flex justify-center md:justify-end">
+            <div className="relative w-full rounded-3xl overflow-hidden" style={{ paddingBottom: 'min(125%, 475px)', maxWidth: 380 }}>
+              <picture>
+                <source srcSet="assets/images/misc/Socials_5.avif" type="image/avif" />
+                <img
+                  src="assets/images/misc/Socials_5.jpg"
+                  alt=""
+                  loading="lazy"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              </picture>
+            </div>
+          </div>
         </div>
       </section>
     </React.Fragment>

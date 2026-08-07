@@ -66,28 +66,9 @@ function Seminars({ theme }) {
 
   return (
     <section id="seminars" data-screen-label="04 Seminars" className="relative noise" style={{ background: SEM_CREAM, color: SEM_INK, paddingBlock: 'var(--pad-y, 96px)' }}>
-      {/* Masthead backdrop — the event photo sits behind the header and fades
-          into the cream before the cards start, so it reads as atmosphere rather
-          than a figure. Decorative only, hence alt="" and aria-hidden. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none"
-        style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 'clamp(380px, 56vh, 680px)', overflow: 'hidden' }}
-      >
-        <picture>
-          <source srcSet="assets/images/seminars/community-event.avif" type="image/avif" />
-          <img
-            src="assets/images/seminars/community-event.jpg"
-            alt=""
-            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 32%', display: 'block' }}
-          />
-        </picture>
-        {/* Cream wash — heavier at the bottom so the copy and cards keep contrast */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(234,230,215,.78) 0%, rgba(234,230,215,.86) 40%, rgba(234,230,215,1) 88%)' }} />
-        {/* Extra veil on narrow screens: the crop lands on a busier part of the
-            photo and the intro copy wraps over more of it. */}
-        <div className="md:hidden" style={{ position: 'absolute', inset: 0, background: 'rgba(234,230,215,.34)' }} />
-      </div>
+      {/* The header used to sit on a washed-back event photo. Removed at the
+          client's request — the masthead reads cleaner on flat cream. The photo
+          itself is still in assets/images/seminars/ if it's wanted elsewhere. */}
 
       <div className="relative max-w-[1400px] mx-auto px-5 md:px-8">
 

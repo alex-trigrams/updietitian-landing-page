@@ -96,7 +96,7 @@
       {
         "id": "initial-nutrition-consultation",
         "eyebrow": "01 · CONSULTATION",
-        "title": "INITIAL NUTRITION CONSULTATION",
+        "title": "Initial Consultation",
         "tags": [
           "30–45 MIN",
           "IN PERSON OR ONLINE",
@@ -107,7 +107,7 @@
       {
         "id": "review-consultation",
         "eyebrow": "02 · FOLLOW-UP",
-        "title": "REVIEW CONSULTATION",
+        "title": "Follow-up Review",
         "tags": [
           "30 MIN",
           "PLAN UPDATE",
@@ -118,7 +118,7 @@
       {
         "id": "performance-nutrition-coaching",
         "eyebrow": "03 · COACHING",
-        "title": "PERFORMANCE NUTRITION COACHING",
+        "title": "Ongoing Nutrition Coaching",
         "tags": [
           "WEEKLY COACHING",
           "4 WEEK MIN",
@@ -133,6 +133,8 @@
         ]
       }
     ],
+    "teaserTag": "ONE-OFF & ONGOING SUPPORT",
+    "teaserCopy": "Initial and follow-up consultations, plus ongoing performance nutrition coaching through your training block.",
     "footerNote": "Private health rebates available for participating funds. Payment plan options available on request. All consults available in person (Perth, WA) or online."
   },
   "seminars": {

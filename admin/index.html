@@ -121,6 +121,11 @@
       { label: 'Packages', path: 'services.heroCards', kind: 'cards', booking: true },
       { label: 'Consultations & coaching', path: 'services.tierCards', kind: 'cards', booking: true },
       { label: 'Footer note', path: 'services.footerNote', kind: 'textarea' },
+      // The home page shows two packages plus a third card for consultations
+      // and coaching. The packages carry their own tag and summary; this third
+      // card has no single service behind it, so its copy lives here.
+      { label: 'Home page — third card tag (orange line)', path: 'services.teaserTag', kind: 'text' },
+      { label: 'Home page — third card summary', path: 'services.teaserCopy', kind: 'textarea' },
     ]},
     { title: 'Seminars', fields: [
       { label: 'Eyebrow tag', path: 'seminars.eyebrow', kind: 'text' },

@@ -14,7 +14,7 @@ const CALENDLY_LINKS = {
   },
   'review-consultation': {
     url: 'https://calendly.com/updietitian/up-dietitian-review-consultation',
-    label: 'Book a review consultation',
+    label: 'Book a follow-up review',
   },
 };
 
