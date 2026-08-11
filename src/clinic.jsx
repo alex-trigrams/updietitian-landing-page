@@ -1,7 +1,8 @@
 // Clinic — in-person booking section at Front Runner Physiotherapy, Osborne Park.
 const CLINIKO_URL = "https://front-runner-sports.au1.cliniko.com/bookings#location";
 
-const CLINIC_PHOTO = 'assets/images/clinic/front-runner-physio-osbornepark.avif';
+const CLINIC_PHOTO = 'assets/images/clinic/front-runner-physio-osbornepark.jpg';
+const CLINIC_PHOTO_AVIF = 'assets/images/clinic/front-runner-physio-osbornepark.avif';
 
 function Clinic({ theme }) {
   const t = THEMES[theme];
@@ -32,11 +33,14 @@ function Clinic({ theme }) {
               style={{ position: 'relative', paddingBottom: '75%', background: '#1D4032', minHeight: 280 }}
             >
               {CLINIC_PHOTO ? (
-                <img
-                  src={CLINIC_PHOTO}
-                  alt="Front Runner Physiotherapy clinic, Osborne Park"
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
-                />
+                <picture>
+                  <source srcSet={CLINIC_PHOTO_AVIF} type="image/avif" />
+                  <img
+                    src={CLINIC_PHOTO}
+                    alt="Front Runner Physiotherapy clinic, Osborne Park"
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                  />
+                </picture>
               ) : (
                 /* placeholder — swap out once photo is added */
                 <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24, opacity: .5 }}>
