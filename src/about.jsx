@@ -78,6 +78,9 @@ function About({ theme }) {
 
         {/* athlete testimonials */}
         <Testimonials />
+
+        {/* guest podcast appearances */}
+        <Podcasts />
       </div>
     </section>
   );
@@ -238,5 +241,97 @@ function Testimonials() {
   );
 }
 
+/* Guest podcast appearances. Deliberately code-owned rather than editable in
+   /admin — Lauren records a handful a year, so the cover art (which has to be
+   downloaded and sized anyway) is the real work, not the copy. Artwork is
+   self-hosted rather than hotlinked from Spotify's CDN. */
+const PODCASTS = [
+  {
+    show: 'The Distance Dr: In Practice',
+    episode: 'Bone Stress Injuries: Why They "Come Out of Nowhere"',
+    meta: 'Ep 8',
+    art: 'assets/images/podcasts/distance-dr.jpg',
+    url: 'https://open.spotify.com/episode/5Aj2hPB6pQi7vBKVB2NKkB',
+  },
+  {
+    show: 'Good Humans with Cooper Chapman',
+    episode: 'High Performance Dietitian',
+    meta: 'Ep 150',
+    art: 'assets/images/podcasts/good-humans.jpg',
+    url: 'https://open.spotify.com/episode/2uqBKbpNhErMHaoLKV6HJC',
+  },
+  {
+    show: 'Beyond The Finish Line',
+    episode: 'Fuelled by Facts: Q&A with a Sports Dietitian',
+    meta: 'Ep 23',
+    art: 'assets/images/podcasts/beyond-the-finish-line.jpg',
+    url: 'https://open.spotify.com/episode/4Y1xEfPMXZRcYLXBiPTY65',
+  },
+  {
+    show: 'Mindset for Runners',
+    episode: 'Nutrition & Fuelling for Peak Performance',
+    art: 'assets/images/podcasts/mindset-for-runners.jpg',
+    url: 'https://open.spotify.com/episode/4qya8w89Crw15YaqKSHYmJ',
+  },
+  {
+    show: 'Peak2Soon',
+    episode: 'Nutrition Master Class',
+    art: 'assets/images/podcasts/peak2soon.jpg',
+    url: 'https://open.spotify.com/episode/1c9Vy3bDDNDnTqEKm1rg5L',
+  },
+];
+
+function PodcastCard({ item }) {
+  return (
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noreferrer"
+      data-blob-hover
+      className="group flex items-center gap-4 p-3 rounded-2xl border border-ink/15 hover:border-orange transition-colors"
+      aria-label={`${item.show} — ${item.episode}. Listen on Spotify (opens in a new tab).`}
+    >
+      <img
+        src={item.art}
+        alt=""
+        loading="lazy"
+        width="72"
+        height="72"
+        className="w-[72px] h-[72px] rounded-xl object-cover shrink-0"
+        style={{ boxShadow: '0 8px 18px rgba(32,28,18,.14)' }}
+      />
+      <div className="min-w-0">
+        <div className="font-mono text-[10px] uppercase tracking-[.18em] opacity-60 truncate">
+          {item.show}{item.meta ? ` · ${item.meta}` : ''}
+        </div>
+        <div className="mt-1.5 text-[15px] leading-snug">{item.episode}</div>
+        <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[.18em] opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#FF6C00' }}>
+          Listen on Spotify →
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function Podcasts() {
+  return (
+    <div className="mt-20 md:mt-28">
+      <div className="flex flex-wrap items-end justify-between gap-3 mb-8">
+        <div>
+          <div className="font-mono text-[11px] uppercase tracking-[.22em] opacity-70">Nutrition insights with Lauren</div>
+          <h3 className="font-display mt-2 leading-[.95]" style={{ fontSize: 'clamp(34px, 5.5vw, 72px)' }}>
+            <span className="skew-italic">Podcast</span>{' '}<span className="skew-italic" style={{ color: '#FF6C00' }}>Appearances.</span>
+          </h3>
+        </div>
+        <div className="font-mono text-[11px] uppercase tracking-[.2em] opacity-50 hidden sm:block">tap to listen ↗</div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {PODCASTS.map((item, i) => <PodcastCard key={i} item={item} />)}
+      </div>
+    </div>
+  );
+}
+
 window.About = About;
 window.Testimonials = Testimonials;
+window.Podcasts = Podcasts;
