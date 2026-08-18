@@ -18,7 +18,7 @@ function Footer({ theme }) {
             <span className="skew-italic" style={{ color: '#FF6C00' }}>UP.</span>
           </h2>
           <div className="col-span-12 md:col-span-5 flex justify-center md:justify-end">
-            <div className="relative w-full rounded-3xl overflow-hidden" style={{ paddingBottom: 'min(125%, 460px)', maxWidth: 368 }}>
+            <div className="relative w-full rounded-3xl overflow-hidden" style={{ paddingBottom: 'min(66%, 400px)', maxWidth: 600 }}>
               <picture>
                 <source srcSet="assets/images/misc/footer-ride.avif" type="image/avif" />
                 <img
