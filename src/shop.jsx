@@ -9,34 +9,37 @@
 // routes: a big outlined-word masthead, an accent filter bar, then a card
 // grid whose images swap and reveal a buy pill on hover.
 //
-// PRICES: a price shown here is typed by hand and is NOT read from Stripe, so
-// a stale number would disagree with the real checkout page. Products with
-// `price: null` render no price at all rather than a wrong one — fill each in
-// only once it's confirmed against the Payment Link.
+// PRICES: these are typed by hand and are NOT read from Stripe, so changing a
+// price in the Stripe dashboard will silently disagree with the figure shown
+// here. Update both together. A product left at `price: null` falls back to
+// "Price at checkout" rather than displaying a wrong number.
 
 const SHOP_PRODUCTS = [
   {
     id: 'tee',
-    name: 'UP Training Tee',
+    name: 'UP Oversize Tee',
     type: 'Tees',
-    price: null,
-    meta: 'Unisex · XS–XXL',
+    price: 40,
+    meta: 'Oversized fit',
+    blurb: 'A relaxed, everyday cotton staple designed for comfort, style and effortless lifestyle wear — coffee runs, rest days, weekend adventures and everything in between.',
     stripe: 'https://buy.stripe.com/28EeV62bz8OQ6QW2dH3Nm02',
   },
   {
     id: 'tank',
-    name: 'UP Training Tank',
+    name: 'UP Active Tank',
     type: 'Tanks',
-    price: null,
-    meta: 'Unisex · XS–XXL',
+    price: 45,
+    meta: 'Cropped fit',
+    blurb: 'A flattering cropped active tank for those who like to train hard and look good doing it. Built for every session, from long runs to Hyrox.',
     stripe: 'https://buy.stripe.com/cNi28k4jHd56dfkcSl3Nm01',
   },
   {
     id: 'socks',
-    name: 'UP Performance Socks',
+    name: 'Level UP Running & Cycling Socks',
     type: 'Socks',
-    price: null,
-    meta: 'One size',
+    price: 19.99,
+    meta: 'One size · US 7–12',
+    blurb: 'Fuel your training from head to toe. Custom UP Dietitian socks for running, cycling and everyday training, with a comfortable, performance-focused fit.',
     stripe: 'https://buy.stripe.com/28E4gs6rP9SU6QW5pT3Nm00',
   },
 ];
@@ -123,7 +126,15 @@ function ProductCard({ product }) {
         <h3 className="font-mono text-[13px] uppercase tracking-[.1em] font-bold leading-snug" style={{ color: '#201C12' }}>
           {product.name}
         </h3>
-        <div className="flex items-end justify-between gap-3">
+        {product.blurb && (
+          <p
+            className="text-[13px] leading-relaxed"
+            style={{ color: 'rgba(32,28,18,.6)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+          >
+            {product.blurb}
+          </p>
+        )}
+        <div className="mt-auto pt-2 flex items-end justify-between gap-3">
           <span className="font-mono text-[13px]" style={{ color: price ? '#201C12' : 'rgba(32,28,18,.45)' }}>
             {price || 'Price at checkout'}
           </span>
