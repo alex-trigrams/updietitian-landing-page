@@ -321,7 +321,7 @@ function Shop({ theme }) {
         <Reveal delay={120}>
           <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
             <p className="max-w-[46ch] font-mono text-[12px] md:text-[13px] uppercase tracking-[.14em] leading-relaxed opacity-70">
-              {C('shop.intro', 'Train in it. Race in it. The kit we actually wear — now yours.')}
+              {C('shop.intro', 'Train in it. Race in it. Performance focus apparel.')}
             </p>
             <a
               href="#the-kit"
