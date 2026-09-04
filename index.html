@@ -75,6 +75,13 @@
   /* about counter */
   .tabular { font-variant-numeric: tabular-nums; }
 
+  /* shop product modal */
+  @keyframes shopFade { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes shopRise { from { opacity: 0; transform: translateY(24px) scale(.98) } to { opacity: 1; transform: none } }
+  @media (prefers-reduced-motion: reduce) {
+    [style*="shopFade"], [style*="shopRise"] { animation: none !important; }
+  }
+
   /* override important: hide cursor blob on touch */
   @media (pointer: coarse) { #cursor-blob{ display:none } }
 </style>
