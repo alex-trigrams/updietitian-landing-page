@@ -26,6 +26,7 @@ function Nav({ theme, route }) {
           <Link href="/services" className="hover:opacity-70" style={{ color: route === '/services' ? t.accent : undefined }} data-blob-hover>Services</Link>
 
           <Link href="/seminars" className="hover:opacity-70" style={{ color: route === '/seminars' ? t.accent : undefined }} data-blob-hover>Seminars</Link>
+          <Link href="/shop" className="hover:opacity-70" style={{ color: route === '/shop' ? t.accent : undefined }} data-blob-hover>Shop</Link>
           <button onClick={() => openEnquiry()} className="uppercase tracking-[.18em] hover:opacity-70" style={{ color: t.fg }} data-blob-hover>Contact</button>
 
           <Link
@@ -60,6 +61,7 @@ function Nav({ theme, route }) {
           <Link href="/services" onClick={() => setOpen(false)} className="py-2 border-b" style={{ borderColor: t.line, color: route === '/services' ? t.accent : undefined }}>Services</Link>
 
           <Link href="/seminars" onClick={() => setOpen(false)} className="py-2 border-b" style={{ borderColor: t.line, color: route === '/seminars' ? t.accent : undefined }}>Seminars</Link>
+          <Link href="/shop" onClick={() => setOpen(false)} className="py-2 border-b" style={{ borderColor: t.line, color: route === '/shop' ? t.accent : undefined }}>Shop</Link>
           <button onClick={() => { setOpen(false); openEnquiry(); }} className="py-2 border-b text-left uppercase tracking-[.16em]" style={{ borderColor: t.line, color: t.fg }}>Contact</button>
           <Link href="/clinic" onClick={() => setOpen(false)} className="py-2 border-b font-bold" style={{ borderColor: t.line, color: t.accent }}>Book In-Person ↗</Link>
           <a href={CALENDLY_URL} onClick={() => setOpen(false)} className="mt-3 px-5 py-3 rounded-full font-bold text-center" style={{ background: t.accent, color: '#EAE6D7' }}>Book a call →</a>

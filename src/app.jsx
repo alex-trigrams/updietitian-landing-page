@@ -192,6 +192,10 @@ function ClinicPage({ theme }) {
   return <Clinic theme={theme} />;
 }
 
+function ShopPage({ theme }) {
+  return <Shop theme={theme} />;
+}
+
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const route = useRoute();
@@ -212,6 +216,7 @@ function App() {
     case '/services': page = <ServicesPage theme={theme} />; break;
     case '/seminars': page = <SeminarsPage theme={theme} />; break;
     case '/clinic':   page = <ClinicPage theme={theme} />; break;
+    case '/shop':     page = <ShopPage theme={theme} />; break;
     case '/contact':  page = <ContactPage />; break;
     case '/privacy':  page = <Privacy />; break;
     case '/cookies':  page = <Cookies />; break;

@@ -6,7 +6,7 @@
 // per-page pageviews. Links stay real <a> tags so right-click / SEO / new-tab
 // all keep working; only plain left-clicks are intercepted.
 
-const ROUTES = ['/', '/about', '/services', '/seminars', '/clinic', '/contact', '/privacy', '/cookies', '/terms'];
+const ROUTES = ['/', '/about', '/services', '/seminars', '/clinic', '/shop', '/contact', '/privacy', '/cookies', '/terms'];
 
 // Per-route <title> + meta description, applied on navigation. Client-rendered,
 // so this is best-effort SEO — enough for browser tabs, history and sharing.
@@ -16,6 +16,7 @@ const ROUTE_META = {
   '/services': { title: 'Services · UP Dietitian', desc: 'Performance nutrition plans, race fuelling packages, consultations and ongoing coaching for athletes.' },
   '/seminars': { title: 'Seminars & Talks · UP Dietitian', desc: 'Sports nutrition seminars for corporate teams, clubs and community groups.' },
   '/clinic':   { title: 'In-Person Clinic · UP Dietitian', desc: 'Face-to-face nutrition consultations at Front Runner Physiotherapy, Osborne Park WA.' },
+  '/shop':     { title: 'Shop · UP Dietitian', desc: 'UP Dietitian training kit — tees, tanks and performance socks. Secure checkout via Stripe.' },
   '/contact':  { title: 'Contact · UP Dietitian', desc: 'Get in touch with UP Dietitian — Perth WA and online, Australia-wide and internationally.' },
   '/privacy':  { title: 'Privacy Policy · UP Dietitian', desc: 'How UP Dietitian collects, uses and protects your personal information.' },
   '/cookies':  { title: 'Cookie Policy · UP Dietitian', desc: 'How UP Dietitian uses cookies and analytics.' },
