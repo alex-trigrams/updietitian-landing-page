@@ -46,6 +46,8 @@ const SHOP_PRODUCTS = [
   },
 ];
 
+const SHOP_TICKER = false;
+
 const shopImg = (slug) => `assets/images/shop/${slug}`;
 
 function formatPrice(v) {
@@ -365,8 +367,11 @@ function Shop({ theme }) {
         </div>
       </div>
 
-      {/* The site's ticker bar, doing the job the orange filter pill used to. */}
-      <Marquee items={C('shop.ticker', ['TRAIN IN IT', 'RACE IN IT', 'LEVEL UP'])} theme="sand" accent slow />
+      {/* The site's ticker bar. Hidden at the client's request — too busy on
+          this page. Flip SHOP_TICKER back to true to bring it back. */}
+      {SHOP_TICKER && (
+        <Marquee items={C('shop.ticker', ['TRAIN IN IT', 'RACE IN IT', 'LEVEL UP'])} theme="sand" accent slow />
+      )}
 
       <div style={{ background: '#EAE6D7', color: '#201C12', paddingTop: 'clamp(48px, 6vw, 80px)', paddingBottom: 'var(--pad-y, 96px)' }}>
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
