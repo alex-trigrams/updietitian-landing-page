@@ -5,10 +5,9 @@
 // Nothing here touches card details — no server, no SDK, no secret key and no
 // PCI surface on updietitian.com.
 //
-// Layout follows the tempr.co/shop reference — one page, no product detail
-// routes. Clicking a card opens a modal with the full description and an
-// image gallery rather than jumping straight out to Stripe, so people can read
-// about the product without leaving the site.
+// One page, no product detail routes. Clicking a card opens a modal with the
+// full description and an image gallery rather than jumping straight out to
+// Stripe, so people can read about the product without leaving the site.
 //
 // PRICES: typed by hand, NOT read from Stripe. Changing a price in the Stripe
 // dashboard will silently disagree with the figure shown here — update both
@@ -179,17 +178,19 @@ function ProductModal({ product, onClose }) {
             )}
           </div>
 
-          {/* Detail */}
-          <div className="p-6 md:p-10 flex flex-col md:justify-center">
-            <span className="font-mono text-[10px] uppercase tracking-[.22em]" style={{ color: '#FF6C00' }}>{product.type}</span>
+          {/* Detail — green panel, matching the site's dark sections. */}
+          <div className="noise p-6 md:p-10 flex flex-col md:justify-center" style={{ background: '#1D4032', color: '#EAE6D7' }}>
+            <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[.22em]" style={{ color: '#FF6C00' }}>
+              <span className="inline-block w-6 h-px bg-current"></span><span>{product.type}</span>
+            </div>
             <h2 className="mt-3 font-display leading-[.95]" style={{ fontSize: 'clamp(30px, 3.6vw, 48px)' }}>
               <span className="skew-italic">{product.name}</span>
             </h2>
-            <p className="mt-5 text-[15px] leading-relaxed" style={{ color: 'rgba(32,28,18,.75)' }}>{product.blurb}</p>
+            <p className="mt-5 text-[15px] leading-relaxed" style={{ color: 'rgba(234,230,215,.75)' }}>{product.blurb}</p>
 
             <div className="mt-7 flex items-baseline gap-4">
               <span className="font-mono text-[22px] font-bold">{price || 'Price at checkout'}</span>
-              <span className="font-mono text-[11px] uppercase tracking-[.18em]" style={{ color: 'rgba(32,28,18,.5)' }}>{product.meta}</span>
+              <span className="font-mono text-[11px] uppercase tracking-[.18em]" style={{ color: 'rgba(234,230,215,.5)' }}>{product.meta}</span>
             </div>
 
             <a
@@ -204,8 +205,8 @@ function ProductModal({ product, onClose }) {
               Buy now <span style={{ fontFamily: 'Anton' }}>→</span>
             </a>
 
-            <p className="mt-5 font-mono text-[10px] uppercase tracking-[.16em] leading-relaxed" style={{ color: 'rgba(32,28,18,.45)' }}>
-              Secure checkout via Stripe · Opens in a new tab
+            <p className="mt-5 font-mono text-[10px] uppercase tracking-[.16em] leading-relaxed" style={{ color: 'rgba(234,230,215,.45)' }}>
+              Choose your size at checkout · Opens in a new tab
             </p>
           </div>
         </div>
@@ -229,8 +230,13 @@ function ProductCard({ product, onOpen }) {
       onClick={() => { trackShop('shop_product_open', product.id); onOpen(product); }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="group flex flex-col rounded-2xl overflow-hidden text-left h-full"
-      style={{ background: '#dfdac6', border: '1px solid rgba(32,28,18,.08)' }}
+      className="group flex flex-col rounded-2xl overflow-hidden text-left h-full transition-all duration-200"
+      style={{
+        background: '#fff',
+        border: `1px solid rgba(32,28,18,${hover ? '.28' : '.1'})`,
+        boxShadow: hover ? '0 6px 28px rgba(32,28,18,.1)' : '0 2px 14px rgba(32,28,18,.05)',
+        transform: hover ? 'translateY(-2px)' : 'none',
+      }}
       data-blob-hover
     >
       {/* Image well. paddingBottom rather than aspect-ratio — the latter had
@@ -248,44 +254,67 @@ function ProductCard({ product, onOpen }) {
           </div>
         )}
 
-        {/* Slides up over the image on hover. Always in the DOM so touch
-            devices, which never hover, still get the affordance on tap. */}
+        {/* Hover scrim carrying the same ＋ affordance the Services and
+            Seminars cards use, rather than a pill sliding up over the photo. */}
         <div
-          className="absolute left-3 right-3 bottom-3 flex items-center justify-center rounded-full font-mono text-[12px] uppercase tracking-[.18em] font-bold py-3"
+          className="absolute inset-0 flex items-end justify-between gap-3 p-4"
           style={{
-            background: '#FF6C00',
+            background: 'linear-gradient(to top, rgba(29,64,50,.92) 0%, rgba(29,64,50,.35) 45%, rgba(29,64,50,0) 100%)',
             color: '#EAE6D7',
-            transition: 'transform .32s cubic-bezier(.2,.8,.2,1), opacity .32s',
-            transform: hover ? 'translateY(0)' : 'translateY(calc(100% + 12px))',
             opacity: hover ? 1 : 0,
+            transition: 'opacity .32s ease',
           }}
         >
-          View details <span className="ml-2" style={{ fontFamily: 'Anton' }}>→</span>
+          <span className="font-mono text-[11px] uppercase tracking-[.18em] font-bold">View details</span>
+          <span
+            className="flex-none w-8 h-8 rounded-full flex items-center justify-center font-mono text-[15px] leading-none"
+            style={{ background: '#FF6C00', color: '#EAE6D7' }}
+            aria-hidden
+          >
+            ＋
+          </span>
         </div>
 
         {images.length > 1 && (
           <span
             className="absolute top-3 right-3 font-mono text-[10px] uppercase tracking-[.16em] px-2.5 py-1 rounded-full"
-            style={{ background: 'rgba(32,28,18,.6)', color: '#EAE6D7' }}
+            style={{ background: 'rgba(29,64,50,.72)', color: '#EAE6D7' }}
           >
             {images.length} photos
           </span>
         )}
       </div>
 
-      <div className="flex-1 px-5 py-4 flex flex-col gap-1.5">
-        <h3 className="font-mono text-[13px] uppercase tracking-[.1em] font-bold leading-snug">{product.name}</h3>
+      <div className="flex-1 px-6 pt-5 pb-6 flex flex-col gap-2">
+        <span className="font-mono text-[10px] uppercase tracking-[.22em]" style={{ color: '#FF6C00' }}>{product.type}</span>
+        <h3 className="font-display leading-[.95]" style={{ fontSize: 'clamp(22px, 2.2vw, 28px)' }}>
+          <span className="skew-italic">{product.name}</span>
+        </h3>
         <p
           className="text-[13px] leading-relaxed"
           style={{ color: 'rgba(32,28,18,.6)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
         >
           {product.blurb}
         </p>
-        <div className="mt-auto pt-2 flex items-end justify-between gap-3">
-          <span className="font-mono text-[13px]" style={{ color: price ? '#201C12' : 'rgba(32,28,18,.45)' }}>
+
+        {/* Tag pills, matching the Services and Seminars cards. */}
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {[product.meta, 'Sizes at checkout'].filter(Boolean).map(tag => (
+            <span
+              key={tag}
+              className="px-2.5 py-1 rounded-full font-mono text-[9px] uppercase tracking-[.16em]"
+              style={{ border: '1px solid rgba(32,28,18,.2)', color: '#201C12' }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-auto pt-4 flex items-end justify-between gap-3" style={{ borderTop: '1px solid rgba(32,28,18,.12)' }}>
+          <span className="font-mono text-[14px] font-bold" style={{ color: price ? '#201C12' : 'rgba(32,28,18,.45)' }}>
             {price || 'Price at checkout'}
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[.18em]" style={{ color: 'rgba(32,28,18,.45)' }}>{product.meta}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[.18em]" style={{ color: '#FF6C00' }}>Buy ↗</span>
         </div>
       </div>
     </button>
@@ -302,94 +331,100 @@ function Shop({ theme }) {
   const shown = filter === 'All' ? products : products.filter(p => p.type === filter);
 
   return (
-    <section data-screen-label="Shop" className="relative" style={{ background: '#EAE6D7', color: '#201C12', paddingTop: 'clamp(112px, 14vw, 176px)', paddingBottom: 'var(--pad-y, 96px)' }}>
-      <div className="max-w-[1400px] mx-auto px-5 md:px-8">
+    <section data-screen-label="Shop">
 
-        <Reveal>
-          <Link href="/" className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] opacity-60 hover:opacity-100" data-blob-hover>
-            ← Back to UP Dietitian
-          </Link>
+      {/* Header band — the dark green, noise-textured treatment used by
+          Services and the seminars intro, so the shop reads as part of the
+          site rather than a bolt-on storefront. */}
+      <div
+        className="relative noise"
+        style={{ background: '#1D4032', color: '#EAE6D7', paddingTop: 'clamp(96px, 11vw, 140px)', paddingBottom: 'clamp(40px, 6vw, 72px)' }}
+      >
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8">
+          <Reveal>
+            <Link href="/" className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] opacity-60 hover:opacity-100" data-blob-hover>
+              ← Back to UP Dietitian
+            </Link>
 
-          {/* Second word outlined, as on the reference. -webkit-text-stroke
-              needs a transparent fill; unsupported browsers read it solid. */}
-          <h1 className="mt-6 font-display leading-[.85]" style={{ fontSize: 'clamp(56px, 12vw, 172px)' }}>
-            <span className="skew-italic">UP</span>{' '}
-            <span className="skew-italic" style={{ color: 'transparent', WebkitTextStroke: '2px #201C12' }}>MERCH.</span>
-          </h1>
-        </Reveal>
+            <div className="mt-8 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: '#FF6C00' }}>
+              <span className="inline-block w-6 h-px bg-current"></span><span>{C('shop.eyebrow', 'The UP Store')}</span>
+            </div>
 
-        <Reveal delay={120}>
-          <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
-            <p className="max-w-[46ch] font-mono text-[12px] md:text-[13px] uppercase tracking-[.14em] leading-relaxed opacity-70">
-              {C('shop.intro', 'Train in it. Race in it. Performance focus apparel.')}
+            {/* Accent on the second word, as in the hero and the legal pages. */}
+            <h1 className="mt-3 font-display leading-[.88]" style={{ fontSize: 'clamp(44px, 8vw, 110px)' }}>
+              <span className="skew-italic">UP</span>{' '}
+              <span className="skew-italic" style={{ color: '#FF6C00' }}>MERCH</span>
+            </h1>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <p className="mt-6 max-w-[46ch] font-mono text-[12px] md:text-[13px] uppercase tracking-[.14em] leading-relaxed" style={{ color: 'rgba(234,230,215,.7)' }}>
+              {C('shop.intro', 'Training & Lifestyle Apparel')}
             </p>
-            <a
-              href="#the-kit"
-              className="btn-shine inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-mono text-[12px] uppercase tracking-[.18em] font-bold"
-              style={{ background: '#201C12', color: '#EAE6D7' }}
-              data-blob-hover
-            >
-              <span className="inline-block w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: '#FF6C00' }}></span>
-              Shop the kit
-            </a>
-          </div>
-        </Reveal>
-
-        <Reveal delay={200}>
-          <div
-            id="the-kit"
-            className="mt-14 rounded-full px-6 py-4 flex flex-wrap items-center justify-between gap-4"
-            style={{ background: '#FF6C00', color: '#EAE6D7', scrollMarginTop: 96 }}
-          >
-            <div className="flex items-baseline gap-3">
-              <span className="font-mono text-[13px] uppercase tracking-[.16em] font-bold">The kit</span>
-              <span className="font-mono text-[11px] tracking-[.12em] opacity-75">
-                {shown.length} {shown.length === 1 ? 'item' : 'items'}
-              </span>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              {types.map((t) => {
-                const on = t === filter;
-                return (
-                  <button
-                    key={t}
-                    onClick={() => setFilter(t)}
-                    className="px-4 py-2 rounded-full font-mono text-[11px] uppercase tracking-[.16em] transition-colors"
-                    style={{ background: on ? '#201C12' : 'transparent', color: '#EAE6D7', border: `1px solid ${on ? '#201C12' : 'rgba(234,230,215,.5)'}` }}
-                    data-blob-hover
-                  >
-                    {t}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </Reveal>
-
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {shown.map((p, n) => (
-            <Reveal key={p.id} delay={n * 110} className="h-full">
-              <ProductCard product={p} onOpen={setActive} />
-            </Reveal>
-          ))}
+          </Reveal>
         </div>
+      </div>
 
-        <Reveal>
-          <p className="mt-12 text-center font-mono text-[11px] uppercase tracking-[.16em] opacity-50">
-            {C('shop.terms', 'Secure checkout via Stripe · All sales final — no refunds or returns for change of mind.')}
-          </p>
-        </Reveal>
+      {/* The site's ticker bar, doing the job the orange filter pill used to. */}
+      <Marquee items={C('shop.ticker', ['TRAIN IN IT', 'RACE IN IT', 'LEVEL UP'])} theme="sand" accent slow />
 
-        <Reveal delay={80}>
-          <div className="mt-12 rounded-3xl noise relative px-6 py-16 md:py-24 text-center" style={{ background: '#1D4032', color: '#EAE6D7' }}>
-            <h2 className="font-display leading-[.95] mx-auto max-w-[22ch]" style={{ fontSize: 'clamp(32px, 5vw, 68px)' }}>
-              <span className="skew-italic">There is no finish line.</span>{' '}
-              <span className="skew-italic" style={{ color: '#FF6C00' }}>Just the next level UP.</span>
-            </h2>
-            <p className="mt-6 font-mono text-[11px] uppercase tracking-[.2em] opacity-60">Train hard. Eat smart. Go UP.</p>
+      <div style={{ background: '#EAE6D7', color: '#201C12', paddingTop: 'clamp(48px, 6vw, 80px)', paddingBottom: 'var(--pad-y, 96px)' }}>
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8">
+
+          <Reveal delay={200}>
+            <div
+              id="the-kit"
+              className="pb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3"
+              style={{ borderBottom: '1px solid rgba(32,28,18,.18)', scrollMarginTop: 96 }}
+            >
+              <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: 'rgba(32,28,18,.55)' }}>
+                <span className="inline-block w-6 h-px bg-current"></span>
+                <span style={{ color: '#201C12' }}>Shop the kit</span>
+                <span>{shown.length} {shown.length === 1 ? 'item' : 'items'}</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-5">
+                {types.map((t) => {
+                  const on = t === filter;
+                  return (
+                    <button
+                      key={t}
+                      onClick={() => setFilter(t)}
+                      className="font-mono text-[11px] uppercase tracking-[.16em] transition-opacity"
+                      style={{
+                        color: on ? '#FF6C00' : '#201C12',
+                        opacity: on ? 1 : .5,
+                        paddingBottom: 2,
+                        borderBottom: `1px solid ${on ? '#FF6C00' : 'transparent'}`,
+                      }}
+                      data-blob-hover
+                    >
+                      {t}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            {shown.map((p, n) => (
+              <Reveal key={p.id} delay={n * 110} className="h-full">
+                <ProductCard product={p} onOpen={setActive} />
+              </Reveal>
+            ))}
           </div>
-        </Reveal>
 
+          {/* Orange rule + note, the same footer treatment Services uses. */}
+          <Reveal>
+            <div className="mt-10 flex items-start gap-4">
+              <div className="w-0.5 flex-shrink-0 rounded-full self-stretch" style={{ background: '#FF6C00' }}></div>
+              <p className="text-[13px] leading-relaxed" style={{ color: 'rgba(32,28,18,.6)' }}>
+                {C('shop.footerNote', 'Choose your size at checkout. Orders ship from Perth, WA — allow 3–7 business days within Australia.')}
+              </p>
+            </div>
+          </Reveal>
+
+        </div>
       </div>
 
       <ProductModal product={active} onClose={() => setActive(null)} />
