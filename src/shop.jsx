@@ -21,7 +21,7 @@ const SHOP_PRODUCTS = [
     price: 40,
     meta: 'Oversized fit',
     blurb: 'A relaxed, everyday cotton staple designed for comfort, style and effortless lifestyle wear — coffee runs, rest days, weekend adventures and everything in between.',
-    images: ['tee-1'],
+    images: ['tee-1', 'tee-2'],
     stripe: 'https://buy.stripe.com/28EeV62bz8OQ6QW2dH3Nm02',
   },
   {
