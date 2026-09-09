@@ -8,6 +8,7 @@ const SVC_CREAM  = '#EAE6D7';
 
 const HERO_CARDS_DEFAULT = [
   {
+    id: 'initial-consult-performance',
     popular: true,
     eyebrow: 'FUEL UP PERFORMANCE PLAN',
     title: "Set Yourself Up Nutrition Plan",
@@ -22,6 +23,7 @@ const HERO_CARDS_DEFAULT = [
     tags: ['ALL SPORTS', 'RACE PREP', 'BODY COMPOSITION', 'HEALTH OUTCOMES'],
   },
   {
+    id: 'level-up-race',
     popular: false,
     eyebrow: 'RACE PACKAGE',
     title: "Level Up Performance Plan",
