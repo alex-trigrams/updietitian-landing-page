@@ -48,7 +48,11 @@ const SHOP_PRODUCTS = [
 
 // Size charts, transcribed from the supplier's charts. Keyed by product id so
 // the modal can deep-link to the right tab. All measurements in cm, garment
-// laid flat; the supplier notes a ±2.5cm tolerance.
+// laid flat; the supplier notes a ±2.5cm tolerance. The full supplier range is
+// kept here, but only SIZES_AVAILABLE are shown/sold at this stage — widen that
+// list when Lauren stocks more sizes.
+const SIZES_AVAILABLE = ['S', 'M', 'L'];
+
 const SIZE_CHARTS = [
   {
     id: 'tank',
@@ -336,7 +340,7 @@ function ProductCard({ product, onOpen }) {
 
         {/* Tag pills, matching the Services and Seminars cards. */}
         <div className="mt-2 flex flex-wrap gap-1.5">
-          {[product.meta, 'Sizes at checkout'].filter(Boolean).map(tag => (
+          {[product.meta, SIZE_CHARTS.some(c => c.id === product.id) ? `Sizes ${SIZES_AVAILABLE.join(' · ')}` : 'Sizes at checkout'].filter(Boolean).map(tag => (
             <span
               key={tag}
               className="px-2.5 py-1 rounded-full font-mono text-[9px] uppercase tracking-[.16em]"
@@ -363,7 +367,14 @@ function ProductCard({ product, onOpen }) {
 // from a product modal's "View size guide" link (which also picks the tab).
 
 function SizeGuide({ open, tab, onToggle, onTab }) {
-  const chart = SIZE_CHARTS.find(c => c.id === tab) || SIZE_CHARTS[0];
+  const full = SIZE_CHARTS.find(c => c.id === tab) || SIZE_CHARTS[0];
+  // Trim each chart to the sizes actually on sale.
+  const keep = full.sizes.map((sz, i) => SIZES_AVAILABLE.includes(sz) ? i : -1).filter(i => i >= 0);
+  const chart = {
+    ...full,
+    sizes: keep.map(i => full.sizes[i]),
+    rows: full.rows.map(r => ({ ...r, values: keep.map(i => r.values[i]) })),
+  };
   const cell = 'px-4 py-3 text-center font-mono text-[13px] whitespace-nowrap';
 
   return (
@@ -410,7 +421,7 @@ function SizeGuide({ open, tab, onToggle, onTab }) {
           </div>
 
           <div className="mt-5 rounded-2xl overflow-x-auto" style={{ background: '#fff', border: '1px solid rgba(32,28,18,.1)' }}>
-            <table className="w-full border-collapse" style={{ minWidth: 520 }}>
+            <table className="w-full border-collapse" style={{ minWidth: 360 }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid rgba(32,28,18,.12)' }}>
                   <th className="px-5 py-3 text-left font-mono text-[10px] uppercase tracking-[.2em]" style={{ color: 'rgba(32,28,18,.55)' }}>cm</th>
@@ -431,7 +442,7 @@ function SizeGuide({ open, tab, onToggle, onTab }) {
           </div>
 
           <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'rgba(32,28,18,.55)' }}>
-            Garment measured flat. Measurements can vary within 2.5cm — this is within the supplier's tolerance.
+            Currently available in {SIZES_AVAILABLE.join(', ')}. Garment measured flat. Measurements can vary within 2.5cm — this is within the supplier's tolerance.
           </p>
         </div>
       )}
