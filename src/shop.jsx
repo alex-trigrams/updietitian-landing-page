@@ -46,6 +46,30 @@ const SHOP_PRODUCTS = [
   },
 ];
 
+// Size charts, transcribed from the supplier's charts. Keyed by product id so
+// the modal can deep-link to the right tab. All measurements in cm, garment
+// laid flat; the supplier notes a ±2.5cm tolerance.
+const SIZE_CHARTS = [
+  {
+    id: 'tank',
+    label: 'Active Tank',
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    rows: [
+      { label: '½ Chest', values: [31.5, 34, 36.5, 39, 41.5, 44] },
+      { label: 'Full length', values: [43, 44, 45, 46, 47, 48] },
+    ],
+  },
+  {
+    id: 'tee',
+    label: 'Oversize Tee',
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
+    rows: [
+      { label: 'Body width', values: [58, 60.5, 63, 65.5, 68, 70.5] },
+      { label: 'Body length', values: [72, 74, 76, 78, 80, 82] },
+    ],
+  },
+];
+
 const SHOP_TICKER = false;
 
 const shopImg = (slug) => `assets/images/shop/${slug}`;
@@ -107,7 +131,7 @@ function Reveal({ children, delay = 0, className, style }) {
 // Opens on card click. Carries the full description, a click-through gallery
 // and the only "Buy now" that actually leaves for Stripe.
 
-function ProductModal({ product, onClose }) {
+function ProductModal({ product, onClose, onSizeGuide }) {
   const [i, setI] = React.useState(0);
   const closeRef = React.useRef(null);
   const images = (product && product.images) || [];
@@ -210,6 +234,17 @@ function ProductModal({ product, onClose }) {
             <p className="mt-5 font-mono text-[10px] uppercase tracking-[.16em] leading-relaxed" style={{ color: 'rgba(234,230,215,.45)' }}>
               Choose your size at checkout · Opens in a new tab
             </p>
+
+            {SIZE_CHARTS.some(c => c.id === product.id) && (
+              <button
+                onClick={() => onSizeGuide(product.id)}
+                className="mt-3 self-start inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] font-bold"
+                style={{ color: '#FF6C00', paddingBottom: 2, borderBottom: '1px solid currentColor' }}
+                data-blob-hover
+              >
+                View size guide ↓
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -323,6 +358,87 @@ function ProductCard({ product, onOpen }) {
   );
 }
 
+// ---- Size guide -----------------------------------------------------------
+// Collapsed by default so the grid stays the focus; opens on the toggle or
+// from a product modal's "View size guide" link (which also picks the tab).
+
+function SizeGuide({ open, tab, onToggle, onTab }) {
+  const chart = SIZE_CHARTS.find(c => c.id === tab) || SIZE_CHARTS[0];
+  const cell = 'px-4 py-3 text-center font-mono text-[13px] whitespace-nowrap';
+
+  return (
+    <div id="size-guide" className="mt-12" style={{ scrollMarginTop: 96 }}>
+      <button
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls="size-guide-panel"
+        className="w-full flex items-center justify-between gap-4 py-4 text-left"
+        style={{ borderTop: '1px solid rgba(32,28,18,.18)', borderBottom: '1px solid rgba(32,28,18,.18)' }}
+        data-blob-hover
+      >
+        <span className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.22em]">
+          <span className="inline-block w-6 h-px bg-current" style={{ color: 'rgba(32,28,18,.55)' }}></span>
+          <span>Size guide</span>
+          <span style={{ color: 'rgba(32,28,18,.55)' }}>Tank &amp; Oversize Tee</span>
+        </span>
+        <span
+          className="flex-none w-8 h-8 rounded-full flex items-center justify-center font-mono text-[15px] leading-none transition-transform duration-300"
+          style={{ background: '#FF6C00', color: '#EAE6D7', transform: open ? 'rotate(45deg)' : 'none' }}
+          aria-hidden
+        >
+          ＋
+        </span>
+      </button>
+
+      {open && (
+        <div id="size-guide-panel" className="pt-6" style={{ animation: 'shopFade .3s ease' }}>
+          <div className="flex flex-wrap items-center gap-5">
+            {SIZE_CHARTS.map((c) => {
+              const on = c.id === chart.id;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => onTab(c.id)}
+                  className="font-mono text-[11px] uppercase tracking-[.16em] transition-opacity"
+                  style={{ color: on ? '#FF6C00' : '#201C12', opacity: on ? 1 : .5, paddingBottom: 2, borderBottom: `1px solid ${on ? '#FF6C00' : 'transparent'}` }}
+                  data-blob-hover
+                >
+                  {c.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-5 rounded-2xl overflow-x-auto" style={{ background: '#fff', border: '1px solid rgba(32,28,18,.1)' }}>
+            <table className="w-full border-collapse" style={{ minWidth: 520 }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid rgba(32,28,18,.12)' }}>
+                  <th className="px-5 py-3 text-left font-mono text-[10px] uppercase tracking-[.2em]" style={{ color: 'rgba(32,28,18,.55)' }}>cm</th>
+                  {chart.sizes.map(sz => (
+                    <th key={sz} className={cell + ' font-bold text-[12px] uppercase tracking-[.16em]'}>{sz}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {chart.rows.map((r, n) => (
+                  <tr key={r.label} style={{ borderBottom: n < chart.rows.length - 1 ? '1px solid rgba(32,28,18,.08)' : 'none' }}>
+                    <th scope="row" className="px-5 py-3 text-left text-[13px] font-semibold whitespace-nowrap">{r.label}</th>
+                    {r.values.map((v, i) => <td key={i} className={cell}>{v}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'rgba(32,28,18,.55)' }}>
+            Garment measured flat. Measurements can vary within 2.5cm — this is within the supplier's tolerance.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ---- Page -----------------------------------------------------------------
 
 function Shop({ theme }) {
@@ -330,7 +446,21 @@ function Shop({ theme }) {
   const types = ['All', ...Array.from(new Set(products.map(p => p.type).filter(Boolean)))];
   const [filter, setFilter] = React.useState('All');
   const [active, setActive] = React.useState(null);
+  const [sizeOpen, setSizeOpen] = React.useState(false);
+  const [sizeTab, setSizeTab] = React.useState(SIZE_CHARTS[0].id);
   const shown = filter === 'All' ? products : products.filter(p => p.type === filter);
+
+  // From the modal: close it, open the guide on that product's tab, scroll to it.
+  const openSizeGuide = (id) => {
+    trackShop('shop_size_guide', id);
+    setActive(null);
+    setSizeTab(id);
+    setSizeOpen(true);
+    setTimeout(() => {
+      const el = document.getElementById('size-guide');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  };
 
   return (
     <section data-screen-label="Shop">
@@ -419,6 +549,15 @@ function Shop({ theme }) {
             ))}
           </div>
 
+          <Reveal>
+            <SizeGuide
+              open={sizeOpen}
+              tab={sizeTab}
+              onToggle={() => { if (!sizeOpen) trackShop('shop_size_guide', 'toggle'); setSizeOpen(v => !v); }}
+              onTab={setSizeTab}
+            />
+          </Reveal>
+
           {/* Orange rule + note, the same footer treatment Services uses. */}
           <Reveal>
             <div className="mt-10 flex items-start gap-4">
@@ -432,7 +571,7 @@ function Shop({ theme }) {
         </div>
       </div>
 
-      <ProductModal product={active} onClose={() => setActive(null)} />
+      <ProductModal product={active} onClose={() => setActive(null)} onSizeGuide={openSizeGuide} />
     </section>
   );
 }
