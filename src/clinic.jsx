@@ -18,10 +18,10 @@ function Clinic({ theme }) {
         </div>
 
         <div className="mt-6">
-          <h2 className="font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
+          <h1 className="font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
             <span className="skew-italic">Face-to-</span><br/>
             <span className="skew-italic" style={{ color: '#FF6C00' }}>face.</span>
-          </h2>
+          </h1>
         </div>
 
         {/* main content grid */}

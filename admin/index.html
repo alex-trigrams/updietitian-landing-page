@@ -138,6 +138,11 @@
     { title: 'Process', fields: [
       { label: 'Steps', path: 'process.steps', kind: 'steps' },
     ]},
+    // Shown on /services and /perth-dietitian, and read by Google and AI
+    // search as question-and-answer pairs.
+    { title: 'FAQ', fields: [
+      { label: 'Questions & answers', path: 'faq.items', kind: 'steps', itemLabel: 'Question', keys: ['question', 'answer'], labels: ['Question', 'Answer'] },
+    ]},
     { title: 'Clinic', fields: [
       { label: 'Description', path: 'clinic.description', kind: 'textarea' },
       { label: 'Address', path: 'clinic.address', kind: 'text' },
@@ -350,26 +355,30 @@
   }
 
   function renderSteps(field) {
+    // Ordered title + description pairs. Process steps use the defaults; the
+    // FAQ passes its own keys and labels (question / answer).
+    const [titleKey, descKey] = field.keys || ['title', 'desc'];
+    const [titleLabel, descLabel] = field.labels || ['Title', 'Description'];
     const wrap = el('div', { class: 'field' });
     wrap.appendChild(el('label', { text: field.label }));
     const items = getPath(content, field.path) || [];
     items.forEach((step, i) => {
       const box = el('div', { class: 'list-item' });
-      box.appendChild(el('div', { class: 'hint', text: 'Step ' + (i + 1) }));
+      box.appendChild(el('div', { class: 'hint', text: (field.itemLabel || 'Step') + ' ' + (i + 1) }));
 
       const titleField = el('div', { class: 'field' });
-      titleField.appendChild(el('label', { text: 'Title' }));
+      titleField.appendChild(el('label', { text: titleLabel }));
       const titleInput = el('input', { type: 'text' });
-      titleInput.value = step.title || '';
-      titleInput.addEventListener('input', () => { step.title = titleInput.value; });
+      titleInput.value = step[titleKey] || '';
+      titleInput.addEventListener('input', () => { step[titleKey] = titleInput.value; });
       titleField.appendChild(titleInput);
       box.appendChild(titleField);
 
       const descField = el('div', { class: 'field' });
-      descField.appendChild(el('label', { text: 'Description' }));
+      descField.appendChild(el('label', { text: descLabel }));
       const descInput = el('textarea');
-      descInput.value = step.desc || '';
-      descInput.addEventListener('input', () => { step.desc = descInput.value; });
+      descInput.value = step[descKey] || '';
+      descInput.addEventListener('input', () => { step[descKey] = descInput.value; });
       descField.appendChild(descInput);
       box.appendChild(descField);
 

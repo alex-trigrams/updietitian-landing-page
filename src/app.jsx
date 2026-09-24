@@ -180,6 +180,7 @@ function ServicesPage({ theme }) {
     <React.Fragment>
       <Services theme={theme} />
       <Process theme={theme} />
+      <Faq />
     </React.Fragment>
   );
 }
@@ -212,6 +213,7 @@ function App() {
     case '/services': page = <ServicesPage theme={theme} />; break;
     case '/seminars': page = <SeminarsPage theme={theme} />; break;
     case '/clinic':   page = <ClinicPage theme={theme} />; break;
+    case '/perth-dietitian': page = <PerthDietitianPage />; break;
     case '/contact':  page = <ContactPage />; break;
     case '/privacy':  page = <Privacy />; break;
     case '/cookies':  page = <Cookies />; break;

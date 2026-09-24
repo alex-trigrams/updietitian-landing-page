@@ -76,9 +76,9 @@ function Seminars({ theme }) {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: SEM_ACCENT }}>{C('seminars.eyebrow', 'Group Education')}</div>
-            <h2 className="mt-3 font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
+            <h1 className="mt-3 font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
               <span className="skew-italic">SEMINARS</span>
-            </h2>
+            </h1>
           </div>
           <button onClick={() => openEnquiry('Seminar')} className="hidden md:inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] mb-2 opacity-80 hover:opacity-100" style={{ color: SEM_INK }} data-blob-hover>
             Enquire about a seminar <span style={{ fontFamily: 'Anton' }}>↗</span>

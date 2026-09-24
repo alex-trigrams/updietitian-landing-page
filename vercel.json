@@ -1,8 +1,16 @@
 {
+  "functions": {
+    "api/render.js": {
+      "includeFiles": "{index.html,content.json,tweaks-panel.jsx,src/**}"
+    }
+  },
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/|admin|assets/|_vercel/|.*\\.).*)",
-      "destination": "/index.html"
+      "destination": "/api/render?path=/$1"
     }
   ]
 }

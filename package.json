@@ -2,7 +2,10 @@
   "name": "updietitian-landing-page",
   "private": true,
   "dependencies": {
+    "@vercel/blob": "^0.27.1",
     "bcryptjs": "^2.4.3",
-    "@vercel/blob": "^0.27.1"
+    "esbuild": "^0.28.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

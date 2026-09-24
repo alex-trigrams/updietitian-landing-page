@@ -217,6 +217,50 @@
     "address": "2/16 Baden Street, Osborne Park, WA",
     "bookingNote": "Select your appointment type and preferred time directly through Front Runner Physiotherapy. Health fund rebates available."
   },
+  "faq": {
+    "items": [
+      {
+        "id": "referral",
+        "question": "Do I need a referral to see a dietitian?",
+        "answer": "No. You can book with UP Dietitian directly, with no GP referral needed. If you're not sure where to start, book a free 15-minute discovery call first."
+      },
+      {
+        "id": "health-fund-rebates",
+        "question": "Can I claim with my private health insurance?",
+        "answer": "Yes. Private health rebates are available with participating health funds. How much you get back depends on your fund and level of cover, so it's worth checking with your insurer before your appointment."
+      },
+      {
+        "id": "in-person-perth",
+        "question": "Where can I see a dietitian in person in Perth?",
+        "answer": "Lauren consults in person two days a week at Front Runner Physiotherapy, 2/16 Baden Street, Osborne Park WA. In-person appointments are booked directly through Front Runner Physiotherapy."
+      },
+      {
+        "id": "online",
+        "question": "Can I see a dietitian online?",
+        "answer": "Yes. Initial and review consultations are available online via Zoom, so you can work with Lauren from anywhere in Australia or overseas. Ongoing coaching check-ins run over Zoom or phone."
+      },
+      {
+        "id": "what-sports-dietitian-does",
+        "question": "What does a sports dietitian do?",
+        "answer": "A sports dietitian helps you eat and fuel for training, competition and recovery. That covers everyday eating, fuelling before, during and after sessions, race-day and carbohydrate-loading plans, hydration, supplements, gut issues and body composition, all built around your sport and schedule."
+      },
+      {
+        "id": "elite-only",
+        "question": "Do I need to be an elite athlete?",
+        "answer": "Not at all. Lauren works with everyday to elite athletes, from people training for their first event to professional competitors, across endurance, team, weight-category and strength sports. She also helps with injury recovery, body composition, gut issues and coeliac disease."
+      },
+      {
+        "id": "dietitian-vs-nutritionist",
+        "question": "What's the difference between a dietitian and a nutritionist?",
+        "answer": "In Australia, Accredited Practising Dietitian (APD) is the national credential for dietitians, run by Dietitians Australia. APDs hold a university qualification in dietetics and complete ongoing professional development, and it's the credential private health funds recognise for rebates. \"Nutritionist\" isn't a protected title. Lauren is an APD."
+      },
+      {
+        "id": "consult-length",
+        "question": "How long is a consultation?",
+        "answer": "Initial and review consultations are 30 minutes, in person or online. Before you commit, you can book a free 15-minute discovery call to talk through your goals."
+      }
+    ]
+  },
   "footer": {
     "ctaLabel": "Start your journey with UP Dietitian here",
     "subCopy": "Ready to take your nutrition to the next level but not sure if UP Dietitian is right for you? Book a complimentary call today and get ready for better fuelling, simplified.",

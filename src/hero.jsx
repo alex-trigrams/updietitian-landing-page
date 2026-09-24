@@ -71,28 +71,31 @@ function Hero({ headline, sub, theme }) {
           removed at the client's request; the slideshow now stands on its own. */}
       <div className="relative max-w-[1400px] mx-auto w-full px-5 md:px-8 flex items-center justify-between font-mono text-[11px] uppercase tracking-[.2em] opacity-80">
         <span className="flex items-center gap-2"><span className="inline-block w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: t.accent }}></span> Taking on athletes now</span>
+        <span className="hidden sm:inline">Sports dietitian · Perth WA &amp; online</span>
       </div>
 
-      {/* Kinetic headline */}
-      <div className="relative max-w-[1700px] mx-auto w-full px-5 md:px-8 mt-8 md:mt-10">
+      {/* Kinetic headline — one <h1> for the page, each row a block span, so
+          search engines read a single heading rather than three. */}
+      <h1 className="relative max-w-[1700px] mx-auto w-full px-5 md:px-8 mt-8 md:mt-10">
         {rows.map((line, i) => (
-          <div
+          <span
             key={i}
-            className="kinetic-row whitespace-nowrap"
+            className="kinetic-row whitespace-nowrap block"
             style={{ transform: `translate3d(${(i % 2 === 0 ? -1 : 1) * offset * 0.25}px, 0, 0)` }}
           >
-            <h1
-              className="font-display leading-[.86] tracking-tight"
+            <span
+              className="block font-display leading-[.86] tracking-tight"
               style={{
                 fontSize: 'clamp(44px, 11vw, 132px)',
                 color: i === 1 ? t.accent : t.fg,
               }}
             >
               <span className="skew-italic">{line}</span>
-            </h1>
-          </div>
+            </span>
+            {i < rows.length - 1 && ' '}
+          </span>
         ))}
-      </div>
+      </h1>
 
       {/* sub copy + CTA cluster */}
       <div className="relative max-w-[1400px] mx-auto w-full px-5 md:px-8 mt-8 md:mt-10 grid grid-cols-12 gap-6 items-end">

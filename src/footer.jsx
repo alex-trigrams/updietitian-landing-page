@@ -82,7 +82,7 @@ function Footer({ theme }) {
           <Link href="/cookies" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Cookies</Link>
           <Link href="/terms" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Payment &amp; Cancellation</Link>
           <Link href="/contact" className="hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Contact</Link>
-          <span className="ml-auto">Built for athletes · Perth WA</span>
+          <Link href="/perth-dietitian" className="ml-auto hover:opacity-100 hover:text-orange transition-opacity" data-blob-hover>Sports dietitian · Perth WA</Link>
           <span>designed by trigrams.studio</span>
         </div>
       </div>
