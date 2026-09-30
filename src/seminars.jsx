@@ -59,8 +59,9 @@ const SEMINAR_IMAGES = {};
 
 function Seminars({ theme }) {
   const [expanded, setExpanded] = React.useState({});
-  const audiences = C('seminars.audiences', null) || SEMINAR_AUDIENCES_DEFAULT;
-  const cards = SEMINAR_AUDIENCES_DEFAULT.map((d, i) => (audiences[i] ? { ...d, ...audiences[i] } : d));
+  // The content list decides which cards show. This used to map over the
+  // defaults by position, so a card removed in /admin came straight back.
+  const cards = C('seminars.audiences', null) || SEMINAR_AUDIENCES_DEFAULT;
   const inclusions = C('seminars.inclusions', SEMINAR_INCLUSIONS_DEFAULT);
   const toggle = (slug) => setExpanded(e => ({ ...e, [slug]: !e[slug] }));
 
@@ -93,7 +94,7 @@ function Seminars({ theme }) {
         {/* Audience cards */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
           {cards.map((card) => {
-            const slug = slugify(card.title);
+            const slug = card.id || slugify(card.title);
             return (
               <ExpandableCard
                 key={slug}

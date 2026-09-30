@@ -122,7 +122,7 @@ function Services({ theme }) {
         brandTag={nm.brand}
         cta={direct
           ? { type: 'calendly', url: direct.url, label: card.bookingLabel || direct.label }
-          : { type: 'calendly', label: 'Book a discovery call' }}
+          : { type: 'calendly', label: card.bookingLabel || 'Book a discovery call' }}
         expanded={!!expanded[slug]}
         onToggle={() => toggle(slug)}
         cardRef={(el) => { refs.current[slug] = el; }}
@@ -146,7 +146,7 @@ function Services({ theme }) {
           </a>
         </div>
         <p className="mt-6 max-w-[54ch] text-[15px] md:text-[16px] leading-relaxed" style={{ color: 'rgba(234,230,215,.7)' }}>
-          Start with a package, or build from individual consultations. Tap any card to see exactly what’s included.
+          {C('services.intro', 'Start with a package, or build from individual consultations. Tap any card to see exactly what’s included.')}
         </p>
 
         {/* Tier 1 — Performance Plans (primary) */}
