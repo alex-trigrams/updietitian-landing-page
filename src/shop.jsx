@@ -18,30 +18,30 @@ const SHOP_PRODUCTS = [
     id: 'tee',
     name: 'UP Oversize Tee',
     type: 'Tees',
-    price: 50,
+    price: 45,
     meta: 'Oversized fit',
     blurb: 'A relaxed, everyday cotton staple designed for comfort, style and effortless lifestyle wear — coffee runs, rest days, weekend adventures and everything in between.',
-    images: ['tee-1', 'tee-2', 'tee-3', 'tee-4', 'tee-5'],
+    images: ['tee-0403', 'tee-0471', 'tee-0427', 'tee-0495', 'tee-0558', 'tee-0357'],
     stripe: 'https://buy.stripe.com/28EeV62bz8OQ6QW2dH3Nm02',
   },
   {
     id: 'tank',
     name: 'UP Active Tank',
     type: 'Tanks',
-    price: 55,
+    price: 50,
     meta: 'Cropped fit',
     blurb: 'A flattering cropped active tank designed for those who like to train hard and look good doing it. Perfect for every session, from long runs to Hyrox.',
-    images: ['tank-1', 'tank-2'],
+    images: ['tank-0552', 'tank-0565', 'tank-55', 'tank-56', 'tank-0555'],
     stripe: 'https://buy.stripe.com/cNi28k4jHd56dfkcSl3Nm01',
   },
   {
     id: 'socks',
     name: 'Level UP Running & Cycling Socks',
     type: 'Socks',
-    price: 29.99,
+    price: 20,
     meta: 'One size · US 7–12',
     blurb: 'Fuel your training from head to toe. Custom UP Dietitian socks designed for running, cycling and everyday training, combining a comfortable, performance-focused fit.',
-    images: ['socks-1', 'socks-2', 'socks-3'],
+    images: ['socks-0378', 'socks-0411', 'socks-0670'],
     stripe: 'https://buy.stripe.com/28E4gs6rP9SU6QW5pT3Nm00',
   },
 ];
@@ -575,7 +575,7 @@ function Shop({ theme }) {
             <div className="mt-10 flex items-start gap-4">
               <div className="w-0.5 flex-shrink-0 rounded-full self-stretch" style={{ background: '#FF6C00' }}></div>
               <p className="text-[13px] leading-relaxed" style={{ color: 'rgba(32,28,18,.6)' }}>
-                {C('shop.footerNote', 'Choose your size at checkout. Orders ship from Perth, WA — allow 3–7 business days within Australia.')}
+                {C('shop.footerNote', 'Choose your size at checkout.')}
               </p>
             </div>
           </Reveal>
