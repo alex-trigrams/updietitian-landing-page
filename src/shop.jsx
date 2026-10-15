@@ -187,7 +187,7 @@ function ProductModal({ product, onClose, onSizeGuide }) {
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Gallery */}
           <div className="p-4 md:p-6 flex flex-col gap-3">
-            <div className="relative w-full rounded-2xl overflow-hidden" style={{ paddingBottom: '100%', background: '#dfdac6' }}>
+            <div className="relative w-full rounded-2xl overflow-hidden" style={{ paddingBottom: '125%', background: '#dfdac6' }}>
               <ShopImage slug={images[i]} alt={`${product.name} — image ${i + 1}`} />
             </div>
 
@@ -280,9 +280,10 @@ function ProductCard({ product, onOpen }) {
       }}
       data-blob-hover
     >
-      {/* Image well. paddingBottom rather than aspect-ratio — the latter had
-          cross-browser trouble on this project. */}
-      <div className="relative w-full overflow-hidden" style={{ paddingBottom: '100%', background: '#EAE6D7' }}>
+      {/* Image well, 4:5 to suit the portrait product shots (the photos are
+          pre-cropped to 4:5 to match). paddingBottom rather than aspect-ratio —
+          the latter had cross-browser trouble on this project. */}
+      <div className="relative w-full overflow-hidden" style={{ paddingBottom: '125%', background: '#EAE6D7' }}>
         {shown ? (
           <ShopImage
             slug={shown}
