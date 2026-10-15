@@ -41,7 +41,7 @@ const SHOP_PRODUCTS = [
     price: 20,
     meta: 'One size · US 7–12',
     blurb: 'Fuel your training from head to toe. Custom UP Dietitian socks designed for running, cycling and everyday training, combining a comfortable, performance-focused fit.',
-    images: ['socks-0378', 'socks-0411', 'socks-0670'],
+    images: ['socks-0378', 'socks-0638', 'socks-0411', 'socks-0670'],
     stripe: 'https://buy.stripe.com/28E4gs6rP9SU6QW5pT3Nm00',
   },
 ];
