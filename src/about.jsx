@@ -12,11 +12,11 @@ function About({ theme }) {
 
         <div className="mt-6 grid grid-cols-12 gap-6 md:gap-10">
           <div className="col-span-12 lg:col-span-7">
-            <h2 className="font-display leading-[.88] tracking-tight" style={{ fontSize: 'clamp(48px, 8vw, 120px)' }}>
+            <h1 className="font-display leading-[.88] tracking-tight" style={{ fontSize: 'clamp(48px, 8vw, 120px)' }}>
               <span className="skew-italic">Lauren</span>{' '}
               <span className="skew-italic" style={{ color: '#FF6C00' }}>Nash</span>
               <span className="block mt-2 font-mono text-[12px] md:text-[14px] tracking-[.22em] uppercase opacity-70">Accredited Practising Dietitian · APD</span>
-            </h2>
+            </h1>
 
             <div className="mt-8 max-w-[62ch] space-y-4 text-[15px] md:text-[17px] leading-relaxed text-ink/80">
               {C('about.bioParagraphs', [

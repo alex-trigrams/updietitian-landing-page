@@ -1,6 +1,9 @@
 // Mobile CTA dock — always stuck to the bottom of the screen on mobile so the
 // primary actions stay in view. "Book a call" → Calendly; "Enquire" → the
 // enquiry modal. Hidden on desktop, where the nav already carries these.
+// The booking button's wording is Lauren's to edit in /admin
+// (stickyCta.mobileLabel). It takes the larger share of the bar so her longer
+// wording fits on one line on most phones, and wraps rather than overflowing.
 function StickyCTA() {
   return (
     <div
@@ -10,11 +13,11 @@ function StickyCTA() {
       <div className="flex items-center gap-2.5">
         <a
           href={CALENDLY_URL}
-          className="btn-shine flex-1 inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-full font-mono text-[12px] uppercase tracking-[.14em] font-bold"
+          className="btn-shine flex-[1.5] min-w-0 inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-full font-mono text-[12px] uppercase tracking-[.1em] font-bold text-center leading-tight"
           style={{ background: '#FF6C00', color: '#EAE6D7' }}
         >
-          <span className="inline-block w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: '#EAE6D7' }}></span>
-          Book a call
+          <span className="flex-shrink-0 inline-block w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: '#EAE6D7' }}></span>
+          {C('stickyCta.mobileLabel', 'Book a call')}
         </a>
         <button
           onClick={() => openEnquiry()}

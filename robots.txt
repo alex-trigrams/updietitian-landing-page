@@ -1,0 +1,8 @@
+# Search engines and AI assistants (Googlebot, Bingbot, GPTBot, ClaudeBot,
+# PerplexityBot, Google-Extended, …) are all welcome on the public pages.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://www.updietitian.com/sitemap.xml

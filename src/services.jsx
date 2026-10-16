@@ -8,6 +8,7 @@ const SVC_CREAM  = '#EAE6D7';
 
 const HERO_CARDS_DEFAULT = [
   {
+    id: 'initial-consult-performance',
     popular: true,
     eyebrow: 'FUEL UP PERFORMANCE PLAN',
     title: "Set Yourself Up Nutrition Plan",
@@ -22,6 +23,7 @@ const HERO_CARDS_DEFAULT = [
     tags: ['ALL SPORTS', 'RACE PREP', 'BODY COMPOSITION', 'HEALTH OUTCOMES'],
   },
   {
+    id: 'level-up-race',
     popular: false,
     eyebrow: 'RACE PACKAGE',
     title: "Level Up Performance Plan",
@@ -120,7 +122,7 @@ function Services({ theme }) {
         brandTag={nm.brand}
         cta={direct
           ? { type: 'calendly', url: direct.url, label: card.bookingLabel || direct.label }
-          : { type: 'calendly', label: 'Book a discovery call' }}
+          : { type: 'calendly', label: card.bookingLabel || 'Book a discovery call' }}
         expanded={!!expanded[slug]}
         onToggle={() => toggle(slug)}
         cardRef={(el) => { refs.current[slug] = el; }}
@@ -135,16 +137,16 @@ function Services({ theme }) {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: SVC_ACCENT }}>What we offer</div>
-            <h2 className="mt-3 font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
+            <h1 className="mt-3 font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
               <span className="skew-italic">SERVICES</span>
-            </h2>
+            </h1>
           </div>
           <a href={CALENDLY_URL} className="hidden md:inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] mb-2 opacity-80 hover:opacity-100" style={{ color: SVC_CREAM }} data-blob-hover>
             Book a discovery call <span style={{ fontFamily: 'Anton' }}>↗</span>
           </a>
         </div>
         <p className="mt-6 max-w-[54ch] text-[15px] md:text-[16px] leading-relaxed" style={{ color: 'rgba(234,230,215,.7)' }}>
-          Start with a package, or build from individual consultations. Tap any card to see exactly what’s included.
+          {C('services.intro', 'Start with a package, or build from individual consultations. Tap any card to see exactly what’s included.')}
         </p>
 
         {/* Tier 1 — Performance Plans (primary) */}

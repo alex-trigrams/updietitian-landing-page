@@ -169,7 +169,7 @@ function ContactPage() {
         <div className="mt-10 grid grid-cols-12 gap-8 md:gap-10">
           <div className="col-span-12 md:col-span-6 lg:col-span-7">
             <p className="max-w-[52ch] text-[16px] md:text-[18px] leading-relaxed opacity-85">
-              Whether you're chasing a race goal, managing a health condition, or just want to fuel smarter — the best place to start is a free 15-minute call. No pressure, just a chat about where you're at and how UP Dietitian can help.
+              {C('contact.intro', "Whether you're chasing a race goal, managing a health condition, or just want to fuel smarter — the best place to start is a free 15-minute call. No pressure, just a chat about where you're at and how UP Dietitian can help.")}
             </p>
             <a href={CALENDLY_URL} className="btn-shine mt-8 inline-flex items-center gap-4 px-7 md:px-9 py-5 md:py-6 rounded-full font-mono text-[13px] md:text-[15px] uppercase tracking-[.18em] font-bold"
                style={{ background: '#FF6C00', color: '#EAE6D7' }} data-blob-hover>
@@ -182,11 +182,11 @@ function ContactPage() {
             <div className="grid grid-cols-2 gap-6 font-mono text-[12px] uppercase tracking-[.16em]">
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Email</span>
-                <a href="mailto:hello@updietitian.com" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>hello@updietitian.com</a>
+                <a href={`mailto:${C('footer.email', 'hello@updietitian.com')}`} className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>{C('footer.email', 'hello@updietitian.com')}</a>
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">Social</span>
-                <a href="https://www.instagram.com/up_dietitian/" target="_blank" rel="noreferrer" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>@up_dietitian</a>
+                <a href="https://www.instagram.com/up_dietitian/" target="_blank" rel="noreferrer" className="hover:text-orange normal-case tracking-normal text-[14px]" data-blob-hover>{C('footer.instagramHandle', '@up_dietitian')}</a>
               </div>
               <div className="flex flex-col gap-2.5">
                 <span className="opacity-50">In person</span>

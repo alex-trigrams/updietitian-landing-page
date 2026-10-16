@@ -8,6 +8,14 @@ const CALENDLY_URL = "https://calendly.com/updietitian/15min";
 // its booking link back to the generic discovery call. Lauren can override
 // either of these per card from /admin (bookingUrl / bookingLabel).
 const CALENDLY_LINKS = {
+  'initial-consult-performance': {
+    url: 'https://calendly.com/updietitian/up-dietitian-initial-consultation',
+    label: 'Book your initial consultation',
+  },
+  'level-up-race': {
+    url: 'https://calendly.com/updietitian/up-dietitian-initial-consultation',
+    label: 'Book your initial consultation',
+  },
   'initial-nutrition-consultation': {
     url: 'https://calendly.com/updietitian/up-dietitian-initial-consultation',
     label: 'Book an initial consultation',

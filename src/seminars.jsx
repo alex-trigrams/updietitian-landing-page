@@ -59,8 +59,9 @@ const SEMINAR_IMAGES = {};
 
 function Seminars({ theme }) {
   const [expanded, setExpanded] = React.useState({});
-  const audiences = C('seminars.audiences', null) || SEMINAR_AUDIENCES_DEFAULT;
-  const cards = SEMINAR_AUDIENCES_DEFAULT.map((d, i) => (audiences[i] ? { ...d, ...audiences[i] } : d));
+  // The content list decides which cards show. This used to map over the
+  // defaults by position, so a card removed in /admin came straight back.
+  const cards = C('seminars.audiences', null) || SEMINAR_AUDIENCES_DEFAULT;
   const inclusions = C('seminars.inclusions', SEMINAR_INCLUSIONS_DEFAULT);
   const toggle = (slug) => setExpanded(e => ({ ...e, [slug]: !e[slug] }));
 
@@ -76,9 +77,9 @@ function Seminars({ theme }) {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-[.22em]" style={{ color: SEM_ACCENT }}>{C('seminars.eyebrow', 'Group Education')}</div>
-            <h2 className="mt-3 font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
+            <h1 className="mt-3 font-display leading-[.88]" style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}>
               <span className="skew-italic">SEMINARS</span>
-            </h2>
+            </h1>
           </div>
           <button onClick={() => openEnquiry('Seminar')} className="hidden md:inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.18em] mb-2 opacity-80 hover:opacity-100" style={{ color: SEM_INK }} data-blob-hover>
             Enquire about a seminar <span style={{ fontFamily: 'Anton' }}>↗</span>
@@ -93,7 +94,7 @@ function Seminars({ theme }) {
         {/* Audience cards */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
           {cards.map((card) => {
-            const slug = slugify(card.title);
+            const slug = card.id || slugify(card.title);
             return (
               <ExpandableCard
                 key={slug}
