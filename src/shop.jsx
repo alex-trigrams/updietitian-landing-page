@@ -22,7 +22,7 @@ const SHOP_PRODUCTS = [
     meta: 'Oversized fit',
     blurb: 'A relaxed, everyday cotton staple designed for comfort, style and effortless lifestyle wear — coffee runs, rest days, weekend adventures and everything in between.',
     images: ['tee-0403', 'tee-0471', 'tee-0427', 'tee-0495', 'tee-0558', 'tee-0357'],
-    stripe: 'https://buy.stripe.com/28EeV62bz8OQ6QW2dH3Nm02',
+    stripe: 'https://buy.stripe.com/9B67sE2bz1mo6QWdWp3Nm04',
   },
   {
     id: 'tank',
@@ -32,7 +32,7 @@ const SHOP_PRODUCTS = [
     meta: 'Cropped fit',
     blurb: 'A flattering cropped active tank designed for those who like to train hard and look good doing it. Perfect for every session, from long runs to Hyrox.',
     images: ['tank-0552', 'tank-0565', 'tank-55', 'tank-56', 'tank-0555'],
-    stripe: 'https://buy.stripe.com/cNi28k4jHd56dfkcSl3Nm01',
+    stripe: 'https://buy.stripe.com/4gM14g6rP7KMejo19D3Nm03',
   },
   {
     id: 'socks',
@@ -42,7 +42,7 @@ const SHOP_PRODUCTS = [
     meta: 'One size · US 7–12',
     blurb: 'Fuel your training from head to toe. Custom UP Dietitian socks designed for running, cycling and everyday training, combining a comfortable, performance-focused fit.',
     images: ['socks-0378', 'socks-0638', 'socks-0411', 'socks-0670'],
-    stripe: 'https://buy.stripe.com/28E4gs6rP9SU6QW5pT3Nm00',
+    stripe: 'https://buy.stripe.com/14A4gs3fD7KM3EK4lP3Nm05',
   },
 ];
 
