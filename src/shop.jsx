@@ -12,6 +12,11 @@
 // PRICES: typed by hand, NOT read from Stripe. Changing a price in the Stripe
 // dashboard will silently disagree with the figure shown here — update both
 // together. A product left at `price: null` shows "Price at checkout" instead.
+//
+// SIZES: `sizes` lists what's stocked and `soldOut` the ones that have run out
+// (still shown, struck through, so people know they existed). Like prices this
+// is display only — the size options themselves live on the Stripe Payment
+// Link, so mark a size sold out there too or people can still pick it.
 
 const SHOP_PRODUCTS = [
   {
@@ -20,6 +25,7 @@ const SHOP_PRODUCTS = [
     type: 'Tees',
     price: 45,
     meta: 'Oversized fit',
+    sizes: ['S', 'M', 'L'],
     blurb: 'A relaxed, everyday cotton staple designed for comfort, style and effortless lifestyle wear — coffee runs, rest days, weekend adventures and everything in between.',
     images: ['tee-0403', 'tee-0471', 'tee-0427', 'tee-0495', 'tee-0558', 'tee-0357'],
     stripe: 'https://buy.stripe.com/9B67sE2bz1mo6QWdWp3Nm04',
@@ -30,6 +36,8 @@ const SHOP_PRODUCTS = [
     type: 'Tanks',
     price: 50,
     meta: 'Cropped fit',
+    sizes: ['S', 'M', 'L'],
+    soldOut: ['M'],
     blurb: 'A flattering cropped active tank designed for those who like to train hard and look good doing it. Perfect for every session, from long runs to Hyrox.',
     images: ['tank-0552', 'tank-0565', 'tank-55', 'tank-56', 'tank-0555'],
     stripe: 'https://buy.stripe.com/4gM14g6rP7KMejo19D3Nm03',
@@ -39,7 +47,8 @@ const SHOP_PRODUCTS = [
     name: 'Level UP Running & Cycling Socks',
     type: 'Socks',
     price: 20,
-    meta: 'One size · US 7–12',
+    meta: 'Two sizes',
+    sizes: ['US 2–6', 'US 7–12'],
     blurb: 'Fuel your training from head to toe. Custom UP Dietitian socks designed for running, cycling and everyday training, combining a comfortable, performance-focused fit.',
     images: ['socks-0378', 'socks-0638', 'socks-0411', 'socks-0670'],
     stripe: 'https://buy.stripe.com/14A4gs3fD7KM3EK4lP3Nm05',
@@ -50,7 +59,8 @@ const SHOP_PRODUCTS = [
 // the modal can deep-link to the right tab. All measurements in cm, garment
 // laid flat; the supplier notes a ±2.5cm tolerance. The full supplier range is
 // kept here, but only SIZES_AVAILABLE are shown/sold at this stage — widen that
-// list when Lauren stocks more sizes.
+// list when Lauren stocks more sizes. Per-product sell-outs live on the
+// product's `soldOut`, not here.
 const SIZES_AVAILABLE = ['S', 'M', 'L'];
 
 const SIZE_CHARTS = [
@@ -82,6 +92,11 @@ function formatPrice(v) {
   if (v == null) return null;
   return `$${Number(v).toFixed(2)} AUD`;
 }
+
+const inStock = (p) => (p.sizes || []).filter(sz => !(p.soldOut || []).includes(sz));
+
+// "S and L", "S, M and L"
+const listSizes = (a) => a.length < 2 ? a.join('') : `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}`;
 
 function trackShop(name, product) {
   try { window.va('event', { name, data: { product } }); } catch (e) {}
@@ -223,6 +238,34 @@ function ProductModal({ product, onClose, onSizeGuide }) {
               <span className="font-mono text-[11px] uppercase tracking-[.18em]" style={{ color: 'rgba(234,230,215,.5)' }}>{product.meta}</span>
             </div>
 
+            {product.sizes && (
+              <div className="mt-6">
+                <div className="flex flex-wrap gap-2">
+                  {product.sizes.map(sz => {
+                    const out = (product.soldOut || []).includes(sz);
+                    return (
+                      <span
+                        key={sz}
+                        className="px-3.5 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-[.16em]"
+                        style={{
+                          border: `1px solid rgba(234,230,215,${out ? '.18' : '.45'})`,
+                          color: out ? 'rgba(234,230,215,.35)' : '#EAE6D7',
+                          textDecoration: out ? 'line-through' : 'none',
+                        }}
+                      >
+                        {sz}
+                      </span>
+                    );
+                  })}
+                </div>
+                {product.soldOut && product.soldOut.length > 0 && (
+                  <p className="mt-3 font-mono text-[11px] uppercase tracking-[.16em]" style={{ color: '#FF6C00' }}>
+                    {listSizes(product.soldOut)} sold out · only {listSizes(inStock(product))} remain
+                  </p>
+                )}
+              </div>
+            )}
+
             <a
               href={product.stripe}
               target="_blank"
@@ -341,7 +384,7 @@ function ProductCard({ product, onOpen }) {
 
         {/* Tag pills, matching the Services and Seminars cards. */}
         <div className="mt-2 flex flex-wrap gap-1.5">
-          {[product.meta, SIZE_CHARTS.some(c => c.id === product.id) ? `Sizes ${SIZES_AVAILABLE.join(' · ')}` : 'Sizes at checkout'].filter(Boolean).map(tag => (
+          {[product.meta, product.sizes ? `Sizes ${inStock(product).join(' · ')}` : 'Sizes at checkout'].filter(Boolean).map(tag => (
             <span
               key={tag}
               className="px-2.5 py-1 rounded-full font-mono text-[9px] uppercase tracking-[.16em]"
@@ -350,6 +393,14 @@ function ProductCard({ product, onOpen }) {
               {tag}
             </span>
           ))}
+          {product.soldOut && product.soldOut.length > 0 && (
+            <span
+              className="px-2.5 py-1 rounded-full font-mono text-[9px] uppercase tracking-[.16em]"
+              style={{ border: '1px solid #FF6C00', color: '#FF6C00' }}
+            >
+              {product.soldOut.join(' · ')} sold out
+            </span>
+          )}
         </div>
 
         <div className="mt-auto pt-4 flex items-end justify-between gap-3" style={{ borderTop: '1px solid rgba(32,28,18,.12)' }}>
@@ -367,7 +418,7 @@ function ProductCard({ product, onOpen }) {
 // Collapsed by default so the grid stays the focus; opens on the toggle or
 // from a product modal's "View size guide" link (which also picks the tab).
 
-function SizeGuide({ open, tab, onToggle, onTab }) {
+function SizeGuide({ open, tab, onToggle, onTab, products }) {
   const full = SIZE_CHARTS.find(c => c.id === tab) || SIZE_CHARTS[0];
   // Trim each chart to the sizes actually on sale.
   const keep = full.sizes.map((sz, i) => SIZES_AVAILABLE.includes(sz) ? i : -1).filter(i => i >= 0);
@@ -376,6 +427,9 @@ function SizeGuide({ open, tab, onToggle, onTab }) {
     sizes: keep.map(i => full.sizes[i]),
     rows: full.rows.map(r => ({ ...r, values: keep.map(i => r.values[i]) })),
   };
+  const product = products.find(p => p.id === chart.id) || {};
+  const soldOut = product.soldOut || [];
+  const available = chart.sizes.filter(sz => !soldOut.includes(sz));
   const cell = 'px-4 py-3 text-center font-mono text-[13px] whitespace-nowrap';
 
   return (
@@ -426,16 +480,22 @@ function SizeGuide({ open, tab, onToggle, onTab }) {
               <thead>
                 <tr style={{ borderBottom: '1px solid rgba(32,28,18,.12)' }}>
                   <th className="px-5 py-3 text-left font-mono text-[10px] uppercase tracking-[.2em]" style={{ color: 'rgba(32,28,18,.55)' }}>cm</th>
-                  {chart.sizes.map(sz => (
-                    <th key={sz} className={cell + ' font-bold text-[12px] uppercase tracking-[.16em]'}>{sz}</th>
-                  ))}
+                  {chart.sizes.map(sz => {
+                    const out = soldOut.includes(sz);
+                    return (
+                      <th key={sz} className={cell + ' font-bold text-[12px] uppercase tracking-[.16em]'} style={out ? { color: 'rgba(32,28,18,.35)' } : undefined}>
+                        <span style={out ? { textDecoration: 'line-through' } : undefined}>{sz}</span>
+                        {out && <span className="block mt-0.5 text-[9px] font-normal" style={{ color: '#FF6C00', textDecoration: 'none' }}>Sold out</span>}
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody>
                 {chart.rows.map((r, n) => (
                   <tr key={r.label} style={{ borderBottom: n < chart.rows.length - 1 ? '1px solid rgba(32,28,18,.08)' : 'none' }}>
                     <th scope="row" className="px-5 py-3 text-left text-[13px] font-semibold whitespace-nowrap">{r.label}</th>
-                    {r.values.map((v, i) => <td key={i} className={cell}>{v}</td>)}
+                    {r.values.map((v, i) => <td key={i} className={cell} style={soldOut.includes(chart.sizes[i]) ? { color: 'rgba(32,28,18,.35)' } : undefined}>{v}</td>)}
                   </tr>
                 ))}
               </tbody>
@@ -443,7 +503,7 @@ function SizeGuide({ open, tab, onToggle, onTab }) {
           </div>
 
           <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'rgba(32,28,18,.55)' }}>
-            Currently available in {SIZES_AVAILABLE.join(', ')}. Garment measured flat. Measurements can vary within 2.5cm — this is within the supplier's tolerance.
+            Currently available in {listSizes(available)}{soldOut.length > 0 && ` (${listSizes(soldOut)} sold out)`}. Garment measured flat. Measurements can vary within 2.5cm — this is within the supplier's tolerance.
           </p>
         </div>
       )}
@@ -567,6 +627,7 @@ function Shop({ theme }) {
               tab={sizeTab}
               onToggle={() => { if (!sizeOpen) trackShop('shop_size_guide', 'toggle'); setSizeOpen(v => !v); }}
               onTab={setSizeTab}
+              products={products}
             />
           </Reveal>
 
