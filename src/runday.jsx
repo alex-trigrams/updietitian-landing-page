@@ -16,14 +16,10 @@
 // touch window/document outside effects and event handlers.
 
 const RUN_DAY = {
-  date: '7am start · date TBC', // add the day once it's locked in, e.g. 'Sat 6 Dec · 7am'
+  date: 'Sun 15 Nov · 7am',
   meet: 'Mullaloo',
   after: 'Coffee at Swell',
-  capacity: 40,
-  // Formspree can't count signups for us, so the cap is manual: once 40 are
-  // in Lauren's inbox, set this to true and redeploy. The form is replaced
-  // with a "fully booked" note.
-  full: false,
+  capacity: 40, // shown as information only; signups aren't counted or closed
 };
 
 const RUN_DAY_TRAINING = [
@@ -150,7 +146,7 @@ function RunDayPage() {
             </div>
           ) : (
             <React.Fragment>
-              <div className="font-mono text-[11px] uppercase tracking-[.2em] font-bold" style={{ color: RD.orange }}>Free community event · {RUN_DAY.full ? 'Fully booked' : `${RUN_DAY.capacity} spots`}</div>
+              <div className="font-mono text-[11px] uppercase tracking-[.2em] font-bold" style={{ color: RD.orange }}>Free community event · {RUN_DAY.capacity} spots</div>
               <h1 className="mt-2 font-display leading-[1]" style={{ fontSize: 'clamp(34px, 6.5vw, 52px)' }}>UP Dietitian Social Run Day</h1>
               <p className="mt-3 text-[16px] leading-relaxed" style={{ color: RD.muted }}>
                 A relaxed group run for every pace along the coast at Mullaloo, then coffee at Swell with a 10–15 minute nutrition Q&amp;A from Lauren Nash, Accredited Practising Dietitian. Spots are capped at {RUN_DAY.capacity}, so fill in your details below to save yours.
@@ -161,17 +157,6 @@ function RunDayPage() {
                 {detail('After', RUN_DAY.after)}
               </div>
 
-              {RUN_DAY.full ? (
-                <div className="mt-8 pt-7 text-center" style={{ borderTop: `1px solid ${RD.line}` }}>
-                  <h2 className="font-display leading-[1]" style={{ fontSize: 'clamp(28px, 5vw, 38px)' }}>We're fully booked</h2>
-                  <p className="mt-3 mx-auto max-w-[44ch] text-[16px] leading-relaxed" style={{ color: RD.muted }}>
-                    All {RUN_DAY.capacity} spots have been taken. Follow along on Instagram for the next one.
-                  </p>
-                  <a href="https://www.instagram.com/up_dietitian/" target="_blank" rel="noopener" className="mt-6 inline-flex items-center justify-center px-6 h-12 rounded-lg text-[15px] font-semibold" style={{ background: RD.orange, color: '#fff' }}>
-                    Follow @up_dietitian
-                  </a>
-                </div>
-              ) : (
               <form onSubmit={submit} noValidate className="mt-8">
                 <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }} />
 
@@ -221,7 +206,6 @@ function RunDayPage() {
                   </p>
                 </div>
               </form>
-              )}
             </React.Fragment>
           )}
         </div>
