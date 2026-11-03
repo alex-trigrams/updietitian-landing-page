@@ -200,8 +200,12 @@ function ShopPage({ theme }) {
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const route = useRoute();
+  // The run-day signup is a plain, light, Jotform-style form page, kept free of
+  // the site's effects (cursor blob, scroll bar, footer, mobile CTA dock) so it
+  // reads simply and loads fast on a phone.
+  const immersive = route === '/run-day';
   // Passing `route` re-binds the cursor blob to elements a new page renders.
-  useCursorBlob(route);
+  useCursorBlob(route, !immersive);
 
   // Update css density attr on body
   React.useEffect(() => {
@@ -228,13 +232,10 @@ function App() {
   }
 
   const isNotFound = !ROUTES.includes(route);
-  // The run-day signup is a full-screen, one-question-at-a-time form, so it
-  // drops the footer and mobile CTA dock that would compete with it.
-  const immersive = route === '/run-day';
 
   return (
     <div data-density={t.density} className={immersive ? '' : 'pb-[68px] md:pb-0'} style={{ background: '#EAE6D7' }}>
-      <ScrollProgress key={route} />
+      {!immersive && <ScrollProgress key={route} />}
       <Nav theme={theme} route={route} />
       {page}
       {!isNotFound && !immersive && <Footer theme={theme} />}

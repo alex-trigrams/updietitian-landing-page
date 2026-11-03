@@ -79,11 +79,13 @@ function useCounter(target, trigger, duration = 1400) {
 
 // Cursor blob micro-interaction. Pass a changing `dep` (e.g. the current route)
 // to re-bind the hover listeners after a new page renders new [data-blob-hover]
-// elements.
-function useCursorBlob(dep) {
+// elements. Pass enabled=false to hide it on pages kept deliberately plain.
+function useCursorBlob(dep, enabled = true) {
   React.useEffect(() => {
     const blob = document.getElementById('cursor-blob');
     if (!blob) return;
+    blob.style.display = enabled ? '' : 'none';
+    if (!enabled) return;
     let x = -100, y = -100, tx = -100, ty = -100, raf;
     const move = (e) => { tx = e.clientX; ty = e.clientY; };
     const loop = () => {
@@ -105,7 +107,7 @@ function useCursorBlob(dep) {
       el.removeEventListener('mouseleave', leaveBig);
     });
     return () => { cancelAnimationFrame(raf); window.removeEventListener('mousemove', move); unbind(); };
-  }, [dep]);
+  }, [dep, enabled]);
 }
 
 // Slug from a title, shared by the Services nav dropdown and the Services

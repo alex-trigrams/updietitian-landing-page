@@ -5,7 +5,8 @@
     }
   },
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true }
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/run", "destination": "/run-day?utm_source=instagram&utm_medium=story&utm_campaign=social_run_day", "permanent": false }
   ],
   "rewrites": [
     {
