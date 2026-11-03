@@ -6,7 +6,7 @@
 // per-page pageviews. Links stay real <a> tags so right-click / SEO / new-tab
 // all keep working; only plain left-clicks are intercepted.
 
-const ROUTES = ['/', '/about', '/services', '/seminars', '/clinic', '/shop', '/perth-dietitian', '/contact', '/privacy', '/cookies', '/terms'];
+const ROUTES = ['/', '/about', '/services', '/seminars', '/clinic', '/shop', '/perth-dietitian', '/run-day', '/contact', '/privacy', '/cookies', '/terms'];
 
 // Per-route <title> + meta description. api/render.js writes these into the
 // server-rendered HTML (with canonical, social and structured-data tags, see
@@ -22,6 +22,7 @@ const ROUTE_META = {
   '/clinic':   { title: 'Dietitian in Osborne Park, Perth · In-Person Consults · UP Dietitian', desc: 'Face-to-face dietitian consultations at Front Runner Physiotherapy, 2/16 Baden Street, Osborne Park WA. Health fund rebates available.' },
   '/shop':     { title: 'Shop · UP Dietitian', desc: 'UP Dietitian training kit — tees, tanks and performance socks. Secure checkout via Stripe.' },
   '/perth-dietitian': { title: 'Dietitian Perth · Nutrition for Active People · UP Dietitian', desc: 'Looking for a dietitian in Perth? Lauren Nash (APD) helps active people with fuelling, gut issues, body composition, injury recovery and coeliac disease.' },
+  '/run-day':  { title: 'Social Run Day · Free Community Run & Nutrition Q&A · UP Dietitian', desc: 'Join the free UP Dietitian Social Run Day in Perth: a relaxed group run for every pace, then a nutrition Q&A with sports dietitian Lauren Nash, APD.' },
   '/contact':  { title: 'Contact · UP Dietitian, Sports Dietitian Perth', desc: 'Get in touch with UP Dietitian: in person in Osborne Park, Perth WA, or online Australia-wide and internationally.' },
   '/privacy':  { title: 'Privacy Policy · UP Dietitian', desc: 'How UP Dietitian collects, uses and protects your personal information.' },
   '/cookies':  { title: 'Cookie Policy · UP Dietitian', desc: 'How UP Dietitian uses cookies and analytics.' },

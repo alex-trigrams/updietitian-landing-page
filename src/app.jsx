@@ -219,6 +219,7 @@ function App() {
     case '/clinic':   page = <ClinicPage theme={theme} />; break;
     case '/shop':     page = <ShopPage theme={theme} />; break;
     case '/perth-dietitian': page = <PerthDietitianPage />; break;
+    case '/run-day':  page = <RunDayPage />; break;
     case '/contact':  page = <ContactPage />; break;
     case '/privacy':  page = <Privacy />; break;
     case '/cookies':  page = <Cookies />; break;
@@ -227,15 +228,18 @@ function App() {
   }
 
   const isNotFound = !ROUTES.includes(route);
+  // The run-day signup is a full-screen, one-question-at-a-time form, so it
+  // drops the footer and mobile CTA dock that would compete with it.
+  const immersive = route === '/run-day';
 
   return (
-    <div data-density={t.density} className="pb-[68px] md:pb-0" style={{ background: '#EAE6D7' }}>
+    <div data-density={t.density} className={immersive ? '' : 'pb-[68px] md:pb-0'} style={{ background: '#EAE6D7' }}>
       <ScrollProgress key={route} />
       <Nav theme={theme} route={route} />
       {page}
-      {!isNotFound && <Footer theme={theme} />}
+      {!isNotFound && !immersive && <Footer theme={theme} />}
       <EnquiryModal />
-      {!isNotFound && <StickyCTA />}
+      {!isNotFound && !immersive && <StickyCTA />}
 
       {route === '/' && (
         <TweaksPanel>

@@ -82,6 +82,12 @@
     [style*="shopFade"], [style*="shopRise"] { animation: none !important; }
   }
 
+  /* run day signup: each question slides up into place */
+  @keyframes runDayIn { from { opacity: 0; transform: translateY(28px) } to { opacity: 1; transform: none } }
+  @media (prefers-reduced-motion: reduce) {
+    [style*="runDayIn"] { animation: none !important; }
+  }
+
   /* override important: hide cursor blob on touch */
   @media (pointer: coarse) { #cursor-blob{ display:none } }
 </style>
@@ -151,6 +157,7 @@
   <script type="text/babel" src="src/enquiry.jsx"></script>
   <script type="text/babel" src="src/faq.jsx"></script>
   <script type="text/babel" src="src/perth.jsx"></script>
+  <script type="text/babel" src="src/runday.jsx"></script>
   <script type="text/babel" src="src/app.jsx"></script>
   <script type="text/babel" src="src/analytics.jsx"></script>
 </body>
