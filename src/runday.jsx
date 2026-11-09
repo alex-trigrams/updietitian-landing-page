@@ -16,16 +16,17 @@
 // touch window/document outside effects and event handlers.
 
 const RUN_DAY = {
-  date: 'Sun 15 Nov · 7am',
-  meet: 'Mullaloo',
-  after: 'Coffee at Swell',
+  date: 'Sun 22 Nov',
+  time: '6am (2hr) · 7am (1hr)',
+  meet: 'Tom Simpson Park, Mullaloo Beach',
+  after: 'Nutrition chats & coffee',
   capacity: 40, // shown as information only; signups aren't counted or closed
 };
 
 const RUN_DAY_TRAINING = [
-  { key: 'A', value: 'Full Ironman' },
-  { key: 'B', value: '70.3' },
-  { key: 'C', value: 'Just for the vibes' },
+  { key: 'A', value: 'Ironman WA' },
+  { key: 'B', value: 'Ironman 70.3 WA' },
+  { key: 'C', value: 'Not racing, just coming for the vibes' },
 ];
 
 const RD = {
@@ -149,10 +150,14 @@ function RunDayPage() {
               <div className="font-mono text-[11px] uppercase tracking-[.2em] font-bold" style={{ color: RD.orange }}>Free community event · {RUN_DAY.capacity} spots</div>
               <h1 className="mt-2 font-display leading-[1]" style={{ fontSize: 'clamp(34px, 6.5vw, 52px)' }}>UP Dietitian Social Run Day</h1>
               <p className="mt-3 text-[16px] leading-relaxed" style={{ color: RD.muted }}>
-                A relaxed group run for every pace along the coast at Mullaloo, then coffee at Swell with a 10–15 minute nutrition Q&amp;A from Lauren Nash, Accredited Practising Dietitian. Spots are capped at {RUN_DAY.capacity}, so fill in your details below to save yours.
+                With just 2 weeks until Ironman &amp; Ironman 70.3 WA, join Lauren from UP Dietitian for a fun, social run to get excited for race day!
+              </p>
+              <p className="mt-3 text-[16px] leading-relaxed" style={{ color: RD.muted }}>
+                All paces and abilities welcome, with 1-hour and 2-hour run options. Stick around afterwards for a quick nutrition Q&amp;A with Lauren and of course, coffee!
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {detail('When', RUN_DAY.date)}
+                {detail('Start', RUN_DAY.time)}
                 {detail('Meet', RUN_DAY.meet)}
                 {detail('After', RUN_DAY.after)}
               </div>
@@ -188,7 +193,7 @@ function RunDayPage() {
                   </div>
                 </RunDayQuestion>
 
-                <RunDayQuestion n={5} label="Your nutrition question for Lauren" help="She'll answer questions in the Q&A after the run. Race fuelling, gut issues, recovery, carb loading: ask away." htmlFor="rd-question" error={errors.question}>
+                <RunDayQuestion n={5} label="Your nutrition question for Lauren" help="Lauren will host a brief nutrition Q&A after the run, so drop one question below you'd like answered. It can be anything from race fuelling, sports supplements, carb loading or general health." htmlFor="rd-question" error={errors.question}>
                   <textarea id="rd-question" name="question" rows={4} value={values.question} onChange={set('question')} placeholder="Type your question here" className="w-full rounded-lg px-4 py-3 text-[16px] outline-none resize-y focus:ring-2 focus:ring-[#FF6C00]/30 focus:border-[#FF6C00]" style={inputStyle('question')} />
                 </RunDayQuestion>
 
