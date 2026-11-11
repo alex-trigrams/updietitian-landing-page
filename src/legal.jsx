@@ -84,8 +84,6 @@ function Privacy() {
 
       <h2>Contact</h2>
       <p>UP Dietitian — Lauren Nash, APD<br/>Email: <a href="mailto:hello@updietitian.com">hello@updietitian.com</a><br/>Perth, Western Australia</p>
-
-      <p className="note"><strong>Note for the business owner:</strong> confirm your registered legal/business name and ABN before publishing, and consider having this policy reviewed by a professional. This template is a starting point, not legal advice.</p>
     </LegalPage>
   );
 }
