@@ -68,8 +68,6 @@ const TIER_CARDS_DEFAULT = [
   },
 ];
 
-// Optional photos per card — drop { avif, jpg, alt } here later, keyed by slug.
-const SERVICE_IMAGES = {};
 
 // The content list is the source of truth for how many cards there are — cards
 // Lauren adds in /admin used to be dropped here, because this mapped over the
@@ -115,7 +113,7 @@ function Services({ theme }) {
     return (
       <ExpandableCard
         key={slug}
-        card={{ ...card, anchor: slug, image: SERVICE_IMAGES[slug] }}
+        card={{ ...card, anchor: slug, image: cardImage(card) }}
         scheme="dark"
         large={large}
         displayName={nm.name}

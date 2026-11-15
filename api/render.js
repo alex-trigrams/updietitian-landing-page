@@ -112,8 +112,8 @@ module.exports = async (req, res) => {
   if (meta) html = html.replace(/<title>[\s\S]*?<\/title>/, headTags(pathname, meta, content, { notFound }));
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  // Content is read live from Lauren's Blob on every request, so /admin edits
-  // show immediately, as they did before this was server-rendered.
+  // Content is read from Sanity on every request, so what the client
+  // publishes at /admin shows immediately.
   res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   res.status(notFound ? 404 : 200).send(html);
 };

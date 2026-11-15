@@ -104,9 +104,8 @@
     // file is served raw does it fall back to a synchronous XHR — fine here, the
     // response is tiny and same-origin, and it must resolve before the
     // babel-transpiled component scripts below execute and read window.SITE_CONTENT.
-    // /api/get-content reads the live Vercel Blob (falling back to the seed
-    // content.json shipped in the repo), so the client never needs to know
-    // the Blob's own URL.
+    // /api/get-content reads what the client has published in Sanity (falling
+    // back to the seed content.json shipped in the repo).
     (function () {
       if (!window.SITE_CONTENT) try {
         var xhr = new XMLHttpRequest();

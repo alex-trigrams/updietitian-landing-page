@@ -53,9 +53,6 @@ const SEMINAR_INCLUSIONS_DEFAULT = [
   'Optional follow-up session or discounted 1-on-1 rate for attendees',
 ];
 
-// Optional photos per seminar card — drop { avif, jpg, alt } here later, keyed
-// by slug of the card title.
-const SEMINAR_IMAGES = {};
 
 function Seminars({ theme }) {
   const [expanded, setExpanded] = React.useState({});
@@ -98,7 +95,7 @@ function Seminars({ theme }) {
             return (
               <ExpandableCard
                 key={slug}
-                card={{ ...card, image: SEMINAR_IMAGES[slug] }}
+                card={{ ...card, image: cardImage(card) }}
                 scheme="light"
                 displayName={card.title}
                 brandTag={card.eyebrow}

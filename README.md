@@ -7,7 +7,7 @@ Landing site for **Lauren Nash, APD** — sports dietitian, Perth WA. Built by [
 
 ## Stack
 
-Static, **no build step**. React 18 + Babel-standalone + Tailwind, all via CDN. Every component attaches to `window` and is loaded in order from `index.html`. Editable marketing copy lives in Vercel Blob and is read at runtime via `/api/get-content` with the `C(path, fallback)` helper.
+React 18 + Babel-standalone + Tailwind, all via CDN; the public pages have no build step. Every component attaches to `window` and is loaded in order from `index.html`. Editable copy and photos live in Sanity and are read with the `C(path, fallback)` helper. The only thing built on deploy is the editor at `/admin` (`studio/`).
 
 ## Structure
 
@@ -26,8 +26,9 @@ Static, **no build step**. React 18 + Babel-standalone + Tailwind, all via CDN. 
   - `sticky-cta.jsx` — mobile bottom CTA dock (Book a call / Enquire).
   - `legal.jsx` — Privacy, Cookies, Contact page, 404.
   - `analytics.jsx` — Vercel Web Analytics custom events, re-init per route.
-- `admin/` + `api/` — hidden `/admin` panel letting Lauren edit copy; content stored in Vercel Blob (see below).
-- `content.json` — **seed/fallback only.** Once Lauren saves via `/admin`, the live Blob is the source of truth and this file goes stale.
+- `studio/` — the Sanity editor the client uses at `/admin` (see below). Built into `admin/` on deploy; `admin/` is not committed.
+- `api/_content.js` — loads published content from Sanity, filling gaps from `content.json`.
+- `content.json` — **seed/fallback only.** Supplies any field the client hasn't filled in, and the whole site if Sanity can't be reached.
 
 ## Routes
 
@@ -35,7 +36,21 @@ Static, **no build step**. React 18 + Babel-standalone + Tailwind, all via CDN. 
 
 ## Content editing (`/admin`)
 
-Login-protected panel backed by Vercel Blob (not GitHub). Env vars in Vercel: `ADMIN_USER`, `ADMIN_PASS_HASH` (bcrypt), `SESSION_SECRET`, `BLOB_READ_WRITE_TOKEN`. Adding a new editable section needs: (1) keys in `content.json`, (2) a group in the `SECTIONS` schema in `admin/index.html`, (3) hardcoded fallbacks in the component.
+The client goes to `/admin`, logs in with their own Sanity account, edits a section and presses Publish. The site reads published content on every request, so changes show straight away. Drafts stay private, and every section keeps a history that can be restored.
+
+The setup is the same for every trigrams.studio client. Two files are per-client:
+
+- `studio/client.config.json` — name, logo, brand colours, Sanity project ID.
+- `studio/schema/sections.js` — the editable sections. Each is one sidebar entry in the editor, built from the shared field helpers in `studio/schema/shared.js`.
+
+Adding an editable field: add it to the section in `sections.js`, read it in the component with `C('<section>.<field>', fallback)`, and deploy. Photos arrive as `{ src, thumb, pos, alt }`.
+
+Setting up a new client (one Sanity project each, free tier):
+
+1. `cd studio && npm install`, then `npx sanity projects create "<Client>" --dataset production` and put the project ID in `client.config.json`.
+2. `npx sanity cors add https://<their-domain> --credentials` (and any preview domain, and `http://localhost:3333` for `npm run dev`).
+3. Write their `sections.js`, then `npx sanity exec scripts/seed.mjs --with-user-token` to copy existing copy and photos in (`scripts/seed-photos.json` maps photo fields to files in the repo).
+4. Invite the client to the project as an Editor from sanity.io/manage.
 
 ## Deploy
 

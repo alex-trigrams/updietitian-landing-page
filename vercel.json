@@ -1,14 +1,28 @@
 {
+  "buildCommand": "npm --prefix studio ci && npm --prefix studio run build",
+  "outputDirectory": ".",
   "functions": {
     "api/render.js": {
       "includeFiles": "{index.html,content.json,tweaks-panel.jsx,src/**}"
     }
   },
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true },
-    { "source": "/run", "destination": "/run-day?utm_source=instagram&utm_medium=story&utm_campaign=social_run_day", "permanent": false }
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/run",
+      "destination": "/run-day?utm_source=instagram&utm_medium=story&utm_campaign=social_run_day",
+      "permanent": false
+    }
   ],
   "rewrites": [
+    {
+      "source": "/admin/(.*)",
+      "destination": "/admin/index.html"
+    },
     {
       "source": "/((?!api/|admin|assets/|_vercel/|.*\\.).*)",
       "destination": "/api/render?path=/$1"

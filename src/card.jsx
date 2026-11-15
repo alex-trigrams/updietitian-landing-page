@@ -23,6 +23,9 @@ function stripLeadNumber(label) {
   return String(label || '').replace(/^\s*\d+\s*[·.\-–—:)]\s*/, '');
 }
 
+// A photo added to a card in /admin, in the shape CardBanner takes.
+const cardImage = (card) => (card.image && card.image.src ? { jpg: card.image.thumb, alt: card.image.alt } : undefined);
+
 // Banner image area. Renders only when a real photo is supplied — the branded
 // placeholder was removed at the client's request ("these probably don't need
 // images"), so image-less cards are now purely typographic.
@@ -31,7 +34,7 @@ function CardBanner({ image }) {
   return (
     <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16 / 9' }}>
       <picture>
-        <source srcSet={image.avif} type="image/avif" />
+        {image.avif && <source srcSet={image.avif} type="image/avif" />}
         <img src={image.jpg} alt={image.alt || ''} loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
       </picture>
     </div>

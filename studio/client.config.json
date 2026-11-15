@@ -1,0 +1,12 @@
+{
+  "name": "UP Dietitian",
+  "projectId": "diz3zpbg",
+  "dataset": "production",
+  "siteUrl": "https://www.updietitian.com",
+  "logo": "/assets/logo-orange-icon.png",
+  "brand": {
+    "primary": "#FF6C00",
+    "ink": "#201C12",
+    "paper": "#EAE6D7"
+  }
+}

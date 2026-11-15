@@ -4,7 +4,7 @@
 // sized to fit the whole hero (type + sub-panel + cue) inside one screen — the
 // client asked for the opening words to fit on a single screen.
 
-const HERO_SLIDES = [
+const HERO_SLIDES_DEFAULT = [
   { avif: 'assets/images/hero/slideshow/slide-1.avif', jpg: 'assets/images/hero/slideshow/slide-1.jpg' },
   { avif: 'assets/images/hero/slideshow/slide-2.avif', jpg: 'assets/images/hero/slideshow/slide-2.jpg' },
   { avif: 'assets/images/hero/slideshow/slide-3.avif', jpg: 'assets/images/hero/slideshow/slide-3.jpg' },
@@ -12,6 +12,13 @@ const HERO_SLIDES = [
   { avif: 'assets/images/hero/slideshow/slide-5.avif', jpg: 'assets/images/hero/slideshow/slide-5.jpg' },
   { avif: 'assets/images/hero/slideshow/slide-6.avif', jpg: 'assets/images/hero/slideshow/slide-6.jpg' },
 ];
+
+// Photos chosen in /admin replace the built-in set. Sanity serves the right
+// format per browser from one URL, so those slides carry no separate AVIF.
+const CMS_SLIDES = C('hero.slides', null);
+const HERO_SLIDES = CMS_SLIDES && CMS_SLIDES.length
+  ? CMS_SLIDES.map(s => ({ jpg: s.src, pos: s.pos }))
+  : HERO_SLIDES_DEFAULT;
 
 function HeroSlideshow() {
   const [idx, setIdx] = React.useState(0);
@@ -27,14 +34,14 @@ function HeroSlideshow() {
     <div aria-hidden className="absolute inset-0 pointer-events-none select-none" style={{ background: '#201C12' }}>
       {HERO_SLIDES.map((s, i) => (
         <picture key={i}>
-          <source srcSet={s.avif} type="image/avif" />
+          {s.avif && <source srcSet={s.avif} type="image/avif" />}
           <img
             src={s.jpg}
             alt=""
             loading={i === 0 ? 'eager' : 'lazy'}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
-              objectFit: 'cover', objectPosition: 'center 30%', display: 'block',
+              objectFit: 'cover', objectPosition: s.pos || 'center 30%', display: 'block',
               opacity: i === idx ? 1 : 0, transition: 'opacity 1.4s ease-in-out',
             }}
           />

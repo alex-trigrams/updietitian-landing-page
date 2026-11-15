@@ -59,10 +59,7 @@ function AboutTeaser() {
       <div className="max-w-[1400px] mx-auto px-5 md:px-8 grid grid-cols-12 gap-8 md:gap-10 items-center">
         <div className="col-span-12 lg:col-span-5 order-2 lg:order-1">
           <div className="relative w-full rounded-3xl overflow-hidden" style={{ aspectRatio: '4/5', maxWidth: 460 }}>
-            <picture>
-              <source srcSet="assets/images/about/about-image.avif" type="image/avif" />
-              <img src="assets/images/about/about-image.JPG" alt="Lauren Nash APD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
-            </picture>
+            <AboutPortrait />
           </div>
         </div>
         <div className="col-span-12 lg:col-span-7 order-1 lg:order-2">

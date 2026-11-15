@@ -3,10 +3,13 @@ const CLINIKO_URL = "https://front-runner-sports.au1.cliniko.com/bookings#locati
 
 // JPEG only — the AVIF version failed to render on some devices, and at 194KB
 // the fallback is cheap enough that format negotiation isn't worth the risk here.
-const CLINIC_PHOTO = 'assets/images/clinic/front-runner-physio-osbornepark.jpg';
+const CLINIC_PHOTO_DEFAULT = 'assets/images/clinic/front-runner-physio-osbornepark.jpg';
 
 function Clinic({ theme }) {
   const t = THEMES[theme];
+  // The photo set in /admin, else the one that shipped with the site.
+  const cmsPhoto = C('clinic.photo', null);
+  const CLINIC_PHOTO = cmsPhoto ? cmsPhoto.src : CLINIC_PHOTO_DEFAULT;
   return (
     <section id="clinic" data-screen-label="06 Clinic" className="relative noise" style={{ background: '#201C12', color: '#EAE6D7', paddingBlock: 'var(--pad-y, 96px)' }}>
       <div className="max-w-[1400px] mx-auto px-5 md:px-8">
@@ -36,8 +39,8 @@ function Clinic({ theme }) {
               {CLINIC_PHOTO ? (
                 <img
                   src={CLINIC_PHOTO}
-                  alt="Front Runner Physiotherapy clinic, Osborne Park"
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                  alt={(cmsPhoto && cmsPhoto.alt) || 'Front Runner Physiotherapy clinic, Osborne Park'}
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: (cmsPhoto && cmsPhoto.pos) || 'center', display: 'block' }}
                 />
               ) : (
                 /* placeholder — swap out once photo is added */

@@ -1,0 +1,17 @@
+{
+  "hero.slides": [
+    { "file": "assets/images/hero/slideshow/slide-1.jpg", "hotspot": [0.5, 0.3] },
+    { "file": "assets/images/hero/slideshow/slide-2.jpg", "hotspot": [0.5, 0.3] },
+    { "file": "assets/images/hero/slideshow/slide-3.jpg", "hotspot": [0.5, 0.3] },
+    { "file": "assets/images/hero/slideshow/slide-4.jpg", "hotspot": [0.5, 0.3] },
+    { "file": "assets/images/hero/slideshow/slide-5.jpg", "hotspot": [0.5, 0.3] },
+    { "file": "assets/images/hero/slideshow/slide-6.jpg", "hotspot": [0.5, 0.3] }
+  ],
+  "about.photo": { "file": "assets/images/about/about-image.JPG", "alt": "Lauren Nash APD", "hotspot": [0.5, 0] },
+  "about.racePhoto": { "file": "assets/images/about/racing-image.JPG", "alt": "Lauren Nash racing the run leg of an Ironman in UP Dietitian kit", "hotspot": [0.5, 0.45] },
+  "about.testimonials.jemma.photo": { "file": "assets/images/about/jemma-race.JPG", "hotspot": [0.55, 0.5] },
+  "about.testimonials.nick.photo": { "file": "assets/images/about/nick-finish.JPG", "hotspot": [0.5, 0.45] },
+  "about.testimonials.eimear.photo": { "file": "assets/images/about/eimear-fight.JPG", "hotspot": [0.5, 0.2] },
+  "about.testimonials.cam.photo": { "file": "assets/images/about/cam-bike.avif", "hotspot": [0.42, 0.25] },
+  "clinic.photo": { "file": "assets/images/clinic/front-runner-physio-osbornepark.jpg", "alt": "Front Runner Physiotherapy clinic, Osborne Park" }
+}

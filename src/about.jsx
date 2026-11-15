@@ -1,5 +1,20 @@
 // About — Lauren bio + drag-reveal "before/after" framing + credentials.
+// The main portrait, shown on /about and in the home page teaser. Uses the
+// photo set in /admin, else the one that shipped with the site.
+function AboutPortrait() {
+  const photo = C('about.photo', null);
+  const style = { width: '100%', height: '100%', objectFit: 'cover', objectPosition: (photo && photo.pos) || 'center top', display: 'block' };
+  if (photo) return <img src={photo.src} alt={photo.alt || 'Lauren Nash APD'} style={style} />;
+  return (
+    <picture>
+      <source srcSet="assets/images/about/about-image.avif" type="image/avif" />
+      <img src="assets/images/about/about-image.JPG" alt="Lauren Nash APD" style={style} />
+    </picture>
+  );
+}
+
 function About({ theme }) {
+  const racePhoto = C('about.racePhoto', null);
   const t = THEMES[theme];
   return (
     <section id="about" data-screen-label="02 About" className="relative" style={{ background: '#EAE6D7', color: '#201C12', paddingBlock: 'var(--pad-y, 96px)' }}>
@@ -43,10 +58,7 @@ function About({ theme }) {
           <div className="col-span-12 lg:col-span-5">
             <div className="relative aspect-[4/5] w-[86%] rounded-3xl overflow-visible">
               <div className="w-full h-full rounded-3xl overflow-hidden">
-                <picture>
-                  <source srcSet="assets/images/about/about-image.avif" type="image/avif" />
-                  <img src="assets/images/about/about-image.JPG" alt="Lauren Nash APD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
-                </picture>
+                <AboutPortrait />
               </div>
 
               {/* sticker badge */}
@@ -63,12 +75,12 @@ function About({ theme }) {
             <div className="mt-10 ml-auto w-[72%] rotate-2">
               <div className="rounded-3xl overflow-hidden" style={{ position: 'relative', paddingBottom: '115%', boxShadow: '0 16px 32px rgba(32,28,18,.14)' }}>
                 <picture>
-                  <source srcSet="assets/images/about/racing-image.avif" type="image/avif" />
+                  {!racePhoto && <source srcSet="assets/images/about/racing-image.avif" type="image/avif" />}
                   <img
-                    src="assets/images/about/racing-image.JPG"
-                    alt="Lauren Nash racing the run leg of an Ironman in UP Dietitian kit"
+                    src={racePhoto ? racePhoto.src : 'assets/images/about/racing-image.JPG'}
+                    alt={(racePhoto && racePhoto.alt) || 'Lauren Nash racing the run leg of an Ironman in UP Dietitian kit'}
                     loading="lazy"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 45%', display: 'block' }}
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: (racePhoto && racePhoto.pos) || 'center 45%', display: 'block' }}
                   />
                 </picture>
               </div>
@@ -113,10 +125,9 @@ const TESTIMONIALS = C('about.testimonials', [
   },
 ]);
 
-/* Athlete photos live in code, not in the editable content, and are keyed by
-   the testimonial's stable id — which survives Lauren renaming "Jemma" to
-   "Jemma W" in /admin. Falls back to matching the first name for any
-   testimonial added through /admin, which won't carry a seed id. */
+/* The photos that shipped with the site, used for any testimonial that has no
+   photo set in /admin. Keyed by the testimonial's stable id, falling back to
+   the first name. */
 const TESTIMONIAL_PHOTOS = {
   // JPG, not AVIF: sips silently produced a blank AVIF from this source photo.
   jemma: { src: 'assets/images/about/jemma-race.JPG', pos: '55% center' },
@@ -142,7 +153,9 @@ function quoteType(quote) {
 
 function TestimonialCard({ card, idx }) {
   const [flipped, setFlipped] = React.useState(false);
-  const photo = card.photo ? { src: card.photo, pos: 'center top' } : testimonialPhoto(card);
+  const photo = card.photo && card.photo.src
+    ? { src: card.photo.thumb, pos: card.photo.pos || 'center top' }
+    : testimonialPhoto(card);
   const type = quoteType(card.quote);
 
   return (
